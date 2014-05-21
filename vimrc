@@ -2,4 +2,7 @@ execute pathogen#infect()
 syntax on
 filetype plugin indent on
 
-let g:vim_markdown_initial_foldlevel=1
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+
+let g:vim_markdown_folding_disabled=1
+
