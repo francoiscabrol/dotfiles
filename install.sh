@@ -31,4 +31,8 @@ for file in $files; do
     ln -s $dir/$file ~/.$file
 done
 
+# Sublime config install
+
+
+
 #EOF
