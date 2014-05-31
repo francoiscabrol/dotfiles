@@ -1,6 +1,6 @@
 
 # Sublime
-sublime/
+sublime/User/*
 !sublime/User/*.sublime*
 
 # Vim
