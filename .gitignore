@@ -1,8 +1,7 @@
 
 # Sublime
 sublime/
-!*/*.sublime-settings
-!*/*.sublime-keymap
+!sublime/User/*.sublime*
 
 # Vim
 *.swp
