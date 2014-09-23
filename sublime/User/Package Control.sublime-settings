@@ -1,11 +1,14 @@
 {
 	"installed_packages":
 	[
+		"Coffee Formatter",
+		"CoffeeScript",
 		"CursorRuler",
 		"GitGutter",
 		"GoToLastEdit",
 		"MarkdownEditing",
 		"Package Control",
+		"SublimeLinter",
 		"Theme - Soda",
 		"Tomorrow Color Schemes"
 	]

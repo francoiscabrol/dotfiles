@@ -7,3 +7,7 @@ autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 let g:vim_markdown_folding_disabled=1
 
 set laststatus=2
+
+map <C-n> :NERDTreeToggle<CR>
+
+
