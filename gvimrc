@@ -1,1 +1,1 @@
-colorscheme Tomorrow-Night
+colorscheme Molokai
