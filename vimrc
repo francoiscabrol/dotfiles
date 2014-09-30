@@ -27,6 +27,16 @@ set guifont=MesloLGSDZ-RegularForPowerline
 ""let g:airline#extensions#tabline#left_sep = ' '
 ""let g:airline#extensions#tabline#left_alt_sep = '|'
 
+" Indent-guide plugin:
 let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
+
+" NERDTree open automatically
+autocmd vimenter * NERDTree
+" even id no files are specified
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" Close vim if the last panel is Nerdtree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
