@@ -58,3 +58,9 @@
 [submodule "vim/bundle/vim-javascript"]
 	path = vim/bundle/vim-javascript
 	url = git@github.com:pangloss/vim-javascript.git
+[submodule "vim/bundle/plantuml-syntax"]
+	path = vim/bundle/plantuml-syntax
+	url = git@github.com:aklt/plantuml-syntax.git
+[submodule "vim/bundle/wmgraphviz.vim"]
+	path = vim/bundle/wmgraphviz.vim
+	url = git@github.com:wannesm/wmgraphviz.vim.git
