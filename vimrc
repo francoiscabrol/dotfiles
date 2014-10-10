@@ -2,7 +2,7 @@ execute pathogen#infect()
 " switch syntax highlighting on, when the terminal has colors
 syntax on
 
-colorscheme Molokai
+colorscheme molokai
 
 " turn indentation on
 filetype indent on
@@ -124,9 +124,13 @@ nmap <F8> :TagbarToggle<CR>
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts=1
 let g:airline_theme='powerlineish'
-set guifont=MesloLGSDZ-RegularForPowerline
+set guifont=Meslo\ LG\ M\ for\ Powerline
 ""let g:airline#extensions#tabline#left_sep = ' '
 ""let g:airline#extensions#tabline#left_alt_sep = '|'
+
+if $COLORTERM == 'gnome-terminal'
+    set t_Co=256
+endif
 
 " Indent-guide plugin:
 let g:indent_guides_auto_colors = 0

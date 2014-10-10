@@ -1,6 +1,8 @@
 'editor':
   'showIndentGuide': true
   'showInvisibles': true
+  'fontSize': 12
+  'invisibles': {}
 'core':
   'disabledPackages': [
     'vim-mode'
