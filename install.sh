@@ -9,7 +9,7 @@
 DOTVIM_HOME=`pwd`
 dir=$DOTVIM_HOME                              # dotfiles directory
 olddir=$DOTVIM_HOME/../dotfiles_old             # old dotfiles backup directory
-files="vimrc gvimrc vim"    # list of files/folders to symlink in homedir
+files="vimrc gvimrc vim tmux.conf"    # list of files/folders to symlink in homedir
 
 ##########
 
@@ -23,7 +23,7 @@ echo "Changing to the $dir directory"
 cd $dir
 echo "...done"
 
-# move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks 
+# move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks
 for file in $files; do
     echo "Moving dotfile ~/.$file to $olddir/$file"
     mv ~/.$file $olddir/$file
