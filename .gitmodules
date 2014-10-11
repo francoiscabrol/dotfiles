@@ -64,3 +64,6 @@
 [submodule "vim/bundle/wmgraphviz.vim"]
 	path = vim/bundle/wmgraphviz.vim
 	url = git@github.com:wannesm/wmgraphviz.vim.git
+[submodule "vim/bundle/vim-jade"]
+	path = vim/bundle/vim-jade
+	url = git://github.com/digitaltoad/vim-jade.git
