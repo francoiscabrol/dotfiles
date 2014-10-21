@@ -1,9 +1,11 @@
 'global':
-  'editor':
-    'showIndentGuide': true
-    'showInvisibles': true
-    'fontSize': 12
-    'tabLength': 4
+  'autoclose-html': {}
+  'exception-reporting':
+    'userId': '5ea76c05-e3ea-db80-313b-35e2265ed483'
+  'welcome':
+    'showOnStartup': false
+  'metrics':
+    'userId': '02843a37a2e0674a9b90b2a2d3b2b17a6f7bd521'
   'core':
     'disabledPackages': [
       'vim-mode'
@@ -13,13 +15,14 @@
       'atom-dark-ui'
       'monokai'
     ]
-  'exception-reporting':
-    'userId': '5ea76c05-e3ea-db80-313b-35e2265ed483'
-  'welcome':
-    'showOnStartup': false
-  'metrics':
-    'userId': '02843a37a2e0674a9b90b2a2d3b2b17a6f7bd521'
+    'projectHome': '/home/fcabrol/Workspace'
+  'editor':
+    'invisibles': {}
+    'showIndentGuide': true
+    'showInvisibles': true
+    'fontSize': 12
+    'tabLength': 4
+  'merge-conflicts': {}
   'highlight-column':
     'opacity': 0.15
     'enableHighlight': false
-  'autoclose-html': {}
