@@ -1,5 +1,4 @@
 'global':
-  'autoclose-html': {}
   'exception-reporting':
     'userId': '5ea76c05-e3ea-db80-313b-35e2265ed483'
   'welcome':
@@ -17,12 +16,14 @@
     ]
     'projectHome': '/home/fcabrol/Workspace'
   'editor':
-    'invisibles': {}
     'showIndentGuide': true
     'showInvisibles': true
     'fontSize': 12
     'tabLength': 4
-  'merge-conflicts': {}
+    'invisibles': {}
   'highlight-column':
     'opacity': 0.15
     'enableHighlight': false
+  'autoclose-html': {}
+  'merge-conflicts':
+    'gitPath': '/usr/bin/git'
