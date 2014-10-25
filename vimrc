@@ -112,13 +112,22 @@ set splitright
 
 " eclude highlighting numbers for several plug-ins
 let g:numbers_exclude = ['minibufexpl', 'nerdtree', 'unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m']
-nnoremap <F3> :NumbersToggle<CR>
+nnoremap <F2> :NumbersToggle<CR>
 
-map <C-n> :NERDTreeToggle<CR>
+" F3 will open NERDTree panel and highlight current file. And when you're in
+" the NERDTree panel, F3 will open file under cursor. So, I can use one button
+" to jump between buffer and NERDTree. (And F4 for preview because it's next
+" to F3)
+map <F3> :NERDTreeToggle<CR>
+map <F4> :NERDTreeFind<CR>
+let g:NERDTreeMapActivateNode="<F3>"
+let g:NERDTreeMapPreview="<F4>"
 
 " Tag bar
 nmap <F8> :TagbarToggle<CR>
 
+" Vim javascript syntax
+"au FileType javascript call JavaScriptFold()
 
 "airline:
 let g:airline#extensions#tabline#enabled = 1
