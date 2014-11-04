@@ -20,7 +20,16 @@
     'showInvisibles': true
     'fontSize': 12
     'tabLength': 4
+<<<<<<< HEAD
+=======
+    'invisibles': {}
+>>>>>>> 95cc743bc2cac4f31a0aed39d5ebd3705f30be95
   'highlight-column':
     'opacity': 0.15
     'enableHighlight': false
   'autoclose-html': {}
+<<<<<<< HEAD
+=======
+  'merge-conflicts':
+    'gitPath': '/usr/bin/git'
+>>>>>>> 95cc743bc2cac4f31a0aed39d5ebd3705f30be95
