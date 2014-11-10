@@ -169,3 +169,6 @@ fun! StripTrailingWhitespace()
     %s/\s\+$//e
 endfun
 autocmd BufWritePre * call StripTrailingWhitespace()
+
+" jshint
+set runtimepath+=~/.vim/bundle/jshint2.vim/
