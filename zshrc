@@ -1,111 +1,61 @@
-# Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
-
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-# ZSH_THEME="robbyrussell"
-# Cool: amuse; dst; fino
-ZSH_THEME="amuse"
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git, osx, meteor, npm, tmux, tmuxinator, bower, coffee, github, jira)
-
-source $ZSH/oh-my-zsh.sh
-
-# User configuration
-
-export PATH="/home/fcabrol/.nvm/v0.10.25/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
 #
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh
-alias pbcopy='xclip -selection clipboard'
-# alias pbpaste='xclip -selection clipboard -o'
-alias open='gnome-open'
-alias openIn='parallel -Xj1 --tty'
+# Executes commands at the start of an interactive session.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
 
-# Shortcut to folder
-alias cdNote='cd /home/fcabrol/Dropbox/Notes/SchneiderElectric'
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
 
-# Git alias
-alias opendiff='git diff HEAD^ --name-only | xargs'
-alias gs='git status'
+# Customize to your needs...
+if [[ "$OSTYPE" =~ ^linux ]]; then
+     alias pbcopy='xclip -selection clipboard'
+     alias open='gnome-open'
+     alias openIn='parallel -Xj1 --tty'
+     #
+     # Shortcut to folder
+     alias cdNote='cd /home/fcabrol/Dropbox/Notes/SchneiderElectric'
+fi
 
-# NodeJs with nvm
-export NVM_DIR="/home/fcabrol/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
-nvm use v0.10.25
-
-# Set vim as editor by default
-export EDITOR='vim'
-
-# Add color in tmux
-alias tmux='tmux -2'
 alias tk='tmux kill-session'
 
-# Auto completion for tmuxinator
-source ~/.tmuxinator/tmuxinator.zsh
+if [[ "$OSTYPE" == "darwin"* ]]; then
 
-#EOF
+    ## Use local in priority
+    export PATH="/usr/local/bin:$PATH"
+
+    ##Leap motion sdk##
+    export LEAP_HOME="/Users/francois/Applications/LeapSDK"
+
+    ##Java##
+    export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home"
+    export PATH=$JAVA_HOME/bin:$PATH
+
+    ##Vim##
+    export PATH="/Users/francois/Applications/vim:$PATH"
+    export EDITOR='vim'
+
+    ##scala##
+    export SCALA_HOME='/Users/francois/Applications/scala-2.10.4'
+    export PATH=$SCALA_HOME/bin:$PATH
+
+    ##postgres##
+    export DATABASE_URL="jdbc:postgresql://localhost:5432/sharplinker?user=sharplinkeruser&password=mushroom"
+    export PGDATA=/usr/local/var/postgres
+
+    ##Shortcuts to folder
+    alias cdfrancoiscabrol.github.source='cd /Users/francois/Dropbox/Workspaces/francoiscabrol.github.source'
+    alias cdnotes='cd /Users/francois/Dropbox/Notes'
+    alias cdprojects='cd /Users/francois/Dropbox/Workspaces/'
+    alias cdtraining='cd /Users/francois/Movies/Tutorials/Entrainement'
+
+    ##Shortcuts to application
+    alias subl='/Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl'
+    alias rtt='/Users/francois/Applications/Read2Text1/read2text'
+    alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
+fi
+
+
