@@ -57,5 +57,3 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     alias rtt='/Users/francois/Applications/Read2Text1/read2text'
     alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
 fi
-
-

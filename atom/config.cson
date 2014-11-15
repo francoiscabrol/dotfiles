@@ -24,3 +24,5 @@
     'opacity': 0.15
     'enableHighlight': false
   'autoclose-html': {}
+  'merge-conflicts':
+    'gitPath': '/usr/bin/git'

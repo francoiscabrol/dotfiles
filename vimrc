@@ -16,6 +16,9 @@ autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 " use vim, not vi api
 set nocompatible
 
+" use mouse
+set mouse=a
+
 " no backup files
 set nobackup
 
