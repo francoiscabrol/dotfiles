@@ -9,7 +9,7 @@
 DOTVIM_HOME=`pwd`
 dir=$DOTVIM_HOME                              # dotfiles directory
 olddir=$DOTVIM_HOME/../dotfiles_old             # old dotfiles backup directory
-files="vimrc gvimrc vim tmux.conf tmuxline.snapshot zshrc"    # list of files/folders to symlink in homedir
+files="vimrc gvimrc vim tmux.conf tmuxline.snapshot zshrc zprofile zpreztorc"    # list of files/folders to symlink in homedir
 
 ##########
 

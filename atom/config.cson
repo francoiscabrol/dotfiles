@@ -23,6 +23,10 @@
   'highlight-column':
     'opacity': 0.15
     'enableHighlight': false
-  'autoclose-html': {}
   'merge-conflicts':
     'gitPath': '/usr/bin/git'
+  'autoclose-html': {}
+'.shell-session.text':
+  'editor': {}
+'.shell.source':
+  'editor': {}

@@ -18,6 +18,8 @@ if [[ "$OSTYPE" =~ ^linux ]]; then
      #
      # Shortcut to folder
      alias cdNote='cd /home/fcabrol/Dropbox/Notes/SchneiderElectric'
+
+     export PATH="/home/fcabrol/npm/bin:$PATH"
 fi
 
 alias tk='tmux kill-session'
@@ -56,4 +58,5 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     alias subl='/Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl'
     alias rtt='/Users/francois/Applications/Read2Text1/read2text'
     alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
+
 fi
