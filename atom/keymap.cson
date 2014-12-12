@@ -16,3 +16,11 @@
 #   'ctrl-P': 'core:move-up'
 #   'ctrl-p': 'core:move-down'
 #
+#
+'.editor:not(.mini)':
+  'ctrl-shift-e': 'easy-motion:start'
+  'ctrl-shift-y': 'easy-motion:start-reverse'
+
+'.find-and-replace .find-container .editor':
+  'ctrl-shift-e': 'easy-motion:start-contextual'
+  'ctrl-shift-y': 'easy-motion:start-contextual-reverse'
