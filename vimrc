@@ -1,4 +1,44 @@
-execute pathogen#infect()
+" Required Vundle setup
+filetype off
+set runtimepath+=~/.vim/bundle/Vundle.vim
+call vundle#rc()
+
+Bundle 'gmarik/Vundle.vim'
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'Shutnik/jshint2.vim'
+Bundle 'tomasr/molokai'
+Bundle 'scrooloose/nerdtree'
+Bundle 'myusuf3/numbers.vim'
+Bundle 'aklt/plantuml-syntax'
+Bundle 'ktvoelker/sbt-vim'
+Bundle 'ervandew/screen'
+Bundle 'scrooloose/syntastic'
+Bundle 'godlygeek/tabular'
+Bundle 'majutsushi/tagbar'
+Bundle 'marijnh/tern_for_vim'
+Bundle 'edkolev/tmuxline.vim'
+Bundle 'bling/vim-airline'
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-git'
+Bundle 'airblade/vim-gitgutter'
+Bundle 'endel/vim-github-colorscheme'
+Bundle 'nathanaelkane/vim-indent-guides'
+Bundle 'digitaltoad/vim-jade'
+Bundle 'pangloss/vim-javascript'
+Bundle 'jelera/vim-javascript-syntax'
+Bundle 'briancollins/vim-jst'
+Bundle 'groenewege/vim-less'
+Bundle 'plasticboy/vim-markdown'
+Bundle 'terryma/vim-multiple-cursors'
+Bundle 'moll/vim-node'
+Bundle 'wavded/vim-stylus'
+Bundle 'lepture/vim-velocity'
+Bundle 'wannesm/wmgraphviz.vim'
+Bundle 'kien/ctrlp.vim'
+Bundle 'christoomey/vim-tmux-navigator'
+
 " switch syntax highlighting on, when the terminal has colors
 syntax on
 
@@ -105,6 +145,8 @@ set autoread
 " use system clipboard
 "http://stackoverflow.com/questions/8134647/copy-and-paste-in-vim-via-keyboard-between-different-mac-terminals
 set clipboard+=unnamed
+map <C-c> "+y<CR>
+map <C-v> "+p<CR>
 
 " don't show intro
 set shortmess+=I

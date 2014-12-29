@@ -5,3 +5,5 @@ sublime/User/*
 
 # Vim
 *.swp
+vim/bundle/*
+!vim/bundle/Vundle.vim

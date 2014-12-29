@@ -23,7 +23,6 @@
     'showInvisibles': true
     'tabLength': 4
     'zoomFontWhenCtrlScrolling': true
-    'fontSize': 21
   'highlight-column':
     'opacity': 0.15
     'enableHighlight': false
@@ -41,7 +40,7 @@
     'displayPluginsControls': false
   'autoclose-html': {}
   'linter': {}
-'.shell.source':
-  'editor': {}
 '.shell-session.text':
+  'editor': {}
+'.shell.source':
   'editor': {}
