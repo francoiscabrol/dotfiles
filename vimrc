@@ -8,6 +8,7 @@ Bundle 'Valloric/YouCompleteMe'
 Bundle 'Shutnik/jshint2.vim'
 Bundle 'tomasr/molokai'
 Bundle 'scrooloose/nerdtree'
+Bundle 'jistr/vim-nerdtree-tabs'
 Bundle 'myusuf3/numbers.vim'
 Bundle 'aklt/plantuml-syntax'
 Bundle 'ktvoelker/sbt-vim'
@@ -38,6 +39,9 @@ Bundle 'lepture/vim-velocity'
 Bundle 'wannesm/wmgraphviz.vim'
 Bundle 'kien/ctrlp.vim'
 Bundle 'christoomey/vim-tmux-navigator'
+Bundle 'editorconfig/editorconfig-vim'
+Bundle 'halostatue/vim-zoom-win'
+Bundle 'vim-scripts/zoom.vim'
 
 " switch syntax highlighting on, when the terminal has colors
 syntax on
@@ -92,7 +96,7 @@ set ignorecase
 " a buffer is marked as ‘hidden’ if it has unsaved changes, and it is not currently loaded in a window
 " if you try and quit Vim while there are hidden buffers, you will raise an error:
 " E162 : No write since last change for buffer “a.txt”
-set hidden
+"set hidden
 
 " disable folding because it is evil
 set nofoldenable
@@ -163,9 +167,8 @@ nnoremap <F2> :NumbersToggle<CR>
 " the NERDTree panel, F3 will open file under cursor. So, I can use one button
 " to jump between buffer and NERDTree. (And F4 for preview because it's next
 " to F3)
-map <F3> :NERDTreeToggle<CR>
+map <leader>' :NERDTreeTabsToggle<CR>
 map <F4> :NERDTreeFind<CR>
-let g:NERDTreeMapActivateNode="<F3>"
 let g:NERDTreeMapPreview="<F4>"
 
 " Tag bar
@@ -174,13 +177,23 @@ nmap <F8> :TagbarToggle<CR>
 " Vim javascript syntax
 "au FileType javascript call JavaScriptFold()
 
+" Open each new buffer in a new tab
+"au BufRead * nested tab sball
+
+autocmd BufEnter * set bufhidden=delete
+
 "airline:
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts=1
+" enable/disable displaying tab number in tabs mode. >
+let g:airline#extensions#tabline#show_tab_nr   = 0
+let g:airline#extensions#tabline#tab_min_count = 2
+"enable/disable displaying buffers with a single tab. >
+let g:airline#extensions#tabline#show_buffers = 0
+let g:airline#extensions#tabline#enabled      = 1
+let g:airline_powerline_fonts                 = 1
+"show just the filename
+let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_theme='powerlineish'
 set guifont=Meslo\ LG\ M\ for\ Powerline
-""let g:airline#extensions#tabline#left_sep = ' '
-""let g:airline#extensions#tabline#left_alt_sep = '|'
 
 if $COLORTERM == 'gnome-terminal'
     set t_Co=256
@@ -195,10 +208,7 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
 ""autocmd vimenter * NERDTree
 " even id no files are specified
 ""autocmd StdinReadPre * let s:std_in=1
-""autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-" Close vim if the last panel is Nerdtree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+"dautocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " jump to last cursor
 autocmd BufReadPost *
