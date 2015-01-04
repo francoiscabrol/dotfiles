@@ -42,11 +42,19 @@ Bundle 'christoomey/vim-tmux-navigator'
 Bundle 'editorconfig/editorconfig-vim'
 Bundle 'halostatue/vim-zoom-win'
 Bundle 'vim-scripts/zoom.vim'
+Bundle 'francoiscabrol/vim-grep'
+Bundle 'vim-scripts/indentLine.vim'
+Bundle 'mileszs/ack.vim'
+Bundle 'drmikehenry/vim-fixkey'
+
+" Eleminate delay with Esc
+set esckeys
 
 " switch syntax highlighting on, when the terminal has colors
 syntax on
 
 colorscheme molokai
+let g:molokai_original = 1
 
 " turn indentation on
 filetype indent on
@@ -93,6 +101,10 @@ set smartcase
 " make sure any searches /searchPhrase doesn't need the \c escape character
 set ignorecase
 
+" No visual error or sound
+set noerrorbells visualbell t_vb=
+autocmd GUIEnter * set visualbell t_vb=
+
 " a buffer is marked as ‘hidden’ if it has unsaved changes, and it is not currently loaded in a window
 " if you try and quit Vim while there are hidden buffers, you will raise an error:
 " E162 : No write since last change for buffer “a.txt”
@@ -129,7 +141,7 @@ set list listchars=tab:\ \ ,trail:·
 
 " get rid of the delay when pressing O (for example)
 " http://stackoverflow.com/questions/2158516/vim-delay-before-o-opens-a-new-line
-set timeout timeoutlen=1000 ttimeoutlen=100
+set timeout timeoutlen=200 ttimeoutlen=200
 
 " always show status bar
 set laststatus=2
@@ -146,11 +158,27 @@ set encoding=utf-8
 " autoload files that have changed outside of vim
 set autoread
 
+" map leader to SPACE
+let mapleader = "\<Space>"
+
+" Close file with SPACE + q
+nnoremap <Leader>q :q<CR>
+
+" Save file with SPACE + w
+nnoremap <Leader>w :w<CR>
+
 " use system clipboard
-"http://stackoverflow.com/questions/8134647/copy-and-paste-in-vim-via-keyboard-between-different-mac-terminals
 set clipboard+=unnamed
-map <C-c> "+y<CR>
-map <C-v> "+p<CR>
+" Copy & paste to system clipboard with <Space>p and <Space>y:
+vmap <Leader>y "+y
+vmap <Leader>d "+d
+nmap <Leader>p "+p
+nmap <Leader>P "+P
+vmap <Leader>p "+p
+vmap <Leader>P "+P
+
+" Stop that stupid window from popping up:
+map q: :q
 
 " don't show intro
 set shortmess+=I
@@ -158,6 +186,9 @@ set shortmess+=I
 " better splits
 set splitbelow
 set splitright
+
+" Tired of clearing highlighted searches by searching for “ldsfhjkhgakjks”? Use this:
+nmap <silent> <leader>/ :nohlsearch<CR>
 
 " eclude highlighting numbers for several plug-ins
 let g:numbers_exclude = ['minibufexpl', 'nerdtree', 'unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m']
@@ -167,30 +198,28 @@ nnoremap <F2> :NumbersToggle<CR>
 " the NERDTree panel, F3 will open file under cursor. So, I can use one button
 " to jump between buffer and NERDTree. (And F4 for preview because it's next
 " to F3)
-map <leader>' :NERDTreeTabsToggle<CR>
-map <F4> :NERDTreeFind<CR>
-let g:NERDTreeMapPreview="<F4>"
+nnoremap <leader>n :NERDTreeTabsToggle<CR>
+nnoremap <leader>nf :NERDTreeFind<CR>
 
 " Tag bar
 nmap <F8> :TagbarToggle<CR>
 
-" Vim javascript syntax
-"au FileType javascript call JavaScriptFold()
+" Quickly edit/reload the vimrc file
+nmap <silent> <leader>ev :e $MYVIMRC<CR>
+nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
-" Open each new buffer in a new tab
-"au BufRead * nested tab sball
-
+" Delete buffer when they are hidden
 autocmd BufEnter * set bufhidden=delete
 
-"airline:
-" enable/disable displaying tab number in tabs mode. >
+" Airline:
+" Enable/disable displaying tab number in tabs mode. >
 let g:airline#extensions#tabline#show_tab_nr   = 0
 let g:airline#extensions#tabline#tab_min_count = 2
-"enable/disable displaying buffers with a single tab. >
+" Enable/disable displaying buffers with a single tab. >
 let g:airline#extensions#tabline#show_buffers = 0
 let g:airline#extensions#tabline#enabled      = 1
 let g:airline_powerline_fonts                 = 1
-"show just the filename
+" Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_theme='powerlineish'
 set guifont=Meslo\ LG\ M\ for\ Powerline
@@ -203,12 +232,6 @@ endif
 let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
-
-" NERDTree open automatically
-""autocmd vimenter * NERDTree
-" even id no files are specified
-""autocmd StdinReadPre * let s:std_in=1
-"dautocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " jump to last cursor
 autocmd BufReadPost *

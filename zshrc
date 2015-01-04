@@ -11,6 +11,9 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+#####
+# For Linux
+#####
 if [[ "$OSTYPE" =~ ^linux ]]; then
      alias pbcopy='xclip -selection clipboard'
      alias open='gnome-open'
@@ -22,8 +25,25 @@ if [[ "$OSTYPE" =~ ^linux ]]; then
      export PATH="/home/fcabrol/npm/bin:$PATH"
 fi
 
+#####
+# For all systems
+#####
 alias tk='tmux kill-session'
+fancy-ctrl-z () {
+  if [[ $#BUFFER -eq 0 ]]; then
+    BUFFER="fg"
+    zle accept-line
+  else
+    zle push-input
+    zle clear-screen
+  fi
+}
+zle -N fancy-ctrl-z
+bindkey '^Z' fancy-ctrl-z
 
+#####
+# For Linux
+#####
 if [[ "$OSTYPE" == "darwin"* ]]; then
 
     ## Use local in priority
