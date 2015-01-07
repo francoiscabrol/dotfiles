@@ -18,6 +18,7 @@ if [[ "$OSTYPE" =~ ^linux ]]; then
      alias pbcopy='xclip -selection clipboard'
      alias open='gnome-open'
      alias openIn='parallel -Xj1 --tty'
+     alias ack='ack-grep'
      #
      # Shortcut to folder
      alias cdNote='cd /home/fcabrol/Dropbox/Notes/SchneiderElectric'
@@ -29,6 +30,11 @@ fi
 # For all systems
 #####
 alias tk='tmux kill-session'
+
+# Grunt autocompletion
+eval "$(grunt --completion=zsh)"
+
+# Terminal to vim shortcut
 fancy-ctrl-z () {
   if [[ $#BUFFER -eq 0 ]]; then
     BUFFER="fg"

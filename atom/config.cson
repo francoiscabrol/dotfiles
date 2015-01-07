@@ -1,4 +1,4 @@
-'global':
+'*':
   'exception-reporting':
     'userId': '5ea76c05-e3ea-db80-313b-35e2265ed483'
   'welcome':
@@ -19,10 +19,11 @@
     'projectHome': '/home/fcabrol/Workspace'
     'destroyEmptyPanes': false
   'editor':
-    'showIndentGuide': true
+    'fontSize': 14
     'showInvisibles': true
+    'showIndentGuide': true
     'tabLength': 4
-    'zoomFontWhenCtrlScrolling': true
+    'invisibles': {}
   'highlight-column':
     'opacity': 0.15
     'enableHighlight': false
@@ -30,6 +31,7 @@
     'gitPath': '/usr/bin/git'
   'tree-view':
     'hideVcsIgnoredFiles': true
+    'hideIgnoredNames': true
   'markdown-preview':
     'breakOnSingleNewline': true
   'mobile-preview':
@@ -40,7 +42,6 @@
     'displayPluginsControls': false
   'autoclose-html': {}
   'linter': {}
-'.shell-session.text':
-  'editor': {}
-'.shell.source':
-  'editor': {}
+  'tree-view-breadcrumb':
+    'scrollToLastItem': false
+  'unity-ui': {}

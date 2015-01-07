@@ -9,7 +9,7 @@ Bundle 'Shutnik/jshint2.vim'
 Bundle 'tomasr/molokai'
 Bundle 'scrooloose/nerdtree'
 Bundle 'jistr/vim-nerdtree-tabs'
-Bundle 'myusuf3/numbers.vim'
+" Bundle 'myusuf3/numbers.vim'
 Bundle 'aklt/plantuml-syntax'
 Bundle 'ktvoelker/sbt-vim'
 Bundle 'ervandew/screen'
@@ -191,15 +191,24 @@ set splitright
 nmap <silent> <leader>/ :nohlsearch<CR>
 
 " eclude highlighting numbers for several plug-ins
-let g:numbers_exclude = ['minibufexpl', 'nerdtree', 'unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m']
-nnoremap <F2> :NumbersToggle<CR>
+"let g:numbers_exclude = ['minibufexpl', 'nerdtree', 'unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m']
+"nnoremap <F2> :NumbersToggle<CR>
 
 " F3 will open NERDTree panel and highlight current file. And when you're in
 " the NERDTree panel, F3 will open file under cursor. So, I can use one button
 " to jump between buffer and NERDTree. (And F4 for preview because it's next
 " to F3)
-nnoremap <leader>n :NERDTreeTabsToggle<CR>
+nnoremap <leader>n :call g:WorkaroundNERDTreeToggle()<CR>
 nnoremap <leader>nf :NERDTreeFind<CR>
+
+" Fix bug with nerdtree
+function! g:WorkaroundNERDTreeToggle()
+    try
+        :NERDTreeTabsToggle
+    catch
+        :NERDTree
+    endtry
+endfunction
 
 " Tag bar
 nmap <F8> :TagbarToggle<CR>
