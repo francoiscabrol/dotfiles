@@ -24,3 +24,7 @@
 '.find-and-replace .find-container .editor':
   'ctrl-shift-e': 'easy-motion:start-contextual'
   'ctrl-shift-y': 'easy-motion:start-contextual-reverse'
+
+'.platform-linux':
+  'ctrl-t': 'fuzzy-finder:toggle-buffer-finder'
+  'ctrl-p': 'fuzzy-finder:toggle-file-finder'
