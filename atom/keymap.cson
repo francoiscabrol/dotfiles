@@ -16,10 +16,16 @@
 #   'ctrl-P': 'core:move-up'
 #   'ctrl-p': 'core:move-down'
 #
-#
-'.editor:not(.mini)':
-  'ctrl-shift-e': 'easy-motion:start'
+'.platform-win32 .workspace .isearch .editor,
+.platform-linux .workspace .isearch .editor':
+  'ctrl-e': 'unset!'
+'.platform-win32 atom-text-editor, .platform-linux atom-text-editor':
+  'ctrl-e': 'unset!'
+
+'.editor':
+  'ctrl-e': 'easy-motion:start'
   'ctrl-shift-y': 'easy-motion:start-reverse'
+  'ctrl-shift-E': 'easy-motion:start'
 
 '.find-and-replace .find-container .editor':
   'ctrl-shift-e': 'easy-motion:start-contextual'
@@ -28,3 +34,37 @@
 '.platform-linux':
   'ctrl-t': 'fuzzy-finder:toggle-buffer-finder'
   'ctrl-p': 'fuzzy-finder:toggle-file-finder'
+
+'.platform-linux':
+  'ctrl-alt-enter': 'maximize-panes:maximize'
+  'ctrl-h':'window:focus-pane-on-left'
+  'ctrl-l':'window:focus-pane-on-right'
+  'ctrl-j':'window:focus-pane-above'
+  'ctrl-k':'window:focus-pane-below'
+
+'body':
+  'ctrl-h':'window:focus-pane-on-left'
+  'ctrl-l':'window:focus-pane-on-right'
+  'ctrl-j':'window:focus-pane-above'
+  'ctrl-k':'window:focus-pane-below'
+
+'.editor:not(.mini)':
+  'ctrl-h': 'unset!'
+  'ctrl-shift-z': 'atom-zeal:shortcut'
+
+'atom-workspace atom-text-editor':
+  'ctrl-home': 'unset!'
+
+'atom-workspace atom-text-editor':
+  'ctrl-l': 'unset!'
+  'ctrl-shift-v': 'editor:select-line'
+
+'atom-workspace atom-text-editor:not([mini])':
+  'ctrl-j': 'unset!'
+  'ctrl-shift-j': 'editor:join-lines'
+
+'.platform-linux .go-to-line atom-text-editor[mini]':
+  'ctrl-w': 'unset!'
+
+'atom-text-editor.vim-mode.insert-mode':
+  'ctrl-w': 'unset!'
