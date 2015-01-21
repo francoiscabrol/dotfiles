@@ -46,7 +46,8 @@ Bundle 'vim-scripts/zoom.vim'
 Bundle 'francoiscabrol/vim-grep'
 Bundle 'vim-scripts/indentLine.vim'
 Bundle 'mileszs/ack.vim'
-Bundle 'drmikehenry/vim-fixkey'
+Bundle 'trusktr/seti.vim'
+Bundle 'altercation/vim-colors-solarized'
 
 " Eleminate delay with Esc
 set esckeys
@@ -55,7 +56,7 @@ set esckeys
 syntax on
 
 colorscheme molokai
-let g:molokai_original = 1
+" let g:molokai_original = 1
 
 " turn indentation on
 filetype indent on
@@ -115,7 +116,7 @@ autocmd GUIEnter * set visualbell t_vb=
 set nofoldenable
 
 " turn word wrap off
-set nowrap
+" set nowrap
 
 " scroll with more context
 set scrolloff=10
