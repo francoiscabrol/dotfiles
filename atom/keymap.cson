@@ -50,7 +50,7 @@
 
 '.editor:not(.mini)':
   'ctrl-h': 'unset!'
-  'ctrl-shift-z': 'atom-zeal:shortcut'
+  # 'ctrl-shift-z': 'atom-zeal:shortcut'
 
 'atom-workspace atom-text-editor':
   'ctrl-home': 'unset!'
