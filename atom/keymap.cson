@@ -59,6 +59,9 @@
   'ctrl-l': 'unset!'
   'ctrl-shift-v': 'editor:select-line'
 
+'atom-text-editor':
+  'ctrl-k': 'unset!'
+
 'atom-workspace atom-text-editor:not([mini])':
   'ctrl-j': 'unset!'
   'ctrl-shift-j': 'editor:join-lines'
