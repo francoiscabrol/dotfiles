@@ -32,6 +32,7 @@ Bundle 'pangloss/vim-javascript'
 Bundle 'jelera/vim-javascript-syntax'
 Bundle 'briancollins/vim-jst'
 Bundle 'groenewege/vim-less'
+Bundle 'hail2u/vim-css3-syntax'
 Bundle 'plasticboy/vim-markdown'
 Bundle 'terryma/vim-multiple-cursors'
 Bundle 'moll/vim-node'
@@ -48,6 +49,7 @@ Bundle 'vim-scripts/indentLine.vim'
 Bundle 'mileszs/ack.vim'
 Bundle 'trusktr/seti.vim'
 Bundle 'altercation/vim-colors-solarized'
+Bundle 'vim-scripts/vim-auto-save'
 
 " Eleminate delay with Esc
 set esckeys
