@@ -15,15 +15,16 @@ fi
 # For Linux
 #####
 if [[ "$OSTYPE" =~ ^linux ]]; then
-     alias pbcopy='xclip -selection clipboard'
-     alias open='gnome-open'
-     alias openIn='parallel -Xj1 --tty'
-     alias ack='ack-grep'
-     #
-     # Shortcut to folder
-     alias cdNote='cd /home/fcabrol/Dropbox/Notes/SchneiderElectric'
+    alias pbcopy='xclip -selection clipboard'
+    alias open='gnome-open'
+    alias openIn='parallel -Xj1 --tty'
+    alias ack='ack-grep'
+    #
+    # Shortcut to folder
+    alias cdnote='cd /home/fcabrol/Dropbox/Notes/SchneiderElectric'
+    alias cdprojects='cd /home/fcabrol/Workspace'
 
-     export PATH="/home/fcabrol/npm/bin:$PATH"
+    export PATH="/home/fcabrol/npm/bin:$PATH"
 fi
 
 #####

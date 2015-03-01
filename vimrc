@@ -32,6 +32,7 @@ Bundle 'pangloss/vim-javascript'
 Bundle 'jelera/vim-javascript-syntax'
 Bundle 'briancollins/vim-jst'
 Bundle 'groenewege/vim-less'
+Bundle 'hail2u/vim-css3-syntax'
 Bundle 'plasticboy/vim-markdown'
 Bundle 'terryma/vim-multiple-cursors'
 Bundle 'moll/vim-node'
@@ -48,6 +49,7 @@ Bundle 'vim-scripts/indentLine.vim'
 Bundle 'mileszs/ack.vim'
 Bundle 'trusktr/seti.vim'
 Bundle 'altercation/vim-colors-solarized'
+Bundle 'vim-scripts/vim-auto-save'
 
 " Eleminate delay with Esc
 set esckeys
@@ -57,6 +59,12 @@ syntax on
 
 colorscheme molokai
 " let g:molokai_original = 1
+
+set background=dark
+set t_Co=256
+let g:rehash256 = 1
+highlight Normal ctermbg=NONE
+highlight nonText ctermbg=NONE
 
 " turn indentation on
 filetype indent on
@@ -201,7 +209,7 @@ nmap <silent> <leader>/ :nohlsearch<CR>
 " the NERDTree panel, F3 will open file under cursor. So, I can use one button
 " to jump between buffer and NERDTree. (And F4 for preview because it's next
 " to F3)
-nnoremap <leader>n :call g:WorkaroundNERDTreeToggle()<CR>
+nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>nf :NERDTreeFind<CR>
 
 " Fix bug with nerdtree
@@ -212,6 +220,16 @@ function! g:WorkaroundNERDTreeToggle()
         :NERDTree
     endtry
 endfunction
+
+function! g:WorkaroundNERDTreeFind()
+    try
+        :NERDTreeFind
+    catch
+        :NERDTree
+    endtry
+endfunction
+
+
 
 " Tag bar
 nmap <F8> :TagbarToggle<CR>
