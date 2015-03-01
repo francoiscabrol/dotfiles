@@ -61,7 +61,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     export LEAP_HOME="/Users/francois/Applications/LeapSDK"
 
     ##Java##
-    export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home"
+    export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_31.jdk/Contents/Home"
     export PATH=$JAVA_HOME/bin:$PATH
 
     ##Vim##
