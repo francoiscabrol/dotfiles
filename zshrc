@@ -62,7 +62,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     export LEAP_HOME="/Users/francois/Applications/LeapSDK"
 
     ##Java##
-    export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home"
+    export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_31.jdk/Contents/Home"
     export PATH=$JAVA_HOME/bin:$PATH
 
     ##Vim##
@@ -88,4 +88,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     alias rtt='/Users/francois/Applications/Read2Text1/read2text'
     alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
 
+    # For note taking
+    nls() {                                                                                                                                                                                    ⏎
+        $EDITOR ~/Dropbox/notes/"$(grep --include="*.md" -R -l -i "$*" ~/Dropbox/notes | sed 's/\/Users\/francois\/Dropbox\/notes\///g' | percol)"
+    }
 fi

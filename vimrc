@@ -137,6 +137,7 @@ set expandtab
 
 " set tab size
 set tabstop=4
+au BufNewFile,BufRead *.scala set tabstop=2
 
 " the number of spaces inserted for a tab
 set shiftwidth=4
