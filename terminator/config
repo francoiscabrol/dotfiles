@@ -1,0 +1,22 @@
+[global_config]
+  title_transmit_bg_color = "#6eb529"
+[keybindings]
+  copy = <Primary>c
+  paste = <Primary>v
+[profiles]
+  [[default]]
+    use_system_font = False
+    font = Meslo LG M for Powerline 10
+    background_image = None
+    foreground_color = "#ffffff"
+    copy_on_selection = True
+    background_color = "#1b1d1e"
+[layouts]
+  [[default]]
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+    [[[window0]]]
+      type = Window
+      parent = ""
+[plugins]

@@ -25,6 +25,13 @@ if [[ "$OSTYPE" =~ ^linux ]]; then
     alias cdprojects='cd /home/fcabrol/Workspace'
 
     export PATH="/home/fcabrol/npm/bin:$PATH"
+    # For note taking
+    nls() {
+        evim ~/Dropbox/Notes/"$(grep --include="*.md" -R -l -i "$*" ~/Dropbox/Notes/ | sed 's/\/home\/fcabrol\/Dropbox\/Notes\///g' | percol)" &
+    }
+    nrm() {
+        rm ~/Dropbox/Notes/"$(grep --include="*.md" -R -l -i "$*" ~/Dropbox/Notes/ | sed 's/\/home\/fcabrol\/Dropbox\/Notes\///g' | percol)" &
+    }
 fi
 
 #####
@@ -93,3 +100,5 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         $EDITOR ~/Dropbox/notes/"$(grep --include="*.md" -R -l -i "$*" ~/Dropbox/notes | sed 's/\/Users\/francois\/Dropbox\/notes\///g' | percol)"
     }
 fi
+
+alias note='terminal_velocity'

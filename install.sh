@@ -42,8 +42,17 @@ done
 echo "Creating symlink to .atom in home directory."
 ln -s $dir/atom/* ~/.atom/
 
-# Sublime config install
-
-
+if [[ "$OSTYPE" =~ ^linux ]]; then
+    # install terminator
+    echo "Moving any existing dotfiles from ~/.config/terminator to $olddir"
+    mkdir -p $olddir/terminator
+    for file in $dir/terminator/*
+    do
+        name=$(basename $file)
+        mv ~/.config/terminator/$name $olddir/terminator/
+    done
+    echo "Creating symlink to .atom in home directory."
+    ln -s $dir/terminator/* ~/.config/terminator/
+fi
 
 #EOF

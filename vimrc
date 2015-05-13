@@ -8,7 +8,6 @@ Bundle 'Valloric/YouCompleteMe'
 Bundle 'Shutnik/jshint2.vim'
 Bundle 'tomasr/molokai'
 Bundle 'scrooloose/nerdtree'
-Bundle 'jistr/vim-nerdtree-tabs'
 " Bundle 'myusuf3/numbers.vim'
 Bundle 'aklt/plantuml-syntax'
 Bundle 'ktvoelker/sbt-vim'
@@ -211,25 +210,6 @@ nmap <silent> <leader>/ :nohlsearch<CR>
 " to F3)
 nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>nf :NERDTreeFind<CR>
-
-" Fix bug with nerdtree
-function! g:WorkaroundNERDTreeToggle()
-    try
-        :NERDTreeTabsToggle
-    catch
-        :NERDTree
-    endtry
-endfunction
-
-function! g:WorkaroundNERDTreeFind()
-    try
-        :NERDTreeFind
-    catch
-        :NERDTree
-    endtry
-endfunction
-
-
 
 " Tag bar
 nmap <F8> :TagbarToggle<CR>
