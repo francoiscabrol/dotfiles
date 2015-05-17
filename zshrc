@@ -15,11 +15,12 @@ fi
 # For Linux
 #####
 if [[ "$OSTYPE" =~ ^linux ]]; then
+    # Alias to applications
     alias pbcopy='xclip -selection clipboard'
     alias open='gnome-open'
     alias openIn='parallel -Xj1 --tty'
     alias ack='ack-grep'
-    #
+
     # Shortcut to folder
     alias cdnote='cd /home/fcabrol/Dropbox/Notes/SchneiderElectric'
     alias cdprojects='cd /home/fcabrol/Workspace'
@@ -55,7 +56,6 @@ fancy-ctrl-z () {
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
-alias cddotfiles='cd /Users/francois/Documents/dotfiles'
 
 #####
 # For Linux
@@ -88,7 +88,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     alias cdfrancoiscabrol.github.source='cd /Users/francois/Dropbox/Workspaces/francoiscabrol.github.source'
     alias cdnotes='cd /Users/francois/Dropbox/Notes'
     alias cdprojects='cd /Users/francois/Dropbox/Workspaces/'
-    alias cdtraining='cd /Users/francois/Movies/Tutorials/Entrainement'
+    alias cddotfiles='cd /Users/francois/Documents/dotfiles'
 
     ##Shortcuts to application
     alias subl='/Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl'
