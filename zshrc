@@ -10,6 +10,8 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
+source $HOME/.bash_aliases
+
 # Customize to your needs...
 #####
 # For Linux
@@ -32,6 +34,11 @@ if [[ "$OSTYPE" =~ ^linux ]]; then
     nrm() {
         rm ~/Dropbox/Notes/"$(grep --include="*.md" -R -l -i "$*" ~/Dropbox/Notes/ | sed 's/\/home\/fcabrol\/Dropbox\/Notes\///g' | percol)" &
     }
+    rfind() {
+        tree --prune -P "*$**"
+    }
+
+
 fi
 
 #####
@@ -55,7 +62,6 @@ fancy-ctrl-z () {
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
-alias cddotfiles='cd /Users/francois/Documents/dotfiles'
 
 #####
 # For Linux

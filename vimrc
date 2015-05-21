@@ -49,6 +49,7 @@ Bundle 'mileszs/ack.vim'
 Bundle 'trusktr/seti.vim'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'vim-scripts/vim-auto-save'
+Bundle 'peterhoeg/vim-qml'
 
 " Eleminate delay with Esc
 set esckeys
