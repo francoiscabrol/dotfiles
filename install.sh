@@ -42,6 +42,9 @@ done
 echo "Creating symlink to .atom in home directory."
 ln -s $dir/atom/* ~/.atom/
 
+#############
+# LINUX
+#############
 if [[ "$OSTYPE" =~ ^linux ]]; then
     # install terminator
     echo "Moving any existing dotfiles from ~/.config/terminator to $olddir"
@@ -51,8 +54,17 @@ if [[ "$OSTYPE" =~ ^linux ]]; then
         name=$(basename $file)
         mv ~/.config/terminator/$name $olddir/terminator/
     done
-    echo "Creating symlink to .atom in home directory."
+    echo "Creating symlink to .config/terminator in home directory."
     ln -s $dir/terminator/* ~/.config/terminator/
+fi
+
+
+#############
+# MACOS
+#############
+if [[ "$OSTYPE" == "darwin"* ]]; then
+
+
 fi
 
 #EOF
