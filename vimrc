@@ -96,6 +96,10 @@ set history=100
 " always show cursor
 set ruler
 
+" Set line highlighting
+set cursorline
+hi CursorLine ctermbg=black
+
 " show incomplete commands
 set showcmd
 
