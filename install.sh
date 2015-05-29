@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 ############################
 # .make.sh
 # This script creates symlinks from the home directory to any desired dotfiles in ~/dotfiles
@@ -9,7 +9,7 @@
 DOTVIM_HOME=`pwd`
 dir=$DOTVIM_HOME                              # dotfiles directory
 olddir=$DOTVIM_HOME/../dotfiles_old             # old dotfiles backup directory
-files="vimrc gvimrc vim tmux.conf tmuxline.snapshot zshrc zprofile zpreztorc"    # list of files/folders to symlink in homedir
+files="vimrc gvimrc vim tmux.conf tmuxline.snapshot zshrc zprofile zpreztorc gitconfig"    # list of files/folders to symlink in homedir
 
 ##########
 
@@ -56,6 +56,17 @@ if [[ "$OSTYPE" =~ ^linux ]]; then
     done
     echo "Creating symlink to .config/terminator in home directory."
     ln -s $dir/terminator/* ~/.config/terminator/
+
+    # install awesome
+    echo "Moving any existing dotfiles from ~/.config/awesome to $olddir"
+    mkdir -p $olddir/awesome
+    for file in $dir/awesome/*
+    do
+        name=$(basename $file)
+        mv ~/.config/awesome/$name $olddir/awesome/
+    done
+    echo "Creating symlink to .config/awesome in home directory."
+    ln -s $dir/awesome/* ~/.config/awesome/
 fi
 
 

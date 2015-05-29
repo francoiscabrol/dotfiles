@@ -95,7 +95,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     alias cdfrancoiscabrol.github.source='cd /Users/francois/Dropbox/Workspaces/francoiscabrol.github.source'
     alias cdnotes='cd /Users/francois/Dropbox/Notes'
     alias cdprojects='cd /Users/francois/Dropbox/Workspaces/'
-    alias cddotfiles='cd /Users/francois/Documents/dotfiles'
 
     ##Shortcuts to application
     alias subl='/Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl'

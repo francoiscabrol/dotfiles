@@ -1,5 +1,6 @@
 [global_config]
   title_transmit_bg_color = "#6eb529"
+  handle_size = 1
 [keybindings]
   copy = <Primary>c
   paste = <Primary>v
