@@ -236,7 +236,7 @@ let g:airline#extensions#tabline#enabled      = 1
 let g:airline_powerline_fonts                 = 1
 " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline_theme='powerlineish'
+let g:airline_theme='luna'
 set guifont=Meslo\ LG\ M\ for\ Powerline
 
 if $COLORTERM == 'gnome-terminal'
