@@ -149,6 +149,54 @@ mytasklist.buttons = awful.util.table.join(
                                               if client.focus then client.focus:raise() end
                                           end))
 
+local util = require('awful.util')
+
+-- Quick launch bar widget BEGINS
+function find_icon(icon_name, icon_dirs)
+    if string.sub(icon_name, 1, 1) == '/' then
+       if util.file_readable(icon_name) then
+          return icon_name
+       else
+          return nil
+       end
+    end
+    if icon_dirs then
+       for _, v in ipairs(icon_dirs) do
+          if util.file_readable(v .. "/" .. icon_name) then
+             return v .. '/' .. icon_name
+          end
+       end
+    end
+    return nil
+end
+
+function getValue(t, key)
+    _, _, res = string.find(t, key .. " *= *([^%c]+)%c")
+    return res
+end
+
+launchbar = { layout = awful.widget.layout.horizontal.leftright }
+filedir = "~/.config/awesome/launchbar/" -- Specify your folder with shortcuts here
+local items = {}
+local files = io.popen("ls " .. filedir .. "*.desktop")
+for f in files:lines() do
+    local t = io.open(f):read("*all")
+    table.insert(items, { image = find_icon(getValue(t,"Icon"),
+                                         { "/usr/share/icons/hicolor/22x22/apps" }),
+                       command = getValue(t,"Exec"),
+                       tooltip = getValue(t,"Name"),
+                       position = tonumber(getValue(t,"Position")) or 255 })
+end
+table.sort(items, function(a,b) return a.position < b.position end)
+for i = 1, table.getn(items) do
+    --     local txt = launchbar[i].tooltip
+    launchbar[i] = awful.widget.launcher(items[i])
+    --     local tt = awful.tooltip ({ objects = { launchbar[i] } })
+    --     tt:set_text (txt)
+    --     tt:set_timeout (0)
+end
+-- Quick launch bar widget ENDS
+
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
     mypromptbox[s] = awful.widget.prompt({ layout = awful.widget.layout.horizontal.leftright })
@@ -175,6 +223,7 @@ for s = 1, screen.count() do
         {
             mylauncher,
             mytaglist[s],
+            launchbar,
             mypromptbox[s],
             layout = awful.widget.layout.horizontal.leftright
         },
@@ -323,6 +372,7 @@ clientbuttons = awful.util.table.join(
 -- Set keys
 root.keys(globalkeys)
 -- }}}
+
 
 -- {{{ Rules
 awful.rules.rules = {

@@ -38,7 +38,7 @@ if [[ "$OSTYPE" =~ ^linux ]]; then
     rfind() {
         tree --prune -P "*$**"
     }
-
+    alias install_history="cat /var/log/apt/history.log | grep 'apt-get install'"
 
 fi
 

@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Terminal
+Exec=terminator
+Icon=/usr/share/icons/Vibrancy-Colors/apps/48/terminator.png
+Position=1
+#and so on
