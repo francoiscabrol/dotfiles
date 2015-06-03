@@ -11,7 +11,7 @@
     background_image = None
     foreground_color = "#ffffff"
     copy_on_selection = True
-    background_color = "#003048"
+    background_color = "#00172a"
 [layouts]
   [[default]]
     [[[child1]]]

@@ -30,7 +30,7 @@ if [[ "$OSTYPE" =~ ^linux ]]; then
     export PATH="/home/fcabrol/npm/bin:$PATH"
     # For note taking
     nls() {
-        evim ~/Dropbox/Notes/"$(grep --include="*.md" -R -l -i "$*" ~/Dropbox/Notes/ | sed 's/\/home\/fcabrol\/Dropbox\/Notes\///g' | percol)" &
+        vim ~/Dropbox/Notes/"$(grep --include="*.md" -R -l -i "$*" ~/Dropbox/Notes/ | sed 's/\/home\/fcabrol\/Dropbox\/Notes\///g' | percol)" &
     }
     nrm() {
         rm ~/Dropbox/Notes/"$(grep --include="*.md" -R -l -i "$*" ~/Dropbox/Notes/ | sed 's/\/home\/fcabrol\/Dropbox\/Notes\///g' | percol)" &
@@ -49,6 +49,12 @@ alias tk='tmux kill-session'
 
 # Grunt autocompletion
 eval "$(grunt --completion=zsh)"
+
+gcom () {
+    git stash
+    gco "$*"
+    git stash pop
+}
 
 # Terminal to vim shortcut
 fancy-ctrl-z () {
