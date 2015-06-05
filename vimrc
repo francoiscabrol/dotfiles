@@ -220,6 +220,18 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>
 " Delete buffer when they are hidden
 autocmd BufEnter * set bufhidden=delete
 
+" Move faster between split
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" Move lines
+"nnoremap <C-S-j> : m .+1<CR>
+"nnoremap <C-S-k> : m .-2<CR>
+"vnoremap <C-S-k> : m '<-2<CR>gv=gv
+"vnoremap <C-S-j> : m '>+1<CR>gv=gv
+
 " Airline:
 " Enable/disable displaying tab number in tabs mode. >
 let g:airline#extensions#tabline#show_tab_nr   = 0

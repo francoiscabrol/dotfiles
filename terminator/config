@@ -1,6 +1,7 @@
 [global_config]
   title_transmit_bg_color = "#6eb529"
   handle_size = 1
+  borderless = True
 [keybindings]
   copy = <Primary>c
   paste = <Primary>v
@@ -10,8 +11,9 @@
     font = Meslo LG M for Powerline 10
     background_image = None
     foreground_color = "#ffffff"
+    show_titlebar = False
     copy_on_selection = True
-    background_color = "#00172a"
+    cursor_blink = False
 [layouts]
   [[default]]
     [[[child1]]]
