@@ -3,16 +3,35 @@
   handle_size = 1
   borderless = True
 [keybindings]
-  copy = <Primary>c
+  reset = None
+  next_tab = None
   paste = <Primary>v
+  close_window = None
+  group_tab = None
+  hide_window = None
+  resize_left = None
+  new_terminator = None
+  full_screen = None
+  new_window = None
+  go_prev = None
+  move_tab_right = None
+  close_term = None
+  reset_clear = None
+  prev_tab = None
+  group_all = None
+  go_next = None
+  move_tab_left = None
+  copy = <Primary>c
+  resize_down = None
 [profiles]
   [[default]]
     use_system_font = False
     font = Meslo LG M for Powerline 10
     background_image = None
-    foreground_color = "#ffffff"
+    foreground_color = "#e5e8e9"
     show_titlebar = False
     copy_on_selection = True
+    background_color = "#002b36"
     cursor_blink = False
 [layouts]
   [[default]]

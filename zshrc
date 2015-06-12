@@ -114,3 +114,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 alias note='terminal_velocity'
+
+# Add id wd not exist, download it: curl -L https://github.com/mfaerevaag/wd/raw/master/install.sh | sh
+wd() {
+  . /home/fcabrol/bin/wd/wd.sh
+}

@@ -50,6 +50,9 @@ editor_cmd = terminal .. " -e '" .. editor
 
 -- Default apps
 awful.util.spawn_with_shell("synapse")
+awful.util.spawn_with_shell("dropbox start")
+awful.util.spawn_with_shell("nm-applet")
+
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -190,7 +193,7 @@ for s = 1, screen.count() do
 
     -- Widgets that are aligned to the left
     local left_layout = wibox.layout.fixed.horizontal()
-    left_layout:add(mylauncher)
+    -- left_layout:add(mylauncher)
     left_layout:add(mytaglist[s])
     left_layout:add(mypromptbox[s])
 
@@ -276,11 +279,11 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
     -- Manage window size
-    -- awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
-    -- awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)    end),
+    awful.key({ modkey,  "Shift"     }, "l",     function () awful.tag.incmwfact( 0.05)    end),
+    awful.key({ modkey,  "Shift"     }, "h",     function () awful.tag.incmwfact(-0.05)    end),
     -- Manage window position
-    awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1)      end),
-    awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1)      end),
+    -- awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1)      end),
+    -- awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1)      end),
     -- awful.key({ modkey, "Control" }, "h",     function () awful.tag.incncol( 1)         end),
     -- awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1)         end),
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
@@ -394,6 +397,8 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { class = "gimp" },
       properties = { floating = true } },
+    { rule = { class = "wiser-thermostat-hmi" },
+      properties = { floating = true , ontop = true} },
     -- Set Firefox to always map on tags number 2 of screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { tag = tags[1][2] } },
