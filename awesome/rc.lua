@@ -41,7 +41,7 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init("/usr/share/awesome/themes/default/theme.lua")
+beautiful.init("~/.config/awesome/themes-zen/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "terminator"
@@ -49,9 +49,22 @@ editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e '" .. editor
 
 -- Default apps
+function run_once(cmd)
+  findme = cmd
+  firstspace = cmd:find(" ")
+  if firstspace then
+    findme = cmd:sub(0, firstspace-1)
+  end
+  awful.util.spawn_with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
+end
+
 awful.util.spawn_with_shell("synapse")
 awful.util.spawn_with_shell("dropbox start")
-awful.util.spawn_with_shell("nm-applet")
+run_once("nm-applet")
+
+if screen.count() == 3 then
+    awful.util.spawn("sh /home/fcabrol/.screenlayout/2-external-screens.sh")
+end
 
 
 -- Default modkey.
@@ -91,7 +104,7 @@ end
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ "web", "work", "chat", "music", "other" }, s, layouts[2])
+    tags[s] = awful.tag({ "work", "chat", "music", "other" }, s, layouts[2])
 end
 -- }}}
 

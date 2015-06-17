@@ -168,7 +168,7 @@ set encoding=utf-8
 set autoread
 
 " map leader to SPACE
-let mapleader = "\<Space>"
+" let mapleader = "\<Space>"
 
 " Close file with SPACE + q
 nnoremap <Leader>q :q<CR>
@@ -207,7 +207,8 @@ nmap <silent> <leader>/ :nohlsearch<CR>
 " the NERDTree panel, F3 will open file under cursor. So, I can use one button
 " to jump between buffer and NERDTree. (And F4 for preview because it's next
 " to F3)
-nnoremap <leader>n :NERDTreeToggle<CR>
+" nnoremap <leader>n :NERDTreeToggle<CR>
+nnoremap <leader>n :NERDTree<CR>
 nnoremap <leader>nf :NERDTreeFind<CR>
 
 " Tag bar
@@ -221,16 +222,19 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>
 autocmd BufEnter * set bufhidden=delete
 
 " Move faster between split
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+" nnoremap <C-J> <C-W><C-J>
+" nnoremap <C-K> <C-W><C-K>
+" nnoremap <C-L> <C-W><C-L>
+" nnoremap <C-H> <C-W><C-H>
 
 " Move lines
-"nnoremap <C-S-j> : m .+1<CR>
-"nnoremap <C-S-k> : m .-2<CR>
-"vnoremap <C-S-k> : m '<-2<CR>gv=gv
-"vnoremap <C-S-j> : m '>+1<CR>gv=gv
+nnoremap <C-j> : m .+1<CR>
+nnoremap <C-k> : m .-2<CR>
+vnoremap <C-k> : m '<-2<CR>gv=gv
+vnoremap <C-j> : m '>+1<CR>gv=gv
+
+" Write a file with the sudo right
+cmap w!! w !sudo tee % >/dev/null
 
 " Airline:
 " Enable/disable displaying tab number in tabs mode. >
