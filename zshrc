@@ -23,21 +23,6 @@ if [[ "$OSTYPE" =~ ^linux ]]; then
     alias openIn='parallel -Xj1 --tty'
     alias ack='ack-grep'
 
-    # Shortcut to folder
-    alias cdnote='cd /home/fcabrol/Dropbox/Notes/SchneiderElectric'
-    alias cdprojects='cd /home/fcabrol/Workspace'
-
-    export PATH="/home/fcabrol/npm/bin:$PATH"
-    # For note taking
-    nls() {
-        vim ~/Dropbox/Notes/"$(grep --include="*.md" -R -l -i "$*" ~/Dropbox/Notes/ | sed 's/\/home\/fcabrol\/Dropbox\/Notes\///g' | percol)" &
-    }
-    nrm() {
-        rm ~/Dropbox/Notes/"$(grep --include="*.md" -R -l -i "$*" ~/Dropbox/Notes/ | sed 's/\/home\/fcabrol\/Dropbox\/Notes\///g' | percol)" &
-    }
-    rfind() {
-        tree --prune -P "*$**"
-    }
     alias install_history="cat /var/log/apt/history.log | grep 'apt-get install'"
 
 fi
@@ -69,9 +54,15 @@ fancy-ctrl-z () {
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
+acki() {
+    vim $((ack $@ | sed 's/:/ /g' | percol | awk '{print "+"$2 " " $1}') || '-c quit')
+}
+grepi() {
+    vim $((grep -n $@ | sed 's/:/ /g' | percol | awk '{print "+"$2 " " $1}') || '-c quit')
+}
 
 #####
-# For Linux
+# For MacOS
 #####
 if [[ "$OSTYPE" == "darwin"* ]]; then
 
