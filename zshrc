@@ -65,39 +65,6 @@ grepi() {
 # For MacOS
 #####
 if [[ "$OSTYPE" == "darwin"* ]]; then
-
-    ## Use local in priority
-    export PATH="/usr/local/bin:$PATH"
-
-    ##Leap motion sdk##
-    export LEAP_HOME="/Users/francois/Applications/LeapSDK"
-
-    ##Java##
-    export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_31.jdk/Contents/Home"
-    export PATH=$JAVA_HOME/bin:$PATH
-
-    ##Vim##
-    export PATH="/Users/francois/Applications/vim:$PATH"
-    export EDITOR='vim'
-
-    ##scala##
-    export SCALA_HOME='/Users/francois/Applications/scala-2.10.4'
-    export PATH=$SCALA_HOME/bin:$PATH
-
-    ##postgres##
-    export DATABASE_URL="jdbc:postgresql://localhost:5432/sharplinker?user=sharplinkeruser&password=mushroom"
-    export PGDATA=/usr/local/var/postgres
-
-    ##Shortcuts to folder
-    alias cdfrancoiscabrol.github.source='cd /Users/francois/Dropbox/Workspaces/francoiscabrol.github.source'
-    alias cdnotes='cd /Users/francois/Dropbox/Notes'
-    alias cdprojects='cd /Users/francois/Dropbox/Workspaces/'
-
-    ##Shortcuts to application
-    alias subl='/Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl'
-    alias rtt='/Users/francois/Applications/Read2Text1/read2text'
-    alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
-
     # For note taking
     nls() {                                                                                                                                                                                    ⏎
         $EDITOR ~/Dropbox/notes/"$(grep --include="*.md" -R -l -i "$*" ~/Dropbox/notes | sed 's/\/Users\/francois\/Dropbox\/notes\///g' | percol)"
