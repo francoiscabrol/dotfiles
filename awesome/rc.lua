@@ -60,6 +60,7 @@ end
 
 awful.util.spawn_with_shell("synapse")
 awful.util.spawn_with_shell("dropbox start")
+awful.util.spawn_with_shell("gnome-keyring-daemon --start")
 run_once("nm-applet")
 
 if screen.count() == 3 then
@@ -104,7 +105,7 @@ end
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ "work", "chat", "music", "other" }, s, layouts[2])
+    tags[s] = awful.tag({ "work 1", "work 2", "chat", "music", "other" }, s, layouts[2])
 end
 -- }}}
 

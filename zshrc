@@ -25,6 +25,8 @@ if [[ "$OSTYPE" =~ ^linux ]]; then
 
     alias install_history="cat /var/log/apt/history.log | grep 'apt-get install'"
 
+    source /etc/profile.d/vte.sh
+
 fi
 
 #####
@@ -77,3 +79,4 @@ alias note='terminal_velocity'
 wd() {
   . /home/fcabrol/bin/wd/wd.sh
 }
+fpath=(/home/fcabrol/bin/wd $fpath)

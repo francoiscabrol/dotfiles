@@ -22,7 +22,6 @@ Bundle 'Lokaltog/vim-easymotion'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-git'
 Bundle 'airblade/vim-gitgutter'
-Bundle 'endel/vim-github-colorscheme'
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'digitaltoad/vim-jade'
 Bundle 'pangloss/vim-javascript'
@@ -42,7 +41,6 @@ Bundle 'francoiscabrol/vim-grep'
 Bundle 'vim-scripts/indentLine.vim'
 Bundle 'mileszs/ack.vim'
 Bundle 'trusktr/seti.vim'
-Bundle 'altercation/vim-colors-solarized'
 Bundle 'peterhoeg/vim-qml'
 
 " Eleminate delay with Esc
@@ -141,7 +139,7 @@ au BufNewFile,BufRead *.scala set tabstop=2
 set shiftwidth=4
 
 " turn on line numbers
-set number
+"set number
 
 let g:vim_markdown_folding_disabled=1
 
@@ -180,6 +178,7 @@ nnoremap <Leader>w :w<CR>
 set clipboard+=unnamed
 " Copy & paste to system clipboard with <Space>p and <Space>y:
 vmap <Leader>y "+y
+vmap <C-c> "+y
 vmap <Leader>d "+d
 nmap <Leader>p "+p
 nmap <Leader>P "+P
@@ -221,12 +220,6 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>
 " Delete buffer when they are hidden
 autocmd BufEnter * set bufhidden=delete
 
-" Move faster between split
-" nnoremap <C-J> <C-W><C-J>
-" nnoremap <C-K> <C-W><C-K>
-" nnoremap <C-L> <C-W><C-L>
-" nnoremap <C-H> <C-W><C-H>
-
 " Move lines
 nnoremap <C-j> : m .+1<CR>
 nnoremap <C-k> : m .-2<CR>
@@ -252,6 +245,15 @@ set guifont=Meslo\ LG\ M\ for\ Powerline
 if $COLORTERM == 'gnome-terminal'
     set t_Co=256
 endif
+
+hi Visual guibg=Grey
+
+" tabs keys mapping
+nnoremap tm  :tabm<Space>
+nnoremap td  :tabclose<CR>
+nnoremap th :tabnext<CR>
+nnoremap tl :tabprev<CR>
+nnoremap tn :tabnew<CR>
 
 " Indent-guide plugin:
 let g:indent_guides_auto_colors = 0
