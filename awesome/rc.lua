@@ -446,8 +446,8 @@ client.connect_signal("manage", function (c, startup)
         end
     end
 
-    local titlebars_enabled = true
-    if titlebars_enabled and (c.type == "normal" or c.type == "dialog") and c.modal then
+    local titlebars_enabled = false
+    if titlebars_enabled and (c.type == "normal" or c.type == "dialog") then
         -- buttons for the titlebar
         local buttons = awful.util.table.join(
                 awful.button({ }, 1, function()
@@ -488,7 +488,12 @@ client.connect_signal("manage", function (c, startup)
         layout:set_right(right_layout)
         layout:set_middle(middle_layout)
 
-        awful.titlebar(c):set_widget(layout)
+        local titlebar_properties = {
+            bg_normal = beautiful.border_normal,
+            bg_focus = beautiful.border_focus
+        }
+
+        awful.titlebar(c, titlebar_properties):set_widget(layout)
     end
 end)
 
