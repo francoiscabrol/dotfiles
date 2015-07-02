@@ -53,7 +53,9 @@ colorscheme molokai
 " let g:molokai_original = 1
 
 set background=dark
-set t_Co=256
+if $COLORTERM == 'gnome-terminal'
+    set t_Co=256
+endif
 let g:rehash256 = 1
 highlight Normal ctermbg=NONE
 highlight nonText ctermbg=NONE
@@ -123,7 +125,7 @@ set nofoldenable
 " set nowrap
 
 " scroll with more context
-set scrolloff=10
+" set scrolloff=10
 
 " allow backspace to delete end of line, indent and start of line characters
 set backspace=indent,eol,start
@@ -189,7 +191,7 @@ vmap <Leader>P "+P
 map q: :q
 
 " don't show intro
-set shortmess+=I
+" set shortmess+=I
 
 " better splits
 set splitbelow
@@ -242,11 +244,8 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_theme='luna'
 set guifont=Meslo\ LG\ M\ for\ Powerline
 
-if $COLORTERM == 'gnome-terminal'
-    set t_Co=256
-endif
 
-hi Visual guibg=Grey
+hi Visual guibg=#002b36
 
 " tabs keys mapping
 nnoremap tm  :tabm<Space>

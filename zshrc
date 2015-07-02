@@ -80,3 +80,4 @@ wd() {
   . /home/fcabrol/bin/wd/wd.sh
 }
 fpath=(/home/fcabrol/bin/wd $fpath)
+rm -f ~/.zcompdump; compinit
