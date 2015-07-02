@@ -30,7 +30,7 @@
     background_image = None
     foreground_color = "#e5e8e9"
     copy_on_selection = True
-    background_color = "#00222a"
+    background_color = "#1a1a1a"
     cursor_blink = False
 [layouts]
   [[default]]
