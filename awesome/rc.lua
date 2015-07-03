@@ -58,9 +58,9 @@ function run_once(cmd)
   awful.util.spawn_with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
 end
 
-awful.util.spawn_with_shell("synapse")
+awful.util.spawn_with_shell("synapse --startup")
 awful.util.spawn_with_shell("dropbox start")
-awful.util.spawn_with_shell("gnome-keyring-daemon --start")
+-- awful.util.spawn_with_shell("gnome-keyring-daemon --start")
 run_once("nm-applet")
 
 if screen.count() == 3 then
@@ -80,15 +80,15 @@ local layouts =
 {
     awful.layout.suit.floating,
     awful.layout.suit.tile,
-    awful.layout.suit.tile.left,
-    awful.layout.suit.tile.bottom,
-    awful.layout.suit.tile.top,
+    --awful.layout.suit.tile.left,
+    --awful.layout.suit.tile.bottom,
+    --awful.layout.suit.tile.top,
     awful.layout.suit.fair,
-    awful.layout.suit.fair.horizontal,
-    awful.layout.suit.spiral,
-    awful.layout.suit.spiral.dwindle,
-    awful.layout.suit.max,
-    awful.layout.suit.magnifier
+    --awful.layout.suit.fair.horizontal,
+    --awful.layout.suit.spiral,
+    awful.layout.suit.spiral.dwindle
+    --awful.layout.suit.max,
+    --awful.layout.suit.magnifier
 }
 -- }}}
 
@@ -298,9 +298,9 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,  "Shift"     }, "l",     function () awful.tag.incmwfact( 0.05)    end),
     awful.key({ modkey,  "Shift"     }, "h",     function () awful.tag.incmwfact(-0.05)    end),
     -- Manage window position
-    -- awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1)      end),
+    -- awful.key({ modkey, "Control", "Shift"   }, "h",     function () awful.tag.incnmaster( 1)      end),
     -- awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1)      end),
-    -- awful.key({ modkey, "Control" }, "h",     function () awful.tag.incncol( 1)         end),
+    -- awful.key({ modkey, "Shift" }, "h",     function () awful.tag.incncol( 1)         end),
     -- awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1)         end),
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
@@ -329,11 +329,9 @@ clientkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
     awful.key({ modkey,           }, "o",      awful.client.movetoscreen                        ),
     awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end),
-    awful.key({ modkey,           }, "n",
+    awful.key({ modkey,           }, "v",
         function (c)
-            -- The client currently has the input focus, so it cannot be
-            -- minimized, since minimized clients can't have the focus.
-            c.minimized = true
+            c.maximized_vertical   = not c.maximized_vertical
         end),
     awful.key({ modkey,           }, "m",
         function (c)
@@ -417,6 +415,8 @@ awful.rules.rules = {
       properties = { floating = true , ontop = true} },
     { rule = { class = "cairo-dock" },
       properties = { floating = true } },
+    { rule = { name = "synapse" },
+      properties = { border_width = 0 } },
     -- Set Firefox to always map on tags number 2 of screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { tag = tags[1][2] } },
@@ -446,7 +446,7 @@ client.connect_signal("manage", function (c, startup)
         end
     end
 
-    local titlebars_enabled = false
+    local titlebars_enabled = true
     if titlebars_enabled and (c.type == "normal" or c.type == "dialog") then
         -- buttons for the titlebar
         local buttons = awful.util.table.join(
@@ -469,10 +469,10 @@ client.connect_signal("manage", function (c, startup)
 
         -- Widgets that are aligned to the right
         local right_layout = wibox.layout.fixed.horizontal()
-        right_layout:add(awful.titlebar.widget.floatingbutton(c))
-        right_layout:add(awful.titlebar.widget.maximizedbutton(c))
-        right_layout:add(awful.titlebar.widget.stickybutton(c))
-        right_layout:add(awful.titlebar.widget.ontopbutton(c))
+        --right_layout:add(awful.titlebar.widget.floatingbutton(c))
+        --right_layout:add(awful.titlebar.widget.maximizedbutton(c))
+        --right_layout:add(awful.titlebar.widget.stickybutton(c))
+        --right_layout:add(awful.titlebar.widget.ontopbutton(c))
         right_layout:add(awful.titlebar.widget.closebutton(c))
 
         -- The title goes in the middle
