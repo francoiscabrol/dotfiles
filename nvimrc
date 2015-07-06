@@ -4,11 +4,9 @@ set runtimepath+=~/.vim/bundle/Vundle.vim
 call vundle#rc()
 
 Bundle 'gmarik/Vundle.vim'
-Bundle 'Valloric/YouCompleteMe'
 Bundle 'Shutnik/jshint2.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'aklt/plantuml-syntax'
-Bundle 'ktvoelker/sbt-vim'
 Bundle 'ervandew/screen'
 Bundle 'scrooloose/syntastic'
 Bundle 'godlygeek/tabular'

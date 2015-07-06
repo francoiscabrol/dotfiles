@@ -60,6 +60,7 @@ end
 
 awful.util.spawn_with_shell("synapse --startup")
 awful.util.spawn_with_shell("dropbox start")
+awful.util.spawn_with_shell("xcompmgr -cF &")
 -- awful.util.spawn_with_shell("gnome-keyring-daemon --start")
 run_once("nm-applet")
 
@@ -305,6 +306,13 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
 
+    awful.key({ modkey, "Mod1" }, "i",  function () awful.client.moveresize( 20,  20, -40, -40) end),
+   awful.key({ modkey, "Mod1" }, "d", function () awful.client.moveresize(-20, -20,  40,  40) end),
+   awful.key({ modkey, "Mod1" }, "j",  function () awful.client.moveresize(  0,  20,   0,   0) end),
+   awful.key({ modkey, "Mod1" }, "k",    function () awful.client.moveresize(  0, -20,   0,   0) end),
+   awful.key({ modkey, "Mod1" }, "h",  function () awful.client.moveresize(-20,   0,   0,   0) end),
+   awful.key({ modkey, "Mod1" }, "l", function () awful.client.moveresize( 20,   0,   0,   0) end),
+
     awful.key({ modkey, "Control" }, "n", awful.client.restore),
 
     -- Prompt
@@ -484,19 +492,25 @@ client.connect_signal("manage", function (c, startup)
 
         -- Now bring it all together
         local layout = wibox.layout.align.horizontal()
-        layout:set_left(left_layout)
-        layout:set_right(right_layout)
+        layout:set_left(right_layout)
+        layout:set_right(left_layout)
         layout:set_middle(middle_layout)
 
         local titlebar_properties = {
-            bg_normal = beautiful.border_normal,
-            bg_focus = beautiful.border_focus
+            bg_normal = beautiful.titlebar_bg_normal,
+            bg_focus = beautiful.titlebar_bg_focus
         }
 
         awful.titlebar(c, titlebar_properties):set_widget(layout)
     end
 end)
 
-client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
-client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+client.connect_signal("focus", function(c)
+    c.border_color = beautiful.border_focus
+    c.opacity = 1
+end)
+client.connect_signal("unfocus", function(c)
+    c.border_color = beautiful.border_normal
+    c.opacity = 0.95
+end)
 -- }}}
