@@ -14,6 +14,9 @@ local menubar = require("menubar")
 -- Load Debian menu entries
 require("debian.menu")
 
+-- Chargement de Revelation
+require("revelation")
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -42,6 +45,7 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init("~/.config/awesome/themes-zen/theme.lua")
+--beautiful.init("~/.config/awesome/themes/multicolor/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "terminator"
@@ -119,9 +123,13 @@ myawesomemenu = {
    { "quit", awesome.quit }
 }
 
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "Debian", debian.menu.Debian_menu.Debian },
-                                    { "open terminal", terminal }
+mymainmenu = awful.menu({ items = {
+                                    { "Application", debian.menu.Debian_menu.Debian },
+                                    { "open terminal", terminal },
+                                   { "manual", terminal .. " -e 'man awesome'" },
+                                   { "edit config", editor_cmd .. " " .. awesome.conffile .. "'" },
+                                   { "restart", awesome.restart },
+                                   { "quit", awesome.quit }
                                   }
                         })
 
@@ -208,7 +216,7 @@ for s = 1, screen.count() do
 
     -- Widgets that are aligned to the left
     local left_layout = wibox.layout.fixed.horizontal()
-    -- left_layout:add(mylauncher)
+    left_layout:add(mylauncher)
     left_layout:add(mytaglist[s])
     left_layout:add(mypromptbox[s])
 
@@ -238,6 +246,7 @@ root.buttons(awful.util.table.join(
 
 -- {{{ Key bindings
 globalkeys = awful.util.table.join(
+    awful.key({ modkey }, "e", revelation.revelation),
     -- next/previous tag
     awful.key({ modkey,  }, "Left",   awful.tag.viewprev       ),
     awful.key({ modkey,  }, "Right",  awful.tag.viewnext       ),
