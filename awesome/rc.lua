@@ -14,9 +14,6 @@ local menubar = require("menubar")
 -- Load Debian menu entries
 require("debian.menu")
 
--- Chargement de Revelation
-require("revelation")
-
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -246,7 +243,6 @@ root.buttons(awful.util.table.join(
 
 -- {{{ Key bindings
 globalkeys = awful.util.table.join(
-    awful.key({ modkey }, "e", revelation.revelation),
     -- next/previous tag
     awful.key({ modkey,  }, "Left",   awful.tag.viewprev       ),
     awful.key({ modkey,  }, "Right",  awful.tag.viewnext       ),
