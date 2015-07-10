@@ -177,15 +177,14 @@ nnoremap <Leader>q :q<CR>
 nnoremap <Leader>w :w<CR>
 
 " use system clipboard
-set clipboard+=unnamed
+set clipboard^=unnamedplus
+
 " Copy & paste to system clipboard with <Space>p and <Space>y:
-vmap <Leader>y "+y
-vmap <C-c> "+y
-vmap <Leader>d "+d
-nmap <Leader>p "+p
-nmap <Leader>P "+P
-vmap <Leader>p "+p
-vmap <Leader>P "+P
+vmap <Leader>y "-y
+vmap <C-c> y
+vmap <Leader>d "-d
+nmap <Leader>p "-p
+nmap <Leader>P "-P
 
 " Stop that stupid window from popping up:
 map q: :q

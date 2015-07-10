@@ -61,12 +61,15 @@ end
 
 awful.util.spawn_with_shell("synapse --startup")
 awful.util.spawn_with_shell("dropbox start")
-awful.util.spawn_with_shell("xcompmgr -cF &")
+-- awful.util.spawn_with_shell("xcompmgr -cF &")
 -- awful.util.spawn_with_shell("gnome-keyring-daemon --start")
 run_once("nm-applet")
 
-if screen.count() == 3 then
-    awful.util.spawn("sh /home/fcabrol/.screenlayout/2-external-screens.sh")
+if screen.count() == 1 then
+--    awful.util.spawn_with_shell("sh /home/fcabrol/.screenlayout/1-screen.sh")
+end
+if screen.count() == 2 then
+--    awful.util.spawn_with_shell("sh /home/fcabrol/.screenlayout/1-external-screens.sh")
 end
 
 
@@ -273,7 +276,7 @@ globalkeys = awful.util.table.join(
         end),
 
 
-    awful.key({ modkey,           }, "w", function () mymainmenu:show() end),
+    --awful.key({ modkey,           }, "w", function () mymainmenu:show() end),
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx(  1)    end),
@@ -299,6 +302,8 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "b", function () awful.util.spawn("google-chrome") end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
+    awful.key({ modkey }, "w", function () awful.util.spawn("gnome-screensaver-command -l") end),
+
 
     -- Manage window size
     awful.key({ modkey,  "Shift"     }, "l",     function () awful.tag.incmwfact( 0.05)    end),
@@ -459,7 +464,7 @@ client.connect_signal("manage", function (c, startup)
         end
     end
 
-    local titlebars_enabled = true
+    local titlebars_enabled = false
     if titlebars_enabled and (c.type == "normal" or c.type == "dialog") then
         -- buttons for the titlebar
         local buttons = awful.util.table.join(

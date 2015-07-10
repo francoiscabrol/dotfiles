@@ -29,10 +29,10 @@
     use_system_font = False
     font = Meslo LG M for Powerline 10
     background_image = None
-    foreground_color = "#e5e8e9"
+    foreground_color = "#839496"
     show_titlebar = False
     copy_on_selection = True
-    background_color = "#0e0e0e"
+    background_color = "#002b36"
     cursor_blink = False
 [layouts]
   [[default]]
