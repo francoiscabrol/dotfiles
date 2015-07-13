@@ -178,6 +178,7 @@ nnoremap <Leader>w :w<CR>
 
 " use system clipboard
 set clipboard^=unnamedplus
+set clipboard^=unnamed
 
 " Copy & paste to system clipboard with <Space>p and <Space>y:
 vmap <Leader>y "-y

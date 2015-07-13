@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 ############################
 # .make.sh
 # This script creates symlinks from the home directory to any desired dotfiles in ~/dotfiles
@@ -6,76 +6,63 @@
 
 ########## Variables
 
-DOTVIM_HOME=`pwd`
-dir=$DOTVIM_HOME                              # dotfiles directory
-olddir=$DOTVIM_HOME/../dotfiles_old             # old dotfiles backup directory
-files="vimrc gvimrc vim nvimrc nvim tmux.conf tmuxline.snapshot zshrc zprofile zpreztorc gitconfig"    # list of files/folders to symlink in homedir
+DOT_DIR=`pwd`
+OLDDOT_DIR=$DOT_DIR/../dotfiles_old # old dotfiles backup directory
 
-##########
-
-# create dotfiles_old in homedir
-echo "Creating $olddir for backup of any existing dotfiles in ~"
-mkdir -p $olddir
-echo "...done"
-
-# change to the dotfiles directory
-echo "Changing to the $dir directory"
-cd $dir
-echo "...done"
-
-# move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks
-for file in $files; do
-    echo "Moving dotfile ~/.$file to $olddir/$file"
-    mv ~/.$file $olddir/$file
-    echo "Creating symlink of $dir/$file in the home directory ~/.$file"
-    ln -s $dir/$file ~/.$file
-done
-
-# install Atom
-echo "Moving any existing dotfiles from ~/.atom to $olddir"
-mkdir $olddir/atom
-for file in $dir/atom/*
-do
-	name=$(basename $file)
-	mv ~/.atom/$name $olddir/atom/
-done
-echo "Creating symlink to .atom in home directory."
-ln -s $dir/atom/* ~/.atom/
-
-#############
-# LINUX
-#############
-if [[ "$OSTYPE" =~ ^linux ]]; then
-    # install terminator
-    echo "Moving any existing dotfiles from ~/.config/terminator to $olddir"
-    mkdir -p $olddir/terminator
-    for file in $dir/terminator/*
-    do
-        name=$(basename $file)
-        mv ~/.config/terminator/$name $olddir/terminator/
-    done
-    echo "Creating symlink to .config/terminator in home directory."
-    ln -s $dir/terminator/* ~/.config/terminator/
-
-    # install awesome
-    echo "Moving any existing dotfiles from ~/.config/awesome to $olddir"
-    mkdir -p $olddir/awesome
-    for file in $dir/awesome/*
-    do
-        name=$(basename $file)
-        mv ~/.config/awesome/$name $olddir/awesome/
-    done
-    echo "Creating symlink to .config/awesome in home directory."
-    ln -s $dir/awesome/* ~/.config/awesome/
+OS_DIR="unix"
+if [[ $OSTYPE == *"linux"* ]]; then
+    OS_DIR="linux unix"
 fi
-
-
-#############
-# MACOS
-#############
 if [[ "$OSTYPE" == "darwin"* ]]; then
-
-
+    OS_DIR="macos unix"
 fi
 
-#EOF
+create_symlink() {
+    local src=$1
+    local dest=$2
+    local copy=$3
+    echo "Copy from $dest to $copy"
+    mv $dest $copy
+    echo "Create symlink from $src to $dest"
+    ln -s $src $dest
+}
+
+createFolder() {
+    local src=$1
+    echo "Create folder if not exist $src"
+    mkdir -p $src
+}
+
+# create dotfiles_old in homedir for backup
+mkdir -p $OLDDOT_DIR
+
+# For each os
+for os in $OS_DIR; do
+    os_dir="$DOT_DIR/$os"
+    files="$os_dir/files"
+    # Create symlinks for files
+    for f in `ls -a $files`; do
+        src="$files/$f"
+        dest="$HOME/$f"
+        copy="$OLDDOT_DIR/$f"
+        create_symlink $src $dest $copy
+    done
+    recurciveFolders="$os_dir/recurcives"
+    for f in `find $recurciveFolders -type d`; do
+        src="$f"
+        basename=${src/$recurciveFolders/}
+        dest="$HOME$basename"
+        copy="$OLDDOT_DIR$basename"
+        createFolder $dest
+        createFolder $copy
+    done
+    for f in `find $recurciveFolders -type f`; do
+        src="$f"
+        basename=${src/$recurciveFolders/}
+        dest="$HOME$basename"
+        copy="$OLDDOT_DIR$basename"
+        create_symlink $src $dest $copy
+    done
+
+done
+

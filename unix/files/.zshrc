@@ -79,5 +79,5 @@ alias note='terminal_velocity'
 wd() {
   . $HOME/bin/wd/wd.sh
 }
-fpath=(/home/fcabrol/bin/wd $fpath)
+fpath=($HOME/bin/wd $fpath)
 rm -f ~/.zcompdump; compinit

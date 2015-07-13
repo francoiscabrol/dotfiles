@@ -1,11 +1,4 @@
-# Atom
-atom/config.cson
-
-# Sublime
-sublime/User/*
-!sublime/User/*.sublime*
-
 # Vim
 *.swp
-vim/bundle/*
-!vim/bundle/Vundle.vim
+unix/files/.vim/bundle/*
+!unix/files/.vim/bundle/Vundle.vim

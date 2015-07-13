@@ -1,0 +1,30 @@
+"*":
+  "exception-reporting":
+    userId: "a86e8eda-c590-f364-2bf9-fc3696b86a0a"
+  welcome:
+    showOnStartup: false
+  editor:
+    fontSize: 18
+    showInvisibles: true
+    showIndentGuide: true
+    softWrap: true
+    softWrapAtPreferredLineLength: true
+    scrollPastEnd: true
+    invisibles:
+      {}
+  "autoclose-html":
+    {}
+  linter:
+    {}
+  core:
+    followSymlinks: true
+    disabledPackages: [
+      "highlight-line"
+    ]
+    themes: [
+      "seti-ui"
+      "seti-syntax"
+    ]
+    audioBeep: false
+  "highlight-line":
+    enableBackgroundColor: false
