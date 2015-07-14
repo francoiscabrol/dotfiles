@@ -41,7 +41,8 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init("~/.config/awesome/themes-zen/theme.lua")
+--beautiful.init("~/.config/awesome/themes-zen/theme.lua")
+beautiful.init("~/.config/awesome/themes/blackburn/theme.lua")
 --beautiful.init("~/.config/awesome/themes/multicolor/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
