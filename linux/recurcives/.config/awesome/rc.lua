@@ -62,7 +62,7 @@ end
 
 awful.util.spawn_with_shell("synapse --startup")
 awful.util.spawn_with_shell("dropbox start")
--- awful.util.spawn_with_shell("xcompmgr -cF &")
+awful.util.spawn_with_shell("xcompmgr  -CcfF -D2 &")
 -- awful.util.spawn_with_shell("gnome-keyring-daemon --start")
 run_once("nm-applet")
 
@@ -518,7 +518,7 @@ end)
 
 client.connect_signal("focus", function(c)
     c.border_color = beautiful.border_focus
-    c.opacity = 1
+    c.opacity = 0.95
 end)
 client.connect_signal("unfocus", function(c)
     c.border_color = beautiful.border_normal
