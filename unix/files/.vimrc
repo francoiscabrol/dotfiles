@@ -99,6 +99,7 @@ set showcmd
 
 " incremental searching
 set incsearch
+noremap <C-f> :copen<CR>:Ack -Qi
 
 " highlight search
 set hlsearch
@@ -203,6 +204,11 @@ nmap <silent> <leader>/ :nohlsearch<CR>
 " eclude highlighting numbers for several plug-ins
 "let g:numbers_exclude = ['minibufexpl', 'nerdtree', 'unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m']
 "nnoremap <F2> :NumbersToggle<CR>
+
+" Make nerdtree look nice
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+let g:NERDTreeWinSize = 30
 
 " F3 will open NERDTree panel and highlight current file. And when you're in
 " the NERDTree panel, F3 will open file under cursor. So, I can use one button

@@ -21,12 +21,8 @@ if [[ "$OSTYPE" =~ ^linux ]]; then
     alias pbcopy='xclip -selection clipboard'
     alias open='gnome-open'
     alias openIn='parallel -Xj1 --tty'
-    alias ack='ack-grep'
 
     alias install_history="cat /var/log/apt/history.log | grep 'apt-get install'"
-
-    source /etc/profile.d/vte.sh
-
 fi
 
 #####
