@@ -285,10 +285,10 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"   }, "Up", function () awful.client.swap.byidx(  1)    end),
     awful.key({ modkey, "Shift"   }, "Down", function () awful.client.swap.byidx( -1)    end),
     -- Focus to next/previous screen
-    awful.key({ modkey, "Control" }, "l", function () awful.screen.focus_relative( 1) end),
-    awful.key({ modkey, "Control" }, "h", function () awful.screen.focus_relative(-1) end),
-    awful.key({ modkey, "Control" }, "Right", function () awful.screen.focus_relative( 1) end),
-    awful.key({ modkey, "Control" }, "Left", function () awful.screen.focus_relative(-1) end),
+    --awful.key({ modkey, "Tab" }, "l", function () awful.screen.focus_relative( 1) end),
+    --awful.key({ modkey, "Tab" }, "h", function () awful.screen.focus_relative(-1) end),
+    --awful.key({ modkey, "Tab" }, "Right", function () awful.screen.focus_relative( 1) end),
+    --awful.key({ modkey, "Tab" }, "Left", function () awful.screen.focus_relative(-1) end),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
     awful.key({ modkey,           }, "Tab",
         function ()
@@ -317,12 +317,14 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
 
-    awful.key({ modkey, "Mod1" }, "i",  function () awful.client.moveresize( 20,  20, -40, -40) end),
-   awful.key({ modkey, "Mod1" }, "d", function () awful.client.moveresize(-20, -20,  40,  40) end),
-   awful.key({ modkey, "Mod1" }, "j",  function () awful.client.moveresize(  0,  20,   0,   0) end),
-   awful.key({ modkey, "Mod1" }, "k",    function () awful.client.moveresize(  0, -20,   0,   0) end),
-   awful.key({ modkey, "Mod1" }, "h",  function () awful.client.moveresize(-20,   0,   0,   0) end),
-   awful.key({ modkey, "Mod1" }, "l", function () awful.client.moveresize( 20,   0,   0,   0) end),
+    awful.key({ modkey, "Mod1" }, "l",  function () awful.client.moveresize( 0, 0, 40, 0) end),
+    awful.key({ modkey, "Mod1" }, "h",  function () awful.client.moveresize( 0, 0, -40, 0) end),
+    awful.key({ modkey, "Mod1" }, "j",  function () awful.client.moveresize( 0, 0, 0, -40) end),
+    awful.key({ modkey, "Mod1" }, "k",  function () awful.client.moveresize( 0, 0, 0, 40) end),
+   awful.key({ modkey, "Control" }, "j",  function () awful.client.moveresize(  0,  60,   0,   0) end),
+   awful.key({ modkey, "Control" }, "k",    function () awful.client.moveresize(  0, -60,   0,   0) end),
+   awful.key({ modkey, "Control" }, "h",  function () awful.client.moveresize(-60,   0,   0,   0) end),
+   awful.key({ modkey, "Control" }, "l", function () awful.client.moveresize( 60,   0,   0,   0) end),
 
     awful.key({ modkey, "Control" }, "n", awful.client.restore),
 
@@ -337,7 +339,12 @@ globalkeys = awful.util.table.join(
                   awful.util.getdir("cache") .. "/history_eval")
               end),
     -- Menubar
-    awful.key({ modkey }, "p", function() menubar.show() end)
+    awful.key({ modkey }, "p", function() menubar.show() end),
+    awful.key({ modkey }, "s", function ()
+        -- If you want to always position the menu on the same place set coordinates
+        awful.menu.menu_keys.down = { "Down", "Alt_L" }
+        awful.menu:clients({theme = { width = 250 }}, { keygrabber=true, coords={x=525, y=330} })
+    end)
 )
 
 clientkeys = awful.util.table.join(

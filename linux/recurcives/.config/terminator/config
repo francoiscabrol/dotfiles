@@ -32,7 +32,7 @@
     foreground_color = "#839496"
     show_titlebar = False
     copy_on_selection = True
-    background_color = "#002b36"
+    background_color = "#fffdee"
     cursor_blink = False
 [layouts]
   [[default]]

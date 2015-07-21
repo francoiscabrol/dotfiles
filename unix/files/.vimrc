@@ -42,6 +42,7 @@ Bundle 'mileszs/ack.vim'
 Bundle 'trusktr/seti.vim'
 Bundle 'peterhoeg/vim-qml'
 Bundle 'mhinz/vim-startify'
+Bundle 'NLKNguyen/papercolor-theme'
 
 " Eleminate delay with Esc
 set esckeys
@@ -49,10 +50,9 @@ set esckeys
 " switch syntax highlighting on, when the terminal has colors
 syntax on
 
-colorscheme molokai
-" let g:molokai_original = 1
-
-set background=dark
+"================ Colors and theme ========================
+colorscheme PaperColor
+set background=light
 if $COLORTERM == 'gnome-terminal'
     set t_Co=256
 endif
@@ -92,7 +92,7 @@ set ruler
 
 " Set line highlighting
 set cursorline
-hi CursorLine ctermbg=black
+hi CursorLine ctermbg=lightgrey
 
 " show incomplete commands
 set showcmd
@@ -125,8 +125,9 @@ set nofoldenable
 " turn word wrap off
 " set nowrap
 
-" scroll with more context
-" set scrolloff=10
+" ================ Completion =======================
+set wildmode=list:longest
+set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
 
 " allow backspace to delete end of line, indent and start of line characters
 set backspace=indent,eol,start
