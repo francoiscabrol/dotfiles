@@ -1,3 +1,33 @@
+" use vim, not vi api
+set nocompatible
+
+" use mouse
+set mouse=a
+
+" no backup files
+set nobackup
+
+" no write backup
+set nowritebackup
+
+" no swap file
+set noswapfile
+
+" utf encoding
+set encoding=utf-8
+
+" autoload files that have changed outside of vim
+set autoread
+
+" get rid of the delay when pressing O (for example)
+" http://stackoverflow.com/questions/2158516/vim-delay-before-o-opens-a-new-line
+set timeout timeoutlen=200 ttimeoutlen=200
+
+" No visual error or sound
+set noerrorbells visualbell t_vb=
+autocmd GUIEnter * set visualbell t_vb=
+
+"================ Plug-ins ========================
 " Required Vundle setup
 filetype off
 set runtimepath+=~/.vim/bundle/Vundle.vim
@@ -44,11 +74,22 @@ Bundle 'peterhoeg/vim-qml'
 Bundle 'mhinz/vim-startify'
 Bundle 'NLKNguyen/papercolor-theme'
 
+"================ Shortcuts =======================
 " Eleminate delay with Esc
 set esckeys
 
-" switch syntax highlighting on, when the terminal has colors
+"================ Syntax highlighting =======================
 syntax on
+
+" specify syntax highlighting for specific files
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+
+" Set line highlighting
+set cursorline
+hi CursorLine ctermbg=lightgrey
+
+" always show cursor
+set ruler
 
 "================ Colors and theme ========================
 colorscheme PaperColor
@@ -66,40 +107,13 @@ filetype indent on
 " enable filetype plugins
 filetype plugin on
 
-" specify syntax highlighting for specific files
-autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+"================ Search  =======================
 
-" use vim, not vi api
-set nocompatible
-
-" use mouse
-set mouse=a
-
-" no backup files
-set nobackup
-
-" no write backup
-set nowritebackup
-
-" no swap file
-set noswapfile
-
-" command history
-set history=100
-
-" always show cursor
-set ruler
-
-" Set line highlighting
-set cursorline
-hi CursorLine ctermbg=lightgrey
-
-" show incomplete commands
-set showcmd
+" Set find in path key mapping
+noremap <C-f> :copen<CR>:Ack -Qi '
 
 " incremental searching
 set incsearch
-noremap <C-f> :copen<CR>:Ack -Qi
 
 " highlight search
 set hlsearch
@@ -110,74 +124,84 @@ set smartcase
 " make sure any searches /searchPhrase doesn't need the \c escape character
 set ignorecase
 
-" No visual error or sound
-set noerrorbells visualbell t_vb=
-autocmd GUIEnter * set visualbell t_vb=
+"================ Buffers =======================
 
 " a buffer is marked as ‘hidden’ if it has unsaved changes, and it is not currently loaded in a window
 " if you try and quit Vim while there are hidden buffers, you will raise an error:
 " E162 : No write since last change for buffer “a.txt”
 "set hidden
 
+"================ Folding =======================
 " disable folding because it is evil
 set nofoldenable
+
+let g:vim_markdown_folding_disabled=1
 
 " turn word wrap off
 " set nowrap
 
-" ================ Completion =======================
+" ================ Command =======================
+" command history
+set history=100
+
+" show incomplete commands
+set showcmd
+
+" config command completion
 set wildmode=list:longest
 set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
 
 " allow backspace to delete end of line, indent and start of line characters
 set backspace=indent,eol,start
 
+" ================ Tabulation =======================
 " convert tabs to spaces
 set expandtab
 
 " set tab size
 set tabstop=4
-au BufNewFile,BufRead *.scala set tabstop=2
 
 " the number of spaces inserted for a tab
 set shiftwidth=4
 
+" Set exception for Scala
+au BufNewFile,BufRead *.scala set tabstop=2
+
 " turn on line numbers
 "set number
 
-let g:vim_markdown_folding_disabled=1
-
+" ================ Edition rules =======================
 " highlight tailing whitespace
 set list listchars=tab:\ \ ,trail:·
 
-" get rid of the delay when pressing O (for example)
-" http://stackoverflow.com/questions/2158516/vim-delay-before-o-opens-a-new-line
-set timeout timeoutlen=200 ttimeoutlen=200
-
+" ================ Status line =======================
 " always show status bar
 set laststatus=2
 
 " set the status line to something useful
-set statusline=%f\ %=L:%l/%L\ %c\ (%p%%)
+set statusline=\ %f%m%r%h%w\ %=%({%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\")}%k\|%Y}%)\ %([%l,%v][%p%%]\ %)
 
+" ================ vim GUI =======================
 " hide the toolbar
 set guioptions-=T
 
-" utf encoding
-set encoding=utf-8
-
-" autoload files that have changed outside of vim
-set autoread
-
-" map leader to SPACE
-" let mapleader = "\<Space>"
-
+" ================ Alias =======================
 " Close file with SPACE + q
 nnoremap <Leader>q :q<CR>
 
 " Save file with SPACE + w
 nnoremap <Leader>w :w<CR>
 
+" Stop that stupid window from popping up:
+map q: :q
+
+" Move lines
+nnoremap <C-j> : m .+1<CR>
+nnoremap <C-k> : m .-2<CR>
+vnoremap <C-k> : m '<-2<CR>gv=gv
+vnoremap <C-j> : m '>+1<CR>gv=gv
+
+" ================ Clipboard =======================
 " use system clipboard
 set clipboard^=unnamedplus
 set clipboard^=unnamed
@@ -189,12 +213,10 @@ vmap <Leader>d "-d
 nmap <Leader>p "-p
 nmap <Leader>P "-P
 
-" Stop that stupid window from popping up:
-map q: :q
-
 " don't show intro
-" set shortmess+=I
+"set shortmess+=I
 
+" ================ Split =======================
 " better splits
 set splitbelow
 set splitright
@@ -202,10 +224,7 @@ set splitright
 " Tired of clearing highlighted searches by searching for “ldsfhjkhgakjks”? Use this:
 nmap <silent> <leader>/ :nohlsearch<CR>
 
-" eclude highlighting numbers for several plug-ins
-"let g:numbers_exclude = ['minibufexpl', 'nerdtree', 'unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m']
-"nnoremap <F2> :NumbersToggle<CR>
-
+" ================ NERDTree =======================
 " Make nerdtree look nice
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
@@ -216,24 +235,18 @@ let g:NERDTreeWinSize = 30
 " to jump between buffer and NERDTree. (And F4 for preview because it's next
 " to F3)
 " nnoremap <leader>n :NERDTreeToggle<CR>
-nnoremap <leader>n :NERDTree<CR>
+nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>nf :NERDTreeFind<CR>
 
-" Tag bar
-nmap <F8> :TagbarToggle<CR>
+" ================ TagBar=======================
+nmap <leader>t :TagbarToggle<CR>
 
 " Quickly edit/reload the vimrc file
-nmap <silent> <leader>ev :e $MYVIMRC<CR>
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
+nmap <silent> <leader>e :e $MYVIMRC<CR>
+nmap <silent> <leader>s :so $MYVIMRC<CR>
 
 " Delete buffer when they are hidden
 autocmd BufEnter * set bufhidden=delete
-
-" Move lines
-nnoremap <C-j> : m .+1<CR>
-nnoremap <C-k> : m .-2<CR>
-vnoremap <C-k> : m '<-2<CR>gv=gv
-vnoremap <C-j> : m '>+1<CR>gv=gv
 
 " Write a file with the sudo right
 cmap w!! w !sudo tee % >/dev/null
