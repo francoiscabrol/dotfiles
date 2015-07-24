@@ -175,6 +175,14 @@ set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
 " allow backspace to delete end of line, indent and start of line characters
 set backspace=indent,eol,start
 
+" ================ Startify =======================
+map <leader>s :Startify<CR>
+autocmd User Startified setlocal buftype=
+let g:ctrlp_reuse_window = 'startify'
+let g:startify_session_persistence = 1
+let g:startify_change_to_dir = 1
+let g:startify_change_to_vcs_root = 1
+
 " ================ Tabulation =======================
 " convert tabs to spaces
 set expandtab
@@ -269,7 +277,7 @@ nmap <leader>t :TagbarToggle<CR>
 
 " Quickly edit/reload the vimrc file
 nmap <silent> <leader>e :e $MYVIMRC<CR>
-nmap <silent> <leader>s :so $MYVIMRC<CR>
+nmap <silent> <leader>r :so $MYVIMRC<CR>
 
 " Delete buffer when they are hidden
 autocmd BufEnter * set bufhidden=delete
