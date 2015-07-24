@@ -29,6 +29,7 @@ fi
 # For all systems
 #####
 alias tk='tmux kill-session'
+alias tmux='tmux -2'
 
 # Grunt autocompletion
 eval "$(grunt --completion=zsh)"

@@ -73,6 +73,11 @@ Bundle 'trusktr/seti.vim'
 Bundle 'peterhoeg/vim-qml'
 Bundle 'mhinz/vim-startify'
 Bundle 'NLKNguyen/papercolor-theme'
+Bundle 'tomtom/tcomment_vim'
+Bundle 'tpope/vim-surround'
+
+" enable filetype plugins
+filetype plugin on
 
 "================ Shortcuts =======================
 " Eleminate delay with Esc
@@ -101,11 +106,27 @@ let g:rehash256 = 1
 highlight Normal ctermbg=NONE
 highlight nonText ctermbg=NONE
 
+hi Visual guibg=#002b36
+
+"================ Indentation ========================
 " turn indentation on
 filetype indent on
 
-" enable filetype plugins
-filetype plugin on
+" indend / deindent after selecting the text with (⇧ v), (.) to repeat.
+vnoremap <Tab> >
+vnoremap <S-Tab> <
+
+" Indent-guide plugin:
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
+
+"================ Comments =======================
+" comment / decomment & normal comment behavior
+vmap <C-m> gc
+nmap <C-m> <S-v>gc
+" Disable tComment to escape some entities
+let g:tcomment#replacements_xml={}
 
 "================ Search  =======================
 
@@ -208,10 +229,15 @@ set clipboard^=unnamed
 
 " Copy & paste to system clipboard with <Space>p and <Space>y:
 vmap <Leader>y "-y
-vmap <C-c> y
 vmap <Leader>d "-d
 nmap <Leader>p "-p
 nmap <Leader>P "-P
+" Cut, Paste, Copy
+vmap <C-x> d
+map <C-x> dd
+map <C-v> P
+vmap <C-c> y
+nmap <C-c> yy
 
 " don't show intro
 "set shortmess+=I
@@ -264,20 +290,28 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_theme='luna'
 set guifont=Meslo\ LG\ M\ for\ Powerline
 
+" enable/disable syntastic integration
+let g:airline#extensions#syntastic#enabled = 1
 
-hi Visual guibg=#002b36
+" ================ Syntastic =======================
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+
 
 " tabs keys mapping
+nnoremap <C-t>  :tabnew<CR>
+inoremap <C-t>  <Esc>:tabnew<CR>i
 nnoremap tm  :tabm<Space>
 nnoremap td  :tabclose<CR>
 nnoremap th :tabnext<CR>
 nnoremap tl :tabprev<CR>
 nnoremap tn :tabnew<CR>
-
-" Indent-guide plugin:
-let g:indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
 
 " jump to last cursor
 autocmd BufReadPost *

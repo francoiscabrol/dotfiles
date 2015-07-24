@@ -6,7 +6,7 @@
 [keybindings]
   reset = None
   next_tab = None
-  paste = <Primary>v
+  paste = <Primary><Shift>v
   close_window = None
   group_tab = None
   hide_window = None
@@ -22,7 +22,7 @@
   group_all = None
   go_next = None
   move_tab_left = None
-  copy = <Primary>c
+  copy = <Primary><Shift>c
   resize_down = None
 [profiles]
   [[default]]
