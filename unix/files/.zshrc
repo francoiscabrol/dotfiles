@@ -23,6 +23,17 @@ if [[ "$OSTYPE" =~ ^linux ]]; then
     alias openIn='parallel -Xj1 --tty'
 
     alias install_history="cat /var/log/apt/history.log | grep 'apt-get install'"
+
+    # Automatically change the directory in bash after closing ranger
+    function ranger-cd {
+        tempfile="$(mktemp -t tmp.XXXXXX)"
+        /usr/local/bin/ranger --choosedir="$tempfile" "${@:-$(pwd)}"
+        test -f "$tempfile" &&
+        if [ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]; then
+            cd -- "$(cat "$tempfile")"
+        fi
+        rm -f -- "$tempfile"
+    }
 fi
 
 #####

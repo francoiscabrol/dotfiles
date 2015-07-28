@@ -73,7 +73,7 @@ Bundle 'trusktr/seti.vim'
 Bundle 'peterhoeg/vim-qml'
 Bundle 'mhinz/vim-startify'
 Bundle 'NLKNguyen/papercolor-theme'
-Bundle 'tomtom/tcomment_vim'
+Bundle 'scrooloose/nerdcommenter'
 Bundle 'tpope/vim-surround'
 
 " enable filetype plugins
@@ -122,11 +122,7 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
 
 "================ Comments =======================
-" comment / decomment & normal comment behavior
-vmap <C-m> gc
-nmap <C-m> <S-v>gc
-" Disable tComment to escape some entities
-let g:tcomment#replacements_xml={}
+
 
 "================ Search  =======================
 
