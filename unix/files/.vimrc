@@ -179,6 +179,9 @@ let g:startify_session_persistence = 1
 let g:startify_change_to_dir = 1
 let g:startify_change_to_vcs_root = 1
 
+" ================ CtrP =======================
+nmap <C-b> :CtrlPBuffer<CR>
+
 " ================ Tabulation =======================
 " convert tabs to spaces
 set expandtab
@@ -278,7 +281,7 @@ call system('rm /tmp/chosenfile')
 endif
 redraw!
 endfun
-map <leader>r :call RangerChooser()<CR>
+map <leader>f :call RangerChooser()<CR>
 
 " ================ TagBar=======================
 nmap <leader>t :TagbarToggle<CR>
@@ -325,8 +328,8 @@ nnoremap <C-t>  :tabnew<CR>
 inoremap <C-t>  <Esc>:tabnew<CR>i
 nnoremap tm  :tabm<Space>
 nnoremap td  :tabclose<CR>
-nnoremap th :tabnext<CR>
-nnoremap tl :tabprev<CR>
+nnoremap tl :tabnext<CR>
+nnoremap th :tabprev<CR>
 nnoremap tn :tabnew<CR>
 
 " jump to last cursor

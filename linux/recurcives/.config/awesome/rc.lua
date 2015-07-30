@@ -5,6 +5,7 @@ awful.rules = require("awful.rules")
 require("awful.autofocus")
 -- Widget and layout library
 local wibox = require("wibox")
+local APW = require("apw/widget")
 -- Theme handling library
 local beautiful = require("beautiful")
 -- Notification library
@@ -195,6 +196,19 @@ mytasklist.buttons = awful.util.table.join(
                                               if client.focus then client.focus:raise() end
                                           end))
 
+-- Battery widget
+batterywidget = wibox.widget.textbox()
+batterywidget:set_text(" | Battery | ")
+batterywidgettimer = timer({ timeout = 5 })
+batterywidgettimer:connect_signal("timeout",
+  function()
+    fh = assert(io.popen("acpi | cut -d, -f 2,3 -", "r"))
+    batterywidget:set_text(" |" .. fh:read("*l") .. " | ")
+    fh:close()
+  end
+)
+batterywidgettimer:start()
+
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
     mypromptbox[s] = awful.widget.prompt()
@@ -225,6 +239,8 @@ for s = 1, screen.count() do
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(mytextclock)
+    right_layout:add(APW)
+    right_layout:add(batterywidget)
     right_layout:add(mylayoutbox[s])
 
     -- Now bring it all together (with the tasklist in the middle)
@@ -285,6 +301,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"   }, "Up", function () awful.client.swap.byidx(  1)    end),
     awful.key({ modkey, "Shift"   }, "Down", function () awful.client.swap.byidx( -1)    end),
     -- Focus to next/previous screen
+    awful.key({ modkey }, "e", function () awful.screen.focus_relative( 1) end),
     --awful.key({ modkey, "Tab" }, "l", function () awful.screen.focus_relative( 1) end),
     --awful.key({ modkey, "Tab" }, "h", function () awful.screen.focus_relative(-1) end),
     --awful.key({ modkey, "Tab" }, "Right", function () awful.screen.focus_relative( 1) end),
@@ -301,6 +318,8 @@ globalkeys = awful.util.table.join(
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
     awful.key({ modkey,           }, "b", function () awful.util.spawn("google-chrome") end),
+    awful.key({ modkey, "Shift"   }, "v", function () awful.util.spawn(editor_cmd .. "'") end),
+    awful.key({ modkey, "Shift"   }, "r", function () awful.util.spawn(terminal .. " -e 'ranger'") end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
     awful.key({ modkey }, "w", function () awful.util.spawn("gnome-screensaver-command -l") end),
@@ -440,7 +459,7 @@ awful.rules.rules = {
     { rule = { class = "gimp" },
       properties = { floating = true } },
     { rule = { class = "wiser-thermostat-hmi" },
-      properties = { floating = true , ontop = true} },
+      properties = { floating = true , ontop = true, tag = tags[1][1]} },
     { rule = { class = "cairo-dock" },
       properties = { floating = true } },
     { rule = { name = "synapse" },

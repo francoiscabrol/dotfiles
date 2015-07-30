@@ -2,3 +2,4 @@
 *.swp
 unix/files/.vim/bundle/*
 !unix/files/.vim/bundle/Vundle.vim
+unix/files/.vim/session
