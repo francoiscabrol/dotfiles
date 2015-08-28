@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Install awesome themes
 cd $HOME/.config/awesome
 git clone git@github.com:mikar/awesome-themes.git ./themes

@@ -24,16 +24,6 @@ if [[ "$OSTYPE" =~ ^linux ]]; then
 
     alias install_history="cat /var/log/apt/history.log | grep 'apt-get install'"
 
-    # Automatically change the directory in bash after closing ranger
-    function ranger-cd {
-        tempfile="$(mktemp -t tmp.XXXXXX)"
-        /usr/local/bin/ranger --choosedir="$tempfile" "${@:-$(pwd)}"
-        test -f "$tempfile" &&
-        if [ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]; then
-            cd -- "$(cat "$tempfile")"
-        fi
-        rm -f -- "$tempfile"
-    }
 fi
 
 #####
@@ -50,6 +40,18 @@ gcom () {
     gco "$*"
     git stash pop
 }
+
+# Automatically change the directory in bash after closing ranger
+function ranger-cd {
+    tempfile="$(mktemp -t tmp.XXXXXX)"
+    /usr/local/bin/ranger --choosedir="$tempfile" "${@:-$(pwd)}"
+    test -f "$tempfile" &&
+    if [ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]; then
+        cd -- "$(cat "$tempfile")"
+    fi
+    rm -f -- "$tempfile"
+}
+alias rcd='ranger-cd'
 
 # Terminal to vim shortcut
 fancy-ctrl-z () {
@@ -75,6 +77,9 @@ grepi() {
 # For MacOS
 #####
 if [[ "$OSTYPE" == "darwin"* ]]; then
+    # Add path
+    PATH=$PATH:$HOME/bin
+
     # For note taking
     nls() {                                                                                                                                                                                    ⏎
         $EDITOR ~/Dropbox/notes/"$(grep --include="*.md" -R -l -i "$*" ~/Dropbox/notes | sed 's/\/Users\/francois\/Dropbox\/notes\///g' | percol)"

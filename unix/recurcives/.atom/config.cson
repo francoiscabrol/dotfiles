@@ -10,12 +10,9 @@
     softWrap: true
     softWrapAtPreferredLineLength: true
     scrollPastEnd: true
-    invisibles:
-      {}
-  "autoclose-html":
-    {}
-  linter:
-    {}
+    invisibles: {}
+  "autoclose-html": {}
+  linter: {}
   core:
     followSymlinks: true
     disabledPackages: [

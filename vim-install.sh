@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Install vim Vbundle
 cd unix/files/.vim/bundle
 git clone git@github.com:VundleVim/Vundle.vim.git
