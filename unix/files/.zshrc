@@ -23,7 +23,7 @@ if [[ "$OSTYPE" =~ ^linux ]]; then
     alias openIn='parallel -Xj1 --tty'
 
     alias install_history="cat /var/log/apt/history.log | grep 'apt-get install'"
-
+    alias ack='ack-grep'
 fi
 
 #####
@@ -80,12 +80,12 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     # Add path
     PATH=$PATH:$HOME/bin
 
-    # For note taking
-    nls() {                                                                                                                                                                                    ⏎
-        $EDITOR ~/Dropbox/notes/"$(grep --include="*.md" -R -l -i "$*" ~/Dropbox/notes | sed 's/\/Users\/francois\/Dropbox\/notes\///g' | percol)"
-    }
 fi
 
+# For note taking
+nls() {
+    $EDITOR "$(grep --include="*.md" -R -l -i "$*" $NOTES | sed 's/\$NOTES\///g' | percol)"
+}
 alias note='terminal_velocity'
 
 # Add id wd not exist, download it: curl -L https://github.com/mfaerevaag/wd/raw/master/install.sh | sh
