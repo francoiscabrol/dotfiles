@@ -6,6 +6,7 @@ require("awful.autofocus")
 -- Widget and layout library
 local wibox = require("wibox")
 local APW = require("apw/widget")
+--require("collision")()
 -- Theme handling library
 local beautiful = require("beautiful")
 -- Notification library
@@ -62,9 +63,9 @@ function run_once(cmd)
 end
 
 awful.util.spawn_with_shell("synapse --startup")
-awful.util.spawn_with_shell("dropbox start")
+--awful.util.spawn_with_shell("dropbox start")
 awful.util.spawn_with_shell("xcompmgr  -CcfF -D2 &")
--- awful.util.spawn_with_shell("gnome-keyring-daemon --start")
+awful.util.spawn_with_shell("gnome-keyring-daemon --start")
 run_once("nm-applet")
 
 if screen.count() == 1 then
@@ -110,10 +111,12 @@ end
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
 tags = {}
-for s = 1, screen.count() do
+tags[1] = awful.tag({ "work 1", "work 2", "work 3", "music", "other" }, 1, layouts[1])
+tags[2] = awful.tag({ "work 4" }, 2, layouts[1])
+--for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ "work 1", "work 2", "chat", "music", "other" }, s, layouts[1])
-end
+    -- tags[s] = awful.tag({ "work 1", "work 2", "work 3", "music", "other" }, s, layouts[1])
+--end
 -- }}}
 
 -- {{{ Menu
@@ -148,6 +151,7 @@ mytextclock = awful.widget.textclock()
 
 -- Create a wibox for each screen and add it
 mywibox = {}
+mybottombox = {}
 mypromptbox = {}
 mylayoutbox = {}
 mytaglist = {}
@@ -196,18 +200,55 @@ mytasklist.buttons = awful.util.table.join(
                                               if client.focus then client.focus:raise() end
                                           end))
 
+myfocusedtask = {}
+myfocusedtask.buttons = awful.util.table.join(
+                     awful.button({ }, 1, function (c)
+                                              if c == client.focus then
+                                                  c.minimized = true
+                                              else
+                                                  -- Without this, the following
+                                                  -- :isvisible() makes no sense
+                                                  c.minimized = false
+                                                  if not c:isvisible() then
+                                                      awful.tag.viewonly(c:tags()[1])
+                                                  end
+                                                  -- This will also un-minimize
+                                                  -- the client, if needed
+                                                  client.focus = c
+                                                  c:raise()
+                                              end
+                                          end),
+                     awful.button({ }, 3, function ()
+                                              if instance then
+                                                  instance:hide()
+                                                  instance = nil
+                                              else
+                                                  instance = awful.menu.clients({
+                                                      theme = { width = 250 }
+                                                  })
+                                              end
+                                          end),
+                     awful.button({ }, 4, function ()
+                                              awful.client.focus.byidx(1)
+                                              if client.focus then client.focus:raise() end
+                                          end),
+                     awful.button({ }, 5, function ()
+                                              awful.client.focus.byidx(-1)
+                                              if client.focus then client.focus:raise() end
+                                          end))
+
 -- Battery widget
-batterywidget = wibox.widget.textbox()
-batterywidget:set_text(" | Battery | ")
-batterywidgettimer = timer({ timeout = 5 })
-batterywidgettimer:connect_signal("timeout",
-  function()
-    fh = assert(io.popen("acpi | cut -d, -f 2,3 -", "r"))
-    batterywidget:set_text(" |" .. fh:read("*l") .. " | ")
-    fh:close()
-  end
-)
-batterywidgettimer:start()
+-- batterywidget = wibox.widget.textbox()
+-- batterywidget:set_text(" | Battery | ")
+-- batterywidgettimer = timer({ timeout = 5 })
+-- batterywidgettimer:connect_signal("timeout",
+--  function()
+--    fh = assert(io.popen("acpi | cut -d, -f 2,3 -", "r"))
+--    batterywidget:set_text(" |" .. fh:read("*l") .. " | ")
+--    fh:close()
+--  end
+--)
+--batterywidgettimer:start()
 
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
@@ -223,8 +264,8 @@ for s = 1, screen.count() do
     -- Create a taglist widget
     mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
 
-    -- Create a tasklist widget
-    mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, mytasklist.buttons)
+    -- create the focused task widget
+    myfocusedtask[s]    = awful.widget.tasklist(s, awful.widget.tasklist.filter.focused)
 
     -- Create the wibox
     mywibox[s] = awful.wibox({ position = "top", screen = s })
@@ -240,16 +281,26 @@ for s = 1, screen.count() do
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(mytextclock)
     right_layout:add(APW)
-    right_layout:add(batterywidget)
+    -- right_layout:add(batterywidget)
     right_layout:add(mylayoutbox[s])
 
     -- Now bring it all together (with the tasklist in the middle)
     local layout = wibox.layout.align.horizontal()
     layout:set_left(left_layout)
-    layout:set_middle(mytasklist[s])
+    layout:set_middle(myfocusedtask[s])
     layout:set_right(right_layout)
 
     mywibox[s]:set_widget(layout)
+
+    -- Create a tasklist widget
+    mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, mytasklist.buttons)
+
+    -- Create the bottombox
+    mybottombox[s] = awful.wibox({ position = "bottom", screen = s })
+    local layout2 = wibox.layout.align.horizontal()
+    layout2:set_middle(mytasklist[s])
+    mybottombox[s]:set_widget(layout2)
+
 end
 -- }}}
 
@@ -340,8 +391,8 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Mod1" }, "h",  function () awful.client.moveresize( 0, 0, -40, 0) end),
     awful.key({ modkey, "Mod1" }, "j",  function () awful.client.moveresize( 0, 0, 0, -40) end),
     awful.key({ modkey, "Mod1" }, "k",  function () awful.client.moveresize( 0, 0, 0, 40) end),
-   awful.key({ modkey, "Control" }, "j",  function () awful.client.moveresize(  0,  60,   0,   0) end),
-   awful.key({ modkey, "Control" }, "k",    function () awful.client.moveresize(  0, -60,   0,   0) end),
+   awful.key({ modkey, "Control" }, "j",  function () awful.client.moveresize(  0,  -60,   0,   0) end),
+   awful.key({ modkey, "Control" }, "k",    function () awful.client.moveresize(  0, 60,   0,   0) end),
    awful.key({ modkey, "Control" }, "h",  function () awful.client.moveresize(-60,   0,   0,   0) end),
    awful.key({ modkey, "Control" }, "l", function () awful.client.moveresize( 60,   0,   0,   0) end),
 
@@ -432,8 +483,20 @@ end
 
 clientbuttons = awful.util.table.join(
     awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
-    awful.button({ modkey }, 1, awful.mouse.client.move),
-    awful.button({ modkey }, 3, awful.mouse.client.resize))
+    awful.button({ modkey }, 1, function (c)
+        c.maximized_horizontal = false
+        c.maximized_vertical   = false
+        c.maximized            = false
+        c.fullscreen           = false
+        awful.mouse.client.move(c)
+    end),
+    awful.button({ modkey }, 3, function (c)
+        c.maximized_horizontal = false
+        c.maximized_vertical   = false
+        c.maximized            = false
+        c.fullscreen           = false
+        awful.mouse.client.resize(c)
+    end))
 
 -- Set keys
 root.keys(globalkeys)
@@ -546,10 +609,10 @@ end)
 
 client.connect_signal("focus", function(c)
     c.border_color = beautiful.border_focus
-    c.opacity = 0.95
+    c.opacity = 1
 end)
 client.connect_signal("unfocus", function(c)
     c.border_color = beautiful.border_normal
-    c.opacity = 0.95
+    c.opacity = 1
 end)
 -- }}}
