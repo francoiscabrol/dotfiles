@@ -1,8 +1,8 @@
 [global_config]
+  dbus = True
   geometry_hinting = False
   title_transmit_bg_color = "#47a242"
   handle_size = 1
-  borderless = True
 [keybindings]
   reset = None
   next_tab = None
@@ -27,13 +27,12 @@
 [profiles]
   [[default]]
     use_system_font = False
-    font = Meslo LG M for Powerline 10
+    font = Meslo LG M for Powerline 9
     background_image = None
     foreground_color = "#839496"
-    show_titlebar = False
     copy_on_selection = True
     background_color = "#fffffd"
-    cursor_blink = False
+    scrollback_infinite = True
 [layouts]
   [[default]]
     [[[child1]]]
