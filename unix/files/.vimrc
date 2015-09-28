@@ -34,18 +34,20 @@ set runtimepath+=~/.vim/bundle/Vundle.vim
 call vundle#rc()
 
 Bundle 'gmarik/Vundle.vim'
-Bundle 'Valloric/YouCompleteMe'
+Bundle 'ajh17/VimCompletesMe'
+"Bundle 'Valloric/YouCompleteMe'
 Bundle 'Shutnik/jshint2.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'aklt/plantuml-syntax'
-Bundle 'ktvoelker/sbt-vim'
+"Bundle 'ktvoelker/sbt-vim'
 Bundle 'ervandew/screen'
 Bundle 'scrooloose/syntastic'
 Bundle 'godlygeek/tabular'
 Bundle 'majutsushi/tagbar'
 Bundle 'mtscout6/vim-tagbar-css'
+Bundle 'lilydjwg/colorizer'
 Bundle 'marijnh/tern_for_vim'
-Bundle 'bling/vim-airline'
+Bundle 'itchyny/lightline.vim'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'tpope/vim-fugitive'
@@ -75,6 +77,7 @@ Bundle 'mhinz/vim-startify'
 Bundle 'NLKNguyen/papercolor-theme'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'tpope/vim-surround'
+Bundle 'KabbAmine/vCoolor.vim'
 
 " enable filetype plugins
 filetype plugin on
@@ -98,7 +101,11 @@ set ruler
 
 "================ Colors and theme ========================
 colorscheme PaperColor
-set background=light
+if $BG == 'dark'
+    set background=dark
+else
+    set background=light
+endif
 if $COLORTERM == 'gnome-terminal'
     set t_Co=256
 endif
@@ -107,6 +114,10 @@ highlight Normal ctermbg=NONE
 highlight nonText ctermbg=NONE
 
 hi Visual guibg=#002b36
+
+"================ Color palette =======================
+let g:vcoolor_disable_mappings = 1
+let g:vcoolor_map = '<leader>c'
 
 "================ Indentation ========================
 " turn indentation on
@@ -127,7 +138,7 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
 "================ Search  =======================
 
 " Set find in path key mapping
-noremap <C-f> :copen<CR>:Ack -Qi '
+noremap <C-f> :copen<CR>:Ack -Qi
 
 " incremental searching
 set incsearch
@@ -242,7 +253,7 @@ nmap <Leader>P "-P
 " Cut, Paste, Copy
 vmap <C-x> d
 map <C-x> dd
-map <C-v> P
+" map <C-v> P
 vmap <C-c> y
 nmap <C-c> yy
 
@@ -268,7 +279,7 @@ let g:NERDTreeWinSize = 30
 " to jump between buffer and NERDTree. (And F4 for preview because it's next
 " to F3)
 " nnoremap <leader>n :NERDTreeToggle<CR>
-nnoremap <leader>n :NERDTreeToggle<CR>
+nnoremap <leader>n :NERDTree<CR>
 nnoremap <leader>nf :NERDTreeFind<CR>
 
 " ================ TagBar=======================
@@ -296,21 +307,37 @@ autocmd BufEnter * set bufhidden=delete
 " Write a file with the sudo right
 cmap w!! w !sudo tee % >/dev/null
 
-" Airline:
-" Enable/disable displaying tab number in tabs mode. >
-let g:airline#extensions#tabline#show_tab_nr   = 0
-let g:airline#extensions#tabline#tab_min_count = 2
-" Enable/disable displaying buffers with a single tab. >
-let g:airline#extensions#tabline#show_buffers = 0
-let g:airline#extensions#tabline#enabled      = 1
-let g:airline_powerline_fonts                 = 1
-" Show just the filename
-let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline_theme='luna'
+"" Airline:
+"" Enable/disable displaying tab number in tabs mode. >
+"let g:airline#extensions#tabline#show_tab_nr   = 0
+"let g:airline#extensions#tabline#tab_min_count = 2
+"" Enable/disable displaying buffers with a single tab. >
+"let g:airline#extensions#tabline#show_buffers = 0
+"let g:airline#extensions#tabline#enabled      = 1
+"let g:airline_powerline_fonts                 = 1
+"" Show just the filename
+"let g:airline#extensions#tabline#fnamemod = ':t'
+"let g:airline_theme='luna'
 set guifont=Meslo\ LG\ M\ for\ Powerline
+"
+"" enable/disable syntastic integration
+"let g:airline#extensions#syntastic#enabled = 1
 
-" enable/disable syntastic integration
-let g:airline#extensions#syntastic#enabled = 1
+" ================ Lightline =======================
+function! LightLineModified()
+  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+let g:lightline = {
+            \ 'component': {
+            \   'readonly': '%{&readonly?"":""}',
+            \ },
+            \ 'component_function': {
+            \   'modified': 'LightLineModified',
+            \ },
+            \ 'separator': { 'left': '', 'right': '' },
+            \ 'subseparator': { 'left': '', 'right': '' }
+            \ }
 
 " ================ Syntastic =======================
 set statusline+=%#warningmsg#
@@ -349,3 +376,7 @@ autocmd BufWritePre * call StripTrailingWhitespace()
 
 " jshint
 set runtimepath+=~/.vim/bundle/jshint2.vim/
+
+"======= JSON =========
+com! FormatJSON %!jq .
+"Use :FormatJSON to format json

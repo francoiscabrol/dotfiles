@@ -12,6 +12,16 @@ fi
 
 source $HOME/.bash_aliases
 
+BG=light
+
+# Check if we are in webstorm
+if [[ $(env | grep -i storm | wc -l) > 1 ]]; then
+    EDITOR=wstorm
+    BG=dark
+fi
+
+export BG
+
 # Customize to your needs...
 #####
 # For Linux
@@ -67,7 +77,11 @@ zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
 acki() {
-    vim $((ack $@ | sed 's/:/ /g' | percol | awk '{print "+"$2 " " $1}') || '-c quit')
+    if [[ $EDITOR == wstorm ]]; then
+        $EDITOR $(ack $@ | sed 's/:/ /g' | percol | awk '{print "--line "$2 " " $1}')
+    else
+        $EDITOR $((ack $@ | sed 's/:/ /g' | percol | awk '{print "+"$2 " " $1}') || '-c quit')
+    fi
 }
 grepi() {
     vim $((grep -n $@ | sed 's/:/ /g' | percol | awk '{print "+"$2 " " $1}') || '-c quit')
