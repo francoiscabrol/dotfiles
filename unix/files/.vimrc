@@ -328,12 +328,17 @@ function! LightLineModified()
   return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
 endfunction
 
+function! LightLineFilename()
+  return expand('%')
+endfunction
+
 let g:lightline = {
             \ 'component': {
             \   'readonly': '%{&readonly?"":""}',
             \ },
             \ 'component_function': {
             \   'modified': 'LightLineModified',
+            \   'filename': 'LightLineFilename'
             \ },
             \ 'separator': { 'left': '', 'right': '' },
             \ 'subseparator': { 'left': '', 'right': '' }
