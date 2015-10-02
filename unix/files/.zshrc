@@ -12,6 +12,8 @@ fi
 
 source $HOME/.bash_aliases
 
+export TERM=xterm-256color
+
 BG=light
 
 # Check if we are in webstorm
