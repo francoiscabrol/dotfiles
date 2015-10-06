@@ -48,7 +48,7 @@ beautiful.init("~/.config/awesome/themes/blackburn/theme.lua")
 --beautiful.init("~/.config/awesome/themes/multicolor/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "terminator"
+terminal = "terminator --profile=dark"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e '" .. editor
 
@@ -62,18 +62,8 @@ function run_once(cmd)
   awful.util.spawn_with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
 end
 
-awful.util.spawn_with_shell("synapse --startup")
---awful.util.spawn_with_shell("dropbox start")
 awful.util.spawn_with_shell("xcompmgr  -CcfF -D2 &")
-awful.util.spawn_with_shell("gnome-keyring-daemon --start")
 run_once("nm-applet")
-
-if screen.count() == 1 then
---    awful.util.spawn_with_shell("sh /home/fcabrol/.screenlayout/1-screen.sh")
-end
-if screen.count() == 2 then
---    awful.util.spawn_with_shell("sh /home/fcabrol/.screenlayout/1-external-screens.sh")
-end
 
 
 -- Default modkey.
@@ -94,8 +84,8 @@ local layouts =
     awful.layout.suit.fair,
     --awful.layout.suit.fair.horizontal,
     --awful.layout.suit.spiral,
-    awful.layout.suit.spiral.dwindle
-    --awful.layout.suit.max,
+    awful.layout.suit.spiral.dwindle,
+    awful.layout.suit.max
     --awful.layout.suit.magnifier
 }
 -- }}}
@@ -112,7 +102,7 @@ end
 -- Define a tag table which hold all screen tags.
 tags = {}
 tags[1] = awful.tag({ "work 1", "work 2", "work 3", "music", "other" }, 1, layouts[1])
-tags[2] = awful.tag({ "work 4" }, 2, layouts[1])
+tags[2] = awful.tag({ "work 4", "servers" }, 2, layouts[1])
 --for s = 1, screen.count() do
     -- Each screen has its own tag table.
     -- tags[s] = awful.tag({ "work 1", "work 2", "work 3", "music", "other" }, s, layouts[1])

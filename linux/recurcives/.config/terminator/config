@@ -29,10 +29,18 @@
     use_system_font = False
     font = Meslo LG M for Powerline 9
     background_image = None
-    foreground_color = "#839496"
+    foreground_color = "#4a4a4a"
     copy_on_selection = True
-    background_color = "#fffffd"
+    background_color = "#ffffff"
     scrollback_infinite = True
+  [[dark]]
+    palette = "#121212:#fa2573:#98e123:#dfd460:#1080d0:#8700ff:#43a8d0:#bbbbbb:#555555:#f6669d:#b1e05f:#fff26d:#00afff:#af87ff:#51ceff:#ffffff"
+    font = Meslo LG M for Powerline 10
+    use_system_font = False
+    foreground_color = "#bbbbbb"
+    show_titlebar = False
+    copy_on_selection = True
+    background_color = "#001e29"
 [layouts]
   [[default]]
     [[[child1]]]

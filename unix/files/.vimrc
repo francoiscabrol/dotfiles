@@ -78,6 +78,7 @@ Bundle 'NLKNguyen/papercolor-theme'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'tpope/vim-surround'
 Bundle 'KabbAmine/vCoolor.vim'
+Bundle 'heavenshell/vim-jsdoc'
 
 " enable filetype plugins
 filetype plugin on

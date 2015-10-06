@@ -14,7 +14,7 @@ source $HOME/.bash_aliases
 
 export TERM=xterm-256color
 
-BG=light
+BG=dark
 
 # Check if we are in webstorm
 if [[ $(env | grep -i storm | wc -l) > 1 ]]; then
