@@ -78,6 +78,19 @@ fancy-ctrl-z () {
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
+# Task warrior - filter by project
+function t() {
+    project=$(basename `pwd`);
+    tp=( $(task _projects | grep $project) );
+
+    if [[ -n $tp ]]; then
+        task "$@" project:$project;
+    else
+        task "$@"
+    fi
+}
+
+# acki: an interactive ack
 acki() {
     if [[ $EDITOR == wstorm ]]; then
         $EDITOR $(ack $@ | sed 's/:/ /g' | percol | awk '{print "--line "$2 " " $1}')
