@@ -14,7 +14,7 @@ set nowritebackup
 set noswapfile
 
 " utf encoding
-set encoding=utf-8
+" commented because neovim " set encoding=utf-8
 
 " autoload files that have changed outside of vim
 set autoread
@@ -46,7 +46,7 @@ Bundle 'godlygeek/tabular'
 Bundle 'majutsushi/tagbar'
 Bundle 'mtscout6/vim-tagbar-css'
 Bundle 'lilydjwg/colorizer'
-Bundle 'marijnh/tern_for_vim'
+"Bundle 'marijnh/tern_for_vim'
 Bundle 'itchyny/lightline.vim'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'Lokaltog/vim-easymotion'
@@ -79,6 +79,8 @@ Bundle 'scrooloose/nerdcommenter'
 Bundle 'tpope/vim-surround'
 Bundle 'KabbAmine/vCoolor.vim'
 Bundle 'heavenshell/vim-jsdoc'
+Bundle 'Shougo/unite.vim'
+Bundle 'Shougo/vimproc.vim'
 
 " enable filetype plugins
 filetype plugin on
@@ -283,15 +285,14 @@ let g:NERDTreeWinSize = 30
 nnoremap <leader>n :NERDTree<CR>
 nnoremap <leader>nf :NERDTreeFind<CR>
 
-" ================ TagBar=======================
-
+" ================ Ranger =======================
 fun! RangerChooser()
-exec "silent !ranger --choosefile=/tmp/chosenfile " . expand("%:p:h")
-if filereadable('/tmp/chosenfile')
-exec 'edit ' . system('cat /tmp/chosenfile')
-call system('rm /tmp/chosenfile')
-endif
-redraw!
+    exec "silent !ranger --choosefile=/tmp/chosenfile " . expand("%:p:h")
+    if filereadable('/tmp/chosenfile')
+        exec 'edit ' . system('cat /tmp/chosenfile')
+        call system('rm /tmp/chosenfile')
+    endif
+    redraw!
 endfun
 map <leader>f :call RangerChooser()<CR>
 

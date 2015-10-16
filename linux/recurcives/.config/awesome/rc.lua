@@ -102,7 +102,9 @@ end
 -- Define a tag table which hold all screen tags.
 tags = {}
 tags[1] = awful.tag({ "work 1", "work 2", "work 3", "music", "other" }, 1, layouts[1])
-tags[2] = awful.tag({ "work 4", "servers" }, 2, layouts[1])
+if screen.count() > 1 then
+    tags[2] = awful.tag({ "work 4", "servers" }, 2, layouts[1])
+end
 --for s = 1, screen.count() do
     -- Each screen has its own tag table.
     -- tags[s] = awful.tag({ "work 1", "work 2", "work 3", "music", "other" }, s, layouts[1])

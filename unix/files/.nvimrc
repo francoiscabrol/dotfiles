@@ -1,5 +1,12 @@
 source ~/.vimrc
 
+" ================ Custom command =======================
+" Selecting all the file content
+:map <C-a> ggVG$
+" tab navigation
+:map <C-h> :tabprevious<CR>
+:map <C-l> :tabnext<CR>
+
 " ================ NeoVim terminal =======================
 :tnoremap <Esc> <C-\><C-n>
 :tnoremap <A-h> <C-\><C-n><C-w>h

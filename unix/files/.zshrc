@@ -24,6 +24,9 @@ fi
 
 export BG
 
+# Bind the vi command to the default $EDITOR
+alias vi=nvim
+
 # Customize to your needs...
 #####
 # For Linux
@@ -99,7 +102,7 @@ acki() {
     fi
 }
 grepi() {
-    vim $((grep -n $@ | sed 's/:/ /g' | percol | awk '{print "+"$2 " " $1}') || '-c quit')
+   $EDITOR $((grep -n $@ | sed 's/:/ /g' | percol | awk '{print "+"$2 " " $1}') || '-c quit')
 }
 
 #####
