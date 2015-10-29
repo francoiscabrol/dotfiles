@@ -53,7 +53,6 @@ Bundle 'Lokaltog/vim-easymotion'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-git'
 Bundle 'airblade/vim-gitgutter'
-Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'digitaltoad/vim-jade'
 Bundle 'pangloss/vim-javascript'
 Bundle 'jelera/vim-javascript-syntax'
@@ -83,8 +82,8 @@ Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/vimproc.vim'
 
 " enable filetype plugins
-filetype plugin on
 
+filetype plugin on
 "================ Shortcuts =======================
 " Eleminate delay with Esc
 set esckeys
@@ -135,7 +134,16 @@ let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
 
+"================ Tabular =======================
+if exists(":Tabularize")
+  nmap <Leader>a= :Tabularize /=<CR>
+  vmap <Leader>a= :Tabularize /=<CR>
+  nmap <Leader>a: :Tabularize /:\zs<CR>
+  vmap <Leader>a: :Tabularize /:\zs<CR>
+endif
+
 "================ Comments =======================
+noremap <leader>c :NERDComToggleComment<CR>
 
 
 "================ Search  =======================
@@ -219,6 +227,9 @@ set list listchars=tab:\ \ ,trail:·
 " ================ Status line =======================
 " always show status bar
 set laststatus=2
+
+" Don't show the buildin vim information line
+set noshowmode
 
 " set the status line to something useful
 set statusline=\ %f%m%r%h%w\ %=%({%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\")}%k\|%Y}%)\ %([%l,%v][%p%%]\ %)
@@ -335,6 +346,9 @@ function! LightLineFilename()
 endfunction
 
 let g:lightline = {
+            \ 'active': {
+            \   'right': [ [ 'lineinfo' ], ['percent'], [ 'filetype' ] ]
+            \ },
             \ 'component': {
             \   'readonly': '%{&readonly?"":""}',
             \ },
@@ -342,10 +356,13 @@ let g:lightline = {
             \   'modified': 'LightLineModified',
             \   'filename': 'LightLineFilename'
             \ },
-            \ 'separator': { 'left': '', 'right': '' },
-            \ 'subseparator': { 'left': '', 'right': '' }
+            \ 'separator': { 'left': '', 'right': '' },
+            \ 'subseparator': { 'left': '|', 'right': '|' }
             \ }
 
+            "\ 'separator': { 'left': '', 'right': '' },
+            "\ 'subseparator': { 'left': '', 'right': '' }
+            "
 " ================ Syntastic =======================
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}

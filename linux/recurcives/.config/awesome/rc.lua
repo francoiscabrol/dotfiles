@@ -50,7 +50,7 @@ beautiful.init("~/.config/awesome/themes/blackburn/theme.lua")
 -- This is used later as the default terminal and editor to run.
 terminal = "terminator --profile=dark"
 editor = os.getenv("EDITOR") or "vim"
-editor_cmd = terminal .. " -e '" .. editor
+editor_cmd = terminal .. " -e 'BG=dark " .. editor
 
 -- Default apps
 function run_once(cmd)
@@ -362,6 +362,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
     awful.key({ modkey,           }, "b", function () awful.util.spawn("google-chrome") end),
     awful.key({ modkey, "Shift"   }, "v", function () awful.util.spawn(editor_cmd .. "'") end),
+    awful.key({ modkey, "Shift"   }, "n", function () awful.util.spawn(editor_cmd .. " ~/notes'") end),
     awful.key({ modkey, "Shift"   }, "r", function () awful.util.spawn(terminal .. " -e 'ranger'") end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
@@ -381,14 +382,58 @@ globalkeys = awful.util.table.join(
 
     awful.key({ modkey, "Mod1" }, "l",  function () awful.client.moveresize( 0, 0, 40, 0) end),
     awful.key({ modkey, "Mod1" }, "h",  function () awful.client.moveresize( 0, 0, -40, 0) end),
-    awful.key({ modkey, "Mod1" }, "j",  function () awful.client.moveresize( 0, 0, 0, -40) end),
-    awful.key({ modkey, "Mod1" }, "k",  function () awful.client.moveresize( 0, 0, 0, 40) end),
-   awful.key({ modkey, "Control" }, "j",  function () awful.client.moveresize(  0,  -60,   0,   0) end),
-   awful.key({ modkey, "Control" }, "k",    function () awful.client.moveresize(  0, 60,   0,   0) end),
-   awful.key({ modkey, "Control" }, "h",  function () awful.client.moveresize(-60,   0,   0,   0) end),
-   awful.key({ modkey, "Control" }, "l", function () awful.client.moveresize( 60,   0,   0,   0) end),
+    awful.key({ modkey, "Mod1" }, "k",  function () awful.client.moveresize( 0, 0, 0, -40) end),
+    awful.key({ modkey, "Mod1" }, "j",  function () awful.client.moveresize( 0, 0, 0, 40) end),
+    awful.key({ modkey, "Control" }, "k",  function () awful.client.moveresize(  0,  -60,   0,   0) end),
+    awful.key({ modkey, "Control" }, "j",    function () awful.client.moveresize(  0, 60,   0,   0) end),
+    awful.key({ modkey, "Control" }, "h",  function () awful.client.moveresize(-60,   0,   0,   0) end),
+    awful.key({ modkey, "Control" }, "l", function () awful.client.moveresize( 60,   0,   0,   0) end),
 
     awful.key({ modkey, "Control" }, "n", awful.client.restore),
+
+    -- tag Control
+    -- -- delete tag
+    awful.key({ modkey, "Control" }, "d",
+            function ()
+               -- table.remove(tags, awful.tag.selected(mouse.screen).name )
+                awful.tag.delete()
+            end),
+
+    -- -- rename tag
+    awful.key({ modkey, "Control" }, "w",
+              function ()
+                 awful.prompt.run({ prompt = "New tag name: " },
+                                  mypromptbox[mouse.screen].widget,
+                                  function(new_name)
+                                     if not new_name or #new_name == 0 then
+                                        return
+                                     else
+                                        local screen = mouse.screen
+                                        local tag = awful.tag.selected(screen)
+                                        if tag then
+                                           tag.name = new_name
+                                        end
+                                     end
+                                  end)
+              end),
+
+    -- -- add new tag
+   awful.key({ modkey, "Control" }, "a",
+        function ()
+                  awful.prompt.run({ prompt = "New tag name: " },
+                    mypromptbox[mouse.screen].widget,
+                    function(new_name)
+                        if not new_name or #new_name == 0 then
+                            return
+                        else
+                            props = {selected = true}
+                            t = awful.tag.add(new_name, props)
+                            tags[mouse.screen][#tags[mouse.screen]+1]=t
+                            awful.tag.viewonly(t)
+                        end
+                    end
+                    )
+        end),
 
     -- Prompt
     awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),

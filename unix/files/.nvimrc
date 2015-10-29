@@ -1,33 +1,55 @@
 source ~/.vimrc
 
+" ================ Pane separator =======================
+set fillchars+=vert:\
+
+" Override color scheme to make split the same color as tmux's default
+autocmd ColorScheme * highlight VertSplit cterm=NONE ctermfg=white ctermbg=NONE
+highlight VertSplit cterm=NONE ctermfg=NONE ctermbg=white
+
 " ================ Custom command =======================
 " Selecting all the file content
 :map <C-a> ggVG$
 " tab navigation
-:map <C-h> :tabprevious<CR>
-:map <C-l> :tabnext<CR>
+:map <A-h> :tabprevious<CR>
+:map <A-l> :tabnext<CR>
+
+" Move lines
+:nnoremap <A-j> : m .+1<CR>
+:nnoremap <A-k> : m .-2<CR>
+:vnoremap <A-k> : m '<-2<CR>gv=gv
+:vnoremap <A-j> : m '>+1<CR>gv=gv
 
 " ================ NeoVim terminal =======================
 :tnoremap <Esc> <C-\><C-n>
-:tnoremap <A-h> <C-\><C-n><C-w>h
-:tnoremap <A-j> <C-\><C-n><C-w>j
-:tnoremap <A-k> <C-\><C-n><C-w>k
-:tnoremap <A-l> <C-\><C-n><C-w>l
-:nnoremap <A-h> <C-w>h
-:nnoremap <A-j> <C-w>j
-:nnoremap <A-k> <C-w>k
-:nnoremap <A-l> <C-w>l
+:tnoremap <C-h> <C-\><C-n><C-w>h
+:tnoremap <C-j> <C-\><C-n><C-w>j
+:tnoremap <C-k> <C-\><C-n><C-w>k
+:tnoremap <C-l> <C-\><C-n><C-w>l
+:nnoremap <C-h> <C-w>h
+:nnoremap <C-j> <C-w>j
+:nnoremap <C-k> <C-w>k
+:nnoremap <C-l> <C-w>l
+
+:map <left> h
+:map <right> l
+:map <up> k
+:map <down> j
+:map <A-left> <A-h>
+:map <A-right> <A-l>
+:map <A-up>   <A-k>
+:map <A-down> <A-j>
 
 " ================ Ranger =======================
 function! RangerMagic()
-    bnew
-    exec 'terminal ranger --choosefile=/tmp/chosenfile ' . expand("%:p:h")
+    new
+    call termopen('terminal ranger --choosefile=/tmp/chosenfile ')
+    startinsert
     bdelete!
     if filereadable('/tmp/chosenfile')
-        exec 'edit ' . system('cat /tmp/chosenfile')
+        exec 'edit ' . readfile('/tmp/chosenfile')
         call system('rm /tmp/chosenfile')
     endif
-    redraw!
 endfunction
 
 function! RangerTest(dirname)
@@ -57,5 +79,6 @@ function! RangerTest(dirname)
 		new
 		call termopen('ranger --choosefiles=' . shellescape(g:rangered) . ' ' . shellescape(a:dirname))
         startinsert
+        bdelete!
 	endif
 endfunction
