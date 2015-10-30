@@ -54,8 +54,6 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-git'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'digitaltoad/vim-jade'
-Bundle 'pangloss/vim-javascript'
-Bundle 'jelera/vim-javascript-syntax'
 Bundle 'briancollins/vim-jst'
 Bundle 'groenewege/vim-less'
 Bundle 'hail2u/vim-css3-syntax'
@@ -78,8 +76,8 @@ Bundle 'scrooloose/nerdcommenter'
 Bundle 'tpope/vim-surround'
 Bundle 'KabbAmine/vCoolor.vim'
 Bundle 'heavenshell/vim-jsdoc'
-Bundle 'Shougo/unite.vim'
-Bundle 'Shougo/vimproc.vim'
+Bundle 'othree/yajs.vim'
+Bundle 'othree/javascript-libraries-syntax.vim'
 
 " enable filetype plugins
 
@@ -111,11 +109,8 @@ endif
 if $COLORTERM == 'gnome-terminal'
     set t_Co=256
 endif
-let g:rehash256 = 1
 highlight Normal ctermbg=NONE
 highlight nonText ctermbg=NONE
-
-hi Visual guibg=#002b36
 
 "================ Color palette =======================
 let g:vcoolor_disable_mappings = 1
