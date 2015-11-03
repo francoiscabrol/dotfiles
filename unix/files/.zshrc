@@ -126,3 +126,5 @@ wd() {
 }
 fpath=($HOME/bin/wd $fpath)
 rm -f ~/.zcompdump; compinit
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

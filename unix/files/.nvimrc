@@ -1,11 +1,11 @@
 source ~/.vimrc
 
 " ================ Pane separator =======================
-set fillchars+=vert:\
+" set fillchars+=vert:\
 
 " Override color scheme to make split the same color as tmux's default
-autocmd ColorScheme * highlight VertSplit cterm=NONE ctermfg=white ctermbg=NONE
-highlight VertSplit cterm=NONE ctermfg=NONE ctermbg=white
+"autocmd ColorScheme * highlight VertSplit cterm=NONE ctermfg=white ctermbg=NONE
+"highlight VertSplit cterm=NONE ctermfg=NONE ctermbg=white
 
 " ================ Custom command =======================
 " Selecting all the file content
@@ -15,10 +15,10 @@ highlight VertSplit cterm=NONE ctermfg=NONE ctermbg=white
 :map <A-l> :tabnext<CR>
 
 " Move lines
-:nnoremap <A-j> : m .+1<CR>
-:nnoremap <A-k> : m .-2<CR>
-:vnoremap <A-k> : m '<-2<CR>gv=gv
-:vnoremap <A-j> : m '>+1<CR>gv=gv
+:nnoremap <C-S-j> : m .+1<CR>
+:nnoremap <C-S-k> : m .-2<CR>
+:vnoremap <C-S-k> : m '<-2<CR>gv=gv
+:vnoremap <C-S-j> : m '>+1<CR>gv=gv
 
 " ================ NeoVim terminal =======================
 :tnoremap <Esc> <C-\><C-n>
@@ -39,6 +39,13 @@ highlight VertSplit cterm=NONE ctermfg=NONE ctermbg=white
 :map <A-right> <A-l>
 :map <A-up>   <A-k>
 :map <A-down> <A-j>
+
+" ================ Ranger =======================
+let g:multi_cursor_use_default_mapping=0
+let g:multi_cursor_next_key='<A-j>'
+let g:multi_cursor_prev_key='<A-S-j>'
+let g:multi_cursor_skip_key='<A-k>'
+let g:multi_cursor_quit_key='<Esc>'
 
 " ================ Ranger =======================
 function! RangerMagic()

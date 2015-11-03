@@ -138,7 +138,7 @@ if exists(":Tabularize")
 endif
 
 "================ Comments =======================
-noremap <leader>c :NERDComToggleComment<CR>
+noremap <C-/> :NERDComToggleComment<CR>
 
 
 "================ Search  =======================
@@ -236,6 +236,7 @@ set guioptions-=T
 " ================ Alias =======================
 " Close file with SPACE + q
 nnoremap <Leader>q :q<CR>
+nnoremap <C-q> :q<CR>
 
 " Save file with SPACE + w
 nnoremap <Leader>w :w<CR>
@@ -275,7 +276,7 @@ set splitbelow
 set splitright
 
 " Tired of clearing highlighted searches by searching for “ldsfhjkhgakjks”? Use this:
-nmap <silent> <leader>/ :nohlsearch<CR>
+nmap <silent> <leader>/ :nohlsearch<CR>:cclose<CR>
 
 " ================ NERDTree =======================
 " Make nerdtree look nice
