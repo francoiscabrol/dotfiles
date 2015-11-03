@@ -34,50 +34,72 @@ set runtimepath+=~/.vim/bundle/Vundle.vim
 call vundle#rc()
 
 Bundle 'gmarik/Vundle.vim'
-Bundle 'ajh17/VimCompletesMe'
-"Bundle 'Valloric/YouCompleteMe'
-Bundle 'Shutnik/jshint2.vim'
 Bundle 'scrooloose/nerdtree'
-Bundle 'aklt/plantuml-syntax'
-"Bundle 'ktvoelker/sbt-vim'
-Bundle 'ervandew/screen'
 Bundle 'scrooloose/syntastic'
 Bundle 'godlygeek/tabular'
 Bundle 'majutsushi/tagbar'
 Bundle 'mtscout6/vim-tagbar-css'
-Bundle 'lilydjwg/colorizer'
-"Bundle 'marijnh/tern_for_vim'
 Bundle 'itchyny/lightline.vim'
 Bundle 'kchmck/vim-coffee-script'
-Bundle 'Lokaltog/vim-easymotion'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-git'
 Bundle 'airblade/vim-gitgutter'
-Bundle 'digitaltoad/vim-jade'
-Bundle 'briancollins/vim-jst'
-Bundle 'groenewege/vim-less'
-Bundle 'hail2u/vim-css3-syntax'
-Bundle 'plasticboy/vim-markdown'
+Bundle 'vim-scripts/indentLine.vim'
 Bundle 'terryma/vim-multiple-cursors'
-Bundle 'moll/vim-node'
-Bundle 'wavded/vim-stylus'
-Bundle 'lepture/vim-velocity'
 Bundle 'wannesm/wmgraphviz.vim'
 Bundle 'kien/ctrlp.vim'
 Bundle 'editorconfig/editorconfig-vim'
 Bundle 'francoiscabrol/vim-grep'
-Bundle 'vim-scripts/indentLine.vim'
 Bundle 'mileszs/ack.vim'
-Bundle 'trusktr/seti.vim'
-Bundle 'peterhoeg/vim-qml'
 Bundle 'mhinz/vim-startify'
-Bundle 'NLKNguyen/papercolor-theme'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'tpope/vim-surround'
+Bundle 'junegunn/goyo.vim'
+Bundle 'junegunn/limelight.vim'
+Bundle 'zefei/vim-colortuner'
+Bundle 'jaxbot/semantic-highlight.vim'
+
+"================ colors =======================
+Bundle 'lilydjwg/colorizer'
 Bundle 'KabbAmine/vCoolor.vim'
+
+"================ languages =======================
+Bundle 'ktvoelker/sbt-vim'
+Bundle 'Shutnik/jshint2.vim'
+"Bundle 'marijnh/tern_for_vim'
+Bundle 'moll/vim-node'
 Bundle 'heavenshell/vim-jsdoc'
 Bundle 'othree/yajs.vim'
 Bundle 'othree/javascript-libraries-syntax.vim'
+
+Bundle 'mustache/vim-mustache-handlebars'
+Bundle 'peterhoeg/vim-qml'
+Bundle 'wavded/vim-stylus'
+Bundle 'briancollins/vim-jst'
+Bundle 'groenewege/vim-less'
+Bundle 'hail2u/vim-css3-syntax'
+Bundle 'plasticboy/vim-markdown'
+Bundle 'digitaltoad/vim-jade'
+Bundle 'aklt/plantuml-syntax'
+
+"================ colorscheme =======================
+Bundle 'NLKNguyen/papercolor-theme'
+Bundle 'w0ng/vim-hybrid'
+Bundle 'junegunn/seoul256.vim'
+Bundle 'trusktr/seti.vim'
+Bundle 'altercation/vim-colors-solarized'
+
+"================ Motion =======================
+Bundle 'Lokaltog/vim-easymotion'
+" Gif config
+map  / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+
+" These `n` & `N` mappings are options. You do not have to map `n` & `N` to EasyMotion.
+" Without these mappings, `n` & `N` works fine. (These mappings just provide
+" different highlight method and have some other features )
+map  n <Plug>(easymotion-next)
+map  N <Plug>(easymotion-prev)
 
 " enable filetype plugins
 
@@ -100,14 +122,11 @@ hi CursorLine ctermbg=lightgrey
 set ruler
 
 "================ Colors and theme ========================
-colorscheme PaperColor
+colorscheme hybrid
 if $BG == 'dark'
     set background=dark
 else
     set background=light
-endif
-if $COLORTERM == 'gnome-terminal'
-    set t_Co=256
 endif
 highlight Normal ctermbg=NONE
 highlight nonText ctermbg=NONE
@@ -142,9 +161,6 @@ noremap <leader>c :NERDComToggleComment<CR>
 
 
 "================ Search  =======================
-
-" Set find in path key mapping
-noremap <C-f> :copen<CR>:Ack -Qi
 
 " incremental searching
 set incsearch
@@ -242,12 +258,6 @@ nnoremap <Leader>w :w<CR>
 
 " Stop that stupid window from popping up:
 map q: :q
-
-" Move lines
-nnoremap <C-j> : m .+1<CR>
-nnoremap <C-k> : m .-2<CR>
-vnoremap <C-k> : m '<-2<CR>gv=gv
-vnoremap <C-j> : m '>+1<CR>gv=gv
 
 " ================ Clipboard =======================
 " use system clipboard

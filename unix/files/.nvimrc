@@ -20,6 +20,10 @@ highlight VertSplit cterm=NONE ctermfg=NONE ctermbg=white
 :vnoremap <A-k> : m '<-2<CR>gv=gv
 :vnoremap <A-j> : m '>+1<CR>gv=gv
 
+" Set find in path key mapping
+:noremap <C-S>f :Ack -Qi
+:noremap <C-f> /
+
 " ================ NeoVim terminal =======================
 :tnoremap <Esc> <C-\><C-n>
 :tnoremap <C-h> <C-\><C-n><C-w>h
@@ -42,12 +46,11 @@ highlight VertSplit cterm=NONE ctermfg=NONE ctermbg=white
 
 " ================ Ranger =======================
 function! RangerMagic()
-    new
-    call termopen('terminal ranger --choosefile=/tmp/chosenfile ')
+    call termopen('ranger --choosefile=/tmp/chosenfile')
     startinsert
     bdelete!
     if filereadable('/tmp/chosenfile')
-        exec 'edit ' . readfile('/tmp/chosenfile')
+        exec 'edit ' . readfile('/tmp/chosenfile')[0]
         call system('rm /tmp/chosenfile')
     endif
 endfunction
