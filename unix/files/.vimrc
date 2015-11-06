@@ -64,7 +64,7 @@ Bundle 'lilydjwg/colorizer'
 Bundle 'KabbAmine/vCoolor.vim'
 
 "================ languages =======================
-Bundle 'ktvoelker/sbt-vim'
+"Bundle 'ktvoelker/sbt-vim'
 Bundle 'Shutnik/jshint2.vim'
 "Bundle 'marijnh/tern_for_vim'
 Bundle 'moll/vim-node'
@@ -91,19 +91,10 @@ Bundle 'altercation/vim-colors-solarized'
 
 "================ Motion =======================
 Bundle 'Lokaltog/vim-easymotion'
-" Gif config
-map  / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
-
-" These `n` & `N` mappings are options. You do not have to map `n` & `N` to EasyMotion.
-" Without these mappings, `n` & `N` works fine. (These mappings just provide
-" different highlight method and have some other features )
-map  n <Plug>(easymotion-next)
-map  N <Plug>(easymotion-prev)
 
 " enable filetype plugins
-
 filetype plugin on
+
 "================ Shortcuts =======================
 " Eleminate delay with Esc
 set esckeys
@@ -122,7 +113,7 @@ hi CursorLine ctermbg=lightgrey
 set ruler
 
 "================ Colors and theme ========================
-colorscheme hybrid
+colorscheme PaperColor
 if $BG == 'dark'
     set background=dark
 else
