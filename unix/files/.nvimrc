@@ -35,21 +35,10 @@ source ~/.vimrc
 :nnoremap <C-k> <C-w>k
 :nnoremap <C-l> <C-w>l
 
-:map <left> h
-:map <right> l
-:map <up> k
-:map <down> j
 :map <A-left> <A-h>
 :map <A-right> <A-l>
 :map <A-up>   <A-k>
 :map <A-down> <A-j>
-
-" ================ Ranger =======================
-let g:multi_cursor_use_default_mapping=0
-let g:multi_cursor_next_key='<A-j>'
-let g:multi_cursor_prev_key='<A-S-j>'
-let g:multi_cursor_skip_key='<A-k>'
-let g:multi_cursor_quit_key='<Esc>'
 
 " ================ Ranger =======================
 function! RangerMagic()

@@ -250,12 +250,12 @@ set statusline=\ %f%m%r%h%w\ %=%({%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"
 set guioptions-=T
 
 " ================ Alias =======================
-" Close file with SPACE + q
-nnoremap <Leader>q :q<CR>
-nnoremap <C-q> :q<CR>
+nnoremap <Leader>q :q<CR>:close<CR>
+nnoremap <C-q> :q<CR>:close<CR>
 
 " Save file with SPACE + w
 nnoremap <Leader>w :w<CR>
+nnoremap <C-s> :w<CR>
 
 " Stop that stupid window from popping up:
 map q: :q
@@ -351,12 +351,38 @@ function! LightLineFilename()
   return expand('%')
 endfunction
 
+function! MyTabFilename(n)
+  let buflist = tabpagebuflist(a:n)
+  let winnr = tabpagewinnr(a:n)
+  let bufnum = buflist[winnr - 1]
+  let bufname = expand('#'.bufnum.':t')
+  let buffullname = expand('#'.bufnum.':p')
+  let buffullnames = []
+  let bufnames = []
+  for i in range(1, tabpagenr('$'))
+    if i != a:n
+      let num = tabpagebuflist(i)[tabpagewinnr(i) - 1]
+      call add(buffullnames, expand('#' . num . ':p'))
+      call add(bufnames, expand('#' . num . ':t'))
+    endif
+  endfor
+  let i = index(bufnames, bufname)
+  if strlen(bufname) && i >= 0 && buffullnames[i] != buffullname
+    return substitute(buffullname, '.*/\([^/]\+/\)', '\1', '')
+  else
+    return strlen(bufname) ? bufname : '[No Name]'
+  endif
+endfunction
+
 let g:lightline = {
             \ 'active': {
             \   'right': [ [ 'lineinfo' ], ['percent'], [ 'filetype' ] ]
             \ },
             \ 'component': {
             \   'readonly': '%{&readonly?"":""}',
+            \ },
+            \ 'tab_component_function': {
+            \   'filename': 'MyTabFilename',
             \ },
             \ 'component_function': {
             \   'modified': 'LightLineModified',

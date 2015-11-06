@@ -25,7 +25,7 @@ fi
 export BG
 
 # Bind the vi command to the default $EDITOR
-alias vi=nvim
+alias vi=$EDITOR
 
 # Customize to your needs...
 #####
@@ -68,7 +68,7 @@ function ranger-cd {
 }
 alias rcd='ranger-cd'
 
-# Terminal to vim shortcut
+# Terminal to vi shortcut
 fancy-ctrl-z () {
   if [[ $#BUFFER -eq 0 ]]; then
     BUFFER="fg"
