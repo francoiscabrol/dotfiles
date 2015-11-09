@@ -3,3 +3,6 @@
 unix/files/.vim/bundle/*
 !unix/files/.vim/bundle/Vundle.vim
 unix/files/.vim/session
+unix/files/.vim/autoload
+unix/files/.nvim/autoload
+unix/files/.vim/plugged

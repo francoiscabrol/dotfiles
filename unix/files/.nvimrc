@@ -20,10 +20,6 @@ source ~/.vimrc
 :vnoremap <C-S-k> : m '<-2<CR>gv=gv
 :vnoremap <C-S-j> : m '>+1<CR>gv=gv
 
-" Set find in path key mapping
-:noremap <C-S>f :Ack -Qi
-:noremap <C-f> /
-
 " ================ NeoVim terminal =======================
 :tnoremap <Esc> <C-\><C-n>
 :tnoremap <C-h> <C-\><C-n><C-w>h

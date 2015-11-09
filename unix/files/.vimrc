@@ -28,69 +28,70 @@ set noerrorbells visualbell t_vb=
 autocmd GUIEnter * set visualbell t_vb=
 
 "================ Plug-ins ========================
-" Required Vundle setup
-filetype off
-set runtimepath+=~/.vim/bundle/Vundle.vim
-call vundle#rc()
+call plug#begin('~/.vim/plugged')
 
-Bundle 'gmarik/Vundle.vim'
-Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/syntastic'
-Bundle 'godlygeek/tabular'
-Bundle 'majutsushi/tagbar'
-Bundle 'mtscout6/vim-tagbar-css'
-Bundle 'itchyny/lightline.vim'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-git'
-Bundle 'airblade/vim-gitgutter'
-Bundle 'vim-scripts/indentLine.vim'
-Bundle 'terryma/vim-multiple-cursors'
-Bundle 'wannesm/wmgraphviz.vim'
-Bundle 'kien/ctrlp.vim'
-Bundle 'editorconfig/editorconfig-vim'
-Bundle 'francoiscabrol/vim-grep'
-Bundle 'mileszs/ack.vim'
-Bundle 'mhinz/vim-startify'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'tpope/vim-surround'
-Bundle 'junegunn/goyo.vim'
-Bundle 'junegunn/limelight.vim'
-Bundle 'zefei/vim-colortuner'
-Bundle 'jaxbot/semantic-highlight.vim'
+Plug 'gmarik/Vundle.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/syntastic'
+Plug 'godlygeek/tabular'
+Plug 'majutsushi/tagbar'
+Plug 'mtscout6/vim-tagbar-css'
+Plug 'itchyny/lightline.vim'
+Plug 'kchmck/vim-coffee-script'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-git'
+Plug 'airblade/vim-gitgutter'
+Plug 'vim-scripts/indentLine.vim'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'wannesm/wmgraphviz.vim'
+"Plug 'kien/ctrlp.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'francoiscabrol/vim-grep'
+Plug 'mileszs/ack.vim'
+Plug 'mhinz/vim-startify'
+Plug 'scrooloose/nerdcommenter'
+Plug 'tpope/vim-surround'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
+Plug 'zefei/vim-colortuner'
+Plug 'jaxbot/semantic-highlight.vim'
 
 "================ colors =======================
-Bundle 'lilydjwg/colorizer'
-Bundle 'KabbAmine/vCoolor.vim'
+Plug 'lilydjwg/colorizer'
+Plug 'KabbAmine/vCoolor.vim'
 
 "================ languages =======================
 "Bundle 'ktvoelker/sbt-vim'
-Bundle 'Shutnik/jshint2.vim'
+Plug 'Shutnik/jshint2.vim'
 "Bundle 'marijnh/tern_for_vim'
-Bundle 'moll/vim-node'
-Bundle 'heavenshell/vim-jsdoc'
-Bundle 'othree/yajs.vim'
-Bundle 'othree/javascript-libraries-syntax.vim'
+Plug 'moll/vim-node'
+Plug 'heavenshell/vim-jsdoc'
+Plug 'othree/yajs.vim'
+Plug 'othree/javascript-libraries-syntax.vim'
 
-Bundle 'mustache/vim-mustache-handlebars'
-Bundle 'peterhoeg/vim-qml'
-Bundle 'wavded/vim-stylus'
-Bundle 'briancollins/vim-jst'
-Bundle 'groenewege/vim-less'
-Bundle 'hail2u/vim-css3-syntax'
-Bundle 'plasticboy/vim-markdown'
-Bundle 'digitaltoad/vim-jade'
-Bundle 'aklt/plantuml-syntax'
+Plug 'mustache/vim-mustache-handlebars'
+Plug 'peterhoeg/vim-qml'
+Plug 'wavded/vim-stylus'
+Plug 'briancollins/vim-jst'
+Plug 'groenewege/vim-less'
+Plug 'hail2u/vim-css3-syntax'
+Plug 'plasticboy/vim-markdown'
+Plug 'digitaltoad/vim-jade'
+Plug 'aklt/plantuml-syntax'
 
 "================ colorscheme =======================
-Bundle 'NLKNguyen/papercolor-theme'
-Bundle 'w0ng/vim-hybrid'
-Bundle 'junegunn/seoul256.vim'
-Bundle 'trusktr/seti.vim'
-Bundle 'altercation/vim-colors-solarized'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'w0ng/vim-hybrid'
+Plug 'junegunn/seoul256.vim'
+Plug 'trusktr/seti.vim'
+Plug 'altercation/vim-colors-solarized'
 
 "================ Motion =======================
-Bundle 'Lokaltog/vim-easymotion'
+Plug 'Lokaltog/vim-easymotion'
+" Add plugins to &runtimepath
+call plug#end()
 
 " enable filetype plugins
 filetype plugin on
@@ -198,13 +199,19 @@ set backspace=indent,eol,start
 " ================ Startify =======================
 map <leader>s :Startify<CR>
 autocmd User Startified setlocal buftype=
-let g:ctrlp_reuse_window = 'startify'
+"let g:ctrlp_reuse_window = 'startify'
 let g:startify_session_persistence = 1
 let g:startify_change_to_dir = 1
 let g:startify_change_to_vcs_root = 1
 
 " ================ CtrP =======================
-nmap <C-b> :CtrlPBuffer<CR>
+"nmap <C-b> :CtrlPBuffer<CR>
+
+" ================ FZF =======================
+nmap <C-p> :GitFiles<CR>
+nmap <C-f> :FZF<CR>
+nmap <C-b> :Buffers<CR>
+nmap <C-c> :Commands<CR>
 
 " ================ Tabulation =======================
 " convert tabs to spaces
@@ -265,8 +272,8 @@ nmap <Leader>P "-P
 vmap <C-x> d
 map <C-x> dd
 " map <C-v> P
-vmap <C-c> y
-nmap <C-c> yy
+"vmap <C-c> y
+"nmap <C-c> yy
 
 " don't show intro
 "set shortmess+=I
