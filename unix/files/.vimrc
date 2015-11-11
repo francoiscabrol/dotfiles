@@ -53,10 +53,15 @@ Plug 'mileszs/ack.vim'
 Plug 'mhinz/vim-startify'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
+Plug 'jaxbot/semantic-highlight.vim'
+Plug 'junegunn/rainbow_parentheses.vim'
+Plug 'junegunn/vim-peekaboo'
+
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
-Plug 'zefei/vim-colortuner'
-Plug 'jaxbot/semantic-highlight.vim'
 
 "================ colors =======================
 Plug 'lilydjwg/colorizer'
@@ -88,6 +93,7 @@ Plug 'junegunn/seoul256.vim'
 Plug 'trusktr/seti.vim'
 Plug 'altercation/vim-colors-solarized'
 
+Plug 'zefei/vim-colortuner'
 "================ Motion =======================
 Plug 'Lokaltog/vim-easymotion'
 " Add plugins to &runtimepath
@@ -248,8 +254,8 @@ set statusline=\ %f%m%r%h%w\ %=%({%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"
 set guioptions-=T
 
 " ================ Alias =======================
-nnoremap <Leader>q :q<CR>:close<CR>
-nnoremap <C-q> :q<CR>:close<CR>
+nnoremap <Leader>q :q<CR>:cclose<CR>
+nnoremap <C-q> :q<CR>:cclose<CR>
 
 " Save file with SPACE + w
 nnoremap <Leader>w :w<CR>
