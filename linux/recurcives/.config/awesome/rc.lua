@@ -393,14 +393,14 @@ globalkeys = awful.util.table.join(
 
     -- tag Control
     -- -- delete tag
-    awful.key({ modkey, "Control" }, "d",
+    awful.key({ modkey, "Mod1" }, "d",
             function ()
                -- table.remove(tags, awful.tag.selected(mouse.screen).name )
                 awful.tag.delete()
             end),
 
     -- -- rename tag
-    awful.key({ modkey, "Control" }, "w",
+    awful.key({ modkey, "Mod1" }, "r",
               function ()
                  awful.prompt.run({ prompt = "New tag name: " },
                                   mypromptbox[mouse.screen].widget,
@@ -418,7 +418,7 @@ globalkeys = awful.util.table.join(
               end),
 
     -- -- add new tag
-   awful.key({ modkey, "Control" }, "a",
+   awful.key({ modkey, "Mod1" }, "n",
         function ()
                   awful.prompt.run({ prompt = "New tag name: " },
                     mypromptbox[mouse.screen].widget,
