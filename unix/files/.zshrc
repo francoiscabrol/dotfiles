@@ -105,6 +105,10 @@ grepi() {
    $EDITOR $((grep -n $@ | sed 's/:/ /g' | percol | awk '{print "+"$2 " " $1}') || '-c quit')
 }
 
+agi() {
+   $EDITOR $((ag $@ | sed 's/:/ /g' | fzf | awk '{print "+"$2 " " $1}') || '-c quit')
+}
+
 #####
 # For MacOS
 #####
@@ -115,8 +119,11 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 # For note taking
-nls() {
+nlspercol() {
     $EDITOR "$(grep --include="*.md" -R -l -i "$*" $NOTES | sed 's/\$NOTES\///g' | percol)"
+}
+nls() {
+    $(agi $@ $NOTES)
 }
 alias note='terminal_velocity'
 
