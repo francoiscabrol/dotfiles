@@ -49,16 +49,19 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'francoiscabrol/vim-grep'
+Plug 'francoiscabrol/ranger.vim'
 Plug 'mileszs/ack.vim'
 Plug 'mhinz/vim-startify'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
 Plug 'jaxbot/semantic-highlight.vim'
 Plug 'junegunn/rainbow_parentheses.vim'
+Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/vim-peekaboo'
-
+Plug 'matze/vim-move'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'mbbill/undotree'
 
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
@@ -120,14 +123,14 @@ hi CursorLine ctermbg=lightgrey
 set ruler
 
 "================ Colors and theme ========================
-colorscheme PaperColor
+highlight Normal ctermbg=NONE
+highlight nonText ctermbg=NONE
+colorscheme Seoul256
 if $BG == 'dark'
     set background=dark
 else
     set background=light
 endif
-highlight Normal ctermbg=NONE
-highlight nonText ctermbg=NONE
 
 "================ Color palette =======================
 let g:vcoolor_disable_mappings = 1
@@ -305,15 +308,7 @@ nnoremap <leader>n :NERDTree<CR>
 nnoremap <leader>nf :NERDTreeFind<CR>
 
 " ================ Ranger =======================
-fun! RangerChooser()
-    exec "silent !ranger --choosefile=/tmp/chosenfile " . expand("%:p:h")
-    if filereadable('/tmp/chosenfile')
-        exec 'edit ' . system('cat /tmp/chosenfile')
-        call system('rm /tmp/chosenfile')
-    endif
-    redraw!
-endfun
-map <leader>f :call RangerChooser()<CR>
+
 
 " ================ TagBar=======================
 nmap <leader>t :TagbarToggle<CR>
