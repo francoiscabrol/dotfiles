@@ -178,7 +178,7 @@ set ignorecase
 " a buffer is marked as ‘hidden’ if it has unsaved changes, and it is not currently loaded in a window
 " if you try and quit Vim while there are hidden buffers, you will raise an error:
 " E162 : No write since last change for buffer “a.txt”
-"set hidden
+set hidden
 
 "================ Folding =======================
 " disable folding because it is evil
@@ -318,7 +318,7 @@ nmap <silent> <leader>e :e $MYVIMRC<CR>
 nmap <silent> <leader>r :so $MYVIMRC<CR>
 
 " Delete buffer when they are hidden
-autocmd BufEnter * set bufhidden=delete
+"autocmd BufEnter * set bufhidden=delete
 
 " Write a file with the sudo right
 cmap w!! w !sudo tee % >/dev/null
@@ -372,6 +372,7 @@ function! MyTabFilename(n)
 endfunction
 
 let g:lightline = {
+            \ 'colorscheme': 'seoul256',
             \ 'active': {
             \   'right': [ [ 'lineinfo' ], ['percent'], [ 'filetype' ] ]
             \ },
