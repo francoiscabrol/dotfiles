@@ -1,6 +1,12 @@
 source ~/.vimrc
 
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+let g:quickhl_manual_colors = [
+    \ "gui=bold ctermfg=16   ctermbg=153 guibg=#747070 guibg=#ffffff",
+    \ "gui=bold ctermfg=16   ctermbg=1   guibg=#FFBC78 guifg=#ffffff",
+    \ "gui=bold ctermfg=16   ctermbg=2   guibg=#72B9FF guifg=#ffffff",
+    \ "gui=bold ctermfg=16   ctermbg=3   guibg=#3EA06F guifg=#ffffff",
+    \ ]
+"let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 " ================ Pane separator =======================
 " set fillchars+=vert:\

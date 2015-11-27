@@ -30,7 +30,8 @@ autocmd GUIEnter * set visualbell t_vb=
 "================ Plug-ins ========================
 call plug#begin('~/.vim/plugged')
 
-Plug 'gmarik/Vundle.vim'
+Plug 'rbgrouleff/bclose.vim'
+Plug 'vim-scripts/quickhl.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
 Plug 'junegunn/vim-easy-align'
@@ -89,6 +90,8 @@ Plug 'plasticboy/vim-markdown'
 Plug 'digitaltoad/vim-jade'
 Plug 'aklt/plantuml-syntax'
 
+Plug 'ensime/ensime-vim'
+
 "================ colorscheme =======================
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'w0ng/vim-hybrid'
@@ -125,7 +128,7 @@ set ruler
 "================ Colors and theme ========================
 highlight Normal ctermbg=NONE
 highlight nonText ctermbg=NONE
-colorscheme Seoul256
+colorscheme seoul256
 if $BG == 'dark'
     set background=dark
 else
@@ -148,6 +151,11 @@ vnoremap <S-Tab> <
 let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
+
+"================ Quckhl ========================
+nmap <leader>j <Plug>(quickhl-manual-this)
+xmap <leader>j <Plug>(quickhl-manual-this)
+nmap <leader>k <Plug>(quickhl-cword-toggle)
 
 "================ Easy align =======================
 " Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -291,7 +299,7 @@ set splitbelow
 set splitright
 
 " Tired of clearing highlighted searches by searching for “ldsfhjkhgakjks”? Use this:
-nmap <silent> <leader>/ :nohlsearch<CR>:cclose<CR>
+nmap <silent> <leader>/ :nohlsearch<CR>:cclose<CR>:QuickhlManualReset<CR>
 
 " ================ NERDTree =======================
 " Make nerdtree look nice
@@ -390,9 +398,6 @@ let g:lightline = {
             \ 'subseparator': { 'left': '|', 'right': '|' }
             \ }
 
-            "\ 'separator': { 'left': '', 'right': '' },
-            "\ 'subseparator': { 'left': '', 'right': '' }
-            "
 " ================ Syntastic =======================
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
