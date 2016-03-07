@@ -39,28 +39,21 @@ mkdir -p $OLDDOT_DIR
 # For each os
 for os in $OS_DIR; do
     os_dir="$DOT_DIR/$os"
-    files="$os_dir/files"
     # Create symlinks for files
+    files="$os_dir/files"
     for f in `ls -a $files`; do
         src="$files/$f"
         dest="$HOME/$f"
         copy="$OLDDOT_DIR/$f"
         create_symlink $src $dest $copy
     done
-    recurciveFolders="$os_dir/recurcives"
-    for f in `find $recurciveFolders -type d`; do
-        src="$f"
-        basename=${src/$recurciveFolders/}
-        dest="$HOME$basename"
-        copy="$OLDDOT_DIR$basename"
-        createFolder $dest
-        createFolder $copy
-    done
-    for f in `find $recurciveFolders -type f`; do
-        src="$f"
-        basename=${src/$recurciveFolders/}
-        dest="$HOME$basename"
-        copy="$OLDDOT_DIR$basename"
+
+    # Create symlinks for config
+    config="$os_dir/config"
+    for f in `ls -a $config`; do
+        src="$config/$f"
+        dest="$HOME/.config/$f"
+        copy="$OLDDOT_DIR/.config/$f"
         create_symlink $src $dest $copy
     done
 

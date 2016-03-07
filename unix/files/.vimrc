@@ -64,6 +64,8 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'mbbill/undotree'
 
+Plug 'fatih/vim-go'
+
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 
