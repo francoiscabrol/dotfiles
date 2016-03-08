@@ -7,3 +7,6 @@ unix/files/.vim/autoload
 unix/files/.nvim/autoload
 unix/files/.vim/plugged
 unix/files/.nvim/shada
+bookmarks
+tagged
+history
