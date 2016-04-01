@@ -3,5 +3,6 @@ gnome-settings-daemon &      # handles themes, starts gnome-screensaver. You may
 nm-applet &                  # assuming you're using Network Manager
 gnome-volume-manager &       # for mounting CDs, USB sticks, and such
 eval `gnome-keyring-daemon`  # SSH/GPG agent
-exec awesome                 # awesome receives xinit's process id; when it terminates, X will be terminated#!/bin/sh
+# exec awesome                 # awesome receives xinit's process id; when it terminates, X will be terminated#!/bin/sh
+exec i3
 /usr/bin/vmware-user &
