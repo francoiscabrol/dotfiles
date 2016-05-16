@@ -1,3 +1,1 @@
-java -Dsbt.main.class=sbt.ScriptMain \
-     -Dsbt.boot.directory=/home/user/.sbt/boot \
-     -jar sbt-launch.jar "$@"
+java -Dsbt.main.class=sbt.ScriptMain -Dsbt.boot.directory=/home/fcabrol/.sbt/boot -jar sbt-launch.jar "$@"
