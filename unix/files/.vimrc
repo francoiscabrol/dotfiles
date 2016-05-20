@@ -35,7 +35,6 @@ Plug 'vim-scripts/quickhl.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
 Plug 'junegunn/vim-easy-align'
-Plug 'majutsushi/tagbar'
 Plug 'mtscout6/vim-tagbar-css'
 Plug 'itchyny/lightline.vim'
 Plug 'kchmck/vim-coffee-script'
@@ -60,8 +59,6 @@ Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/vim-peekaboo'
 Plug 'matze/vim-move'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
 Plug 'mbbill/undotree'
 
 Plug 'fatih/vim-go'
@@ -382,7 +379,7 @@ function! MyTabFilename(n)
 endfunction
 
 let g:lightline = {
-            \ 'colorscheme': 'seoul256',
+            \ 'colorscheme': 'solarized',
             \ 'active': {
             \   'right': [ [ 'lineinfo' ], ['percent'], [ 'filetype' ] ]
             \ },
