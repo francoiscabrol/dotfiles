@@ -1,5 +1,5 @@
 
-let g:ranger_map_keys = 0
+let g:ranger_map_keys = 1
 
 " use vim, not vi api
 set nocompatible
@@ -47,7 +47,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'vim-scripts/indentLine.vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'wannesm/wmgraphviz.vim'
-"Plug 'kien/ctrlp.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'editorconfig/editorconfig-vim'
@@ -76,7 +75,6 @@ Plug 'KabbAmine/vCoolor.vim'
 "================ languages =======================
 "Bundle 'ktvoelker/sbt-vim'
 Plug 'Shutnik/jshint2.vim'
-"Bundle 'marijnh/tern_for_vim'
 Plug 'moll/vim-node'
 Plug 'heavenshell/vim-jsdoc'
 Plug 'othree/yajs.vim'
@@ -92,7 +90,12 @@ Plug 'plasticboy/vim-markdown'
 Plug 'digitaltoad/vim-jade'
 Plug 'aklt/plantuml-syntax'
 
-Plug 'ensime/ensime-vim'
+function! DoRemote(arg)
+  UpdateRemotePlugins
+endfunction
+Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+
+let g:deoplete#enable_at_startup = 1
 
 "================ colorscheme =======================
 Plug 'NLKNguyen/papercolor-theme'
@@ -207,8 +210,8 @@ set history=100
 set showcmd
 
 " config command completion
-set wildmode=list:longest
 set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
+set wildmode=list:longest
 
 " allow backspace to delete end of line, indent and start of line characters
 set backspace=indent,eol,start

@@ -15,9 +15,10 @@ source $HOME/.bash_aliases
 export TERM=xterm-256color
 
 BG=dark
+EDITOR=nvim
 
 # Check if we are in webstorm
-if [[ $(env | grep -i storm | wc -l) > 1 ]]; then
+if [[ $(env | grep -i storm | wc -l) > 0 ]]; then
     EDITOR=wstorm
     BG=dark
 fi
@@ -106,7 +107,11 @@ grepi() {
 }
 
 agi() {
-   $EDITOR $((ag $@ | sed 's/:/ /g' | fzf | awk '{print "+"$2 " " $1}') || '-c quit')
+   if [[ $EDITOR == wstorm ]]; then
+        $EDITOR $(ag $@ | sed 's/:/ /g' | fzf | awk '{print "--line "$2 " " $1}')
+   else
+        $EDITOR $((ag $@ | sed 's/:/ /g' | fzf | awk '{print "+"$2 " " $1}') || '-c quit')
+   fi
 }
 
 #####

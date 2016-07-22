@@ -27,12 +27,14 @@
 [profiles]
   [[default]]
     palette = "#121212:#fa2573:#98e123:#dfd460:#1080d0:#8700ff:#43a8d0:#bbbbbb:#555555:#f6669d:#b1e05f:#fff26d:#00afff:#af87ff:#51ceff:#ffffff"
-    font = Meslo LG M for Powerline 10
+    copy_on_selection = True
     background_image = None
+    background_darkness = 0.8
+    background_type = transparent
     use_system_font = False
     foreground_color = "#bbbbbb"
     show_titlebar = False
-    copy_on_selection = True
+    font = Meslo LG M for Powerline 10
     background_color = "#001e29"
     scrollback_infinite = True
   [[light]]
