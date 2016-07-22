@@ -7,7 +7,7 @@ import sys.process._
 
 object Script {
 
-  def getListOfFiles(dir: File):List[File] = dir.listFiles.filter(_.isDirectory).toList
+def getListOfFiles(dir: File):List[File] = dir.listFiles.filter(_.isDirectory).filter(!_.isHidden).toList
   def execute(cmd: String, folder: File) = sys.process.Process(cmd, folder).!!
   def isUpToDate(folder: File) = execute("git status", folder).contains("up-to-date")
 
@@ -15,7 +15,7 @@ object Script {
     val folders = getListOfFiles(new File("."))
     folders foreach((folder) => {
         print(folder + ": ")
-        println(isUpToDate(folder))
+        if (isUpToDate(folder)) println("up-to-date") else println("not")
     })
   }
 }
