@@ -1,0 +1,61 @@
+#!/usr/bin/env scala
+
+import java.io.File
+import sys.process._
+
+object Script {
+
+  implicit class stringColors(val s: String) {
+    val RED = "\u001B[31m"
+    val GREEN = "\u001B[32m"
+    val WHITE = "\u001B[37m"
+    val BLUE = "\u001B[34m"
+    val RESET = "\u001B[0m"
+
+    def red = RED + s + RESET
+    def green = GREEN + s + RESET
+    def blue = BLUE + s + RESET
+  }
+
+  implicit class FileDecored(file: File) {
+    def listOfFiles: List[File] = file.listFiles.filter(_.isDirectory).filter(!_.isHidden).toList
+    def isGitRepo: Boolean = file.listFiles.exists(f => f.getName == ".git")
+  }
+
+  object Cmd {
+    def execute(cmd: String, dir: File): String = {
+      try {
+          sys.process.Process(cmd, dir).!!
+      } catch {
+          case e: Exception => "error"
+      }
+    }
+  }
+
+  object Git {
+    def status(dir: File): String = {
+      if (!dir.isGitRepo)
+        return "Not a git repo"
+      Cmd.execute("git status", dir)
+    }
+    def shortStatus(dir: File): String = status(dir) match {
+        case x if x.contains("not staged") => "Need to stage files".red
+        case x if x.contains("up-to-date") => "Up to date"
+        case x if x.contains("git pull") => "Need to pull".blue
+        case x if x.contains("nothing to commit") => "nothing to commit. Not synchonized with a remote"
+        case "error" => "well... something unusual".red
+        case x => x
+      }
+  }
+
+  def main(args: Array[String]) {
+    val directories = new File(".").listOfFiles
+    directories foreach((dir) => {
+        val state = Git.shortStatus(dir)
+        println(dir + ": " + state.green)
+    })
+  }
+}
+
+Script.main(args)
+

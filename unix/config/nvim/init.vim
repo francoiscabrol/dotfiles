@@ -1,4 +1,3 @@
-
 let g:ranger_map_keys = 1
 
 " use vim, not vi api
@@ -36,23 +35,16 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'rbgrouleff/bclose.vim'
 Plug 'vim-scripts/quickhl.vim'
 Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/syntastic'
-Plug 'junegunn/vim-easy-align'
-Plug 'mtscout6/vim-tagbar-css'
 Plug 'itchyny/lightline.vim'
-Plug 'kchmck/vim-coffee-script'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-scripts/indentLine.vim'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'wannesm/wmgraphviz.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'francoiscabrol/vim-grep'
 Plug 'francoiscabrol/ranger.vim'
-Plug 'mileszs/ack.vim'
 Plug 'mhinz/vim-startify'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
@@ -70,24 +62,24 @@ Plug 'junegunn/limelight.vim'
 
 "================ colors =======================
 Plug 'lilydjwg/colorizer'
-Plug 'KabbAmine/vCoolor.vim'
+"Plug 'KabbAmine/vCoolor.vim'
 
 "================ languages =======================
 "Bundle 'ktvoelker/sbt-vim'
-Plug 'Shutnik/jshint2.vim'
-Plug 'moll/vim-node'
-Plug 'heavenshell/vim-jsdoc'
-Plug 'othree/yajs.vim'
-Plug 'othree/javascript-libraries-syntax.vim'
+"Plug 'Shutnik/jshint2.vim'
+"Plug 'moll/vim-node'
+"Plug 'heavenshell/vim-jsdoc'
+"Plug 'othree/yajs.vim'
+"Plug 'othree/javascript-libraries-syntax.vim'
 
-Plug 'mustache/vim-mustache-handlebars'
-Plug 'peterhoeg/vim-qml'
+"Plug 'mustache/vim-mustache-handlebars'
+"Plug 'peterhoeg/vim-qml'
 Plug 'wavded/vim-stylus'
-Plug 'briancollins/vim-jst'
-Plug 'groenewege/vim-less'
+"Plug 'briancollins/vim-jst'
+"Plug 'groenewege/vim-less'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'plasticboy/vim-markdown'
-Plug 'digitaltoad/vim-jade'
+"Plug 'digitaltoad/vim-jade'
 Plug 'aklt/plantuml-syntax'
 
 function! DoRemote(arg)
@@ -106,7 +98,7 @@ Plug 'altercation/vim-colors-solarized'
 
 Plug 'zefei/vim-colortuner'
 "================ Motion =======================
-Plug 'Lokaltog/vim-easymotion'
+"Plug 'Lokaltog/vim-easymotion'
 " Add plugins to &runtimepath
 call plug#end()
 
@@ -232,16 +224,17 @@ nmap <C-p> :GitFiles<CR>
 nmap <C-f> :FZF<CR>
 nmap <C-b> :Buffers<CR>
 nmap <C-c> :Commands<CR>
+nmap <leader>t :Filetypes<CR>
 
 " ================ Tabulation =======================
 " convert tabs to spaces
 set expandtab
 
 " set tab size
-set tabstop=4
+set tabstop=2
 
 " the number of spaces inserted for a tab
-set shiftwidth=4
+set shiftwidth=2
 
 " Set exception for Scala
 au BufNewFile,BufRead *.scala set tabstop=2
@@ -324,7 +317,6 @@ nnoremap <leader>nf :NERDTreeFind<CR>
 
 
 " ================ TagBar=======================
-nmap <leader>t :TagbarToggle<CR>
 
 " Quickly edit/reload the vimrc file
 nmap <silent> <leader>e :e $MYVIMRC<CR>
@@ -482,3 +474,6 @@ let g:quickhl_manual_colors = [
 :map <A-right> <A-l>
 :map <A-up>   <A-k>
 :map <A-down> <A-j>
+
+let g:ranger_map_keys = 1
+
