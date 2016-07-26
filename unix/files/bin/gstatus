@@ -35,7 +35,7 @@ object Script {
   object Git {
     def status(dir: File): String = {
       if (!dir.isGitRepo)
-        return "Not a git repo"
+        return "Not a git repo".blue
       Cmd.execute("git status", dir)
     }
     def shortStatus(dir: File): String = status(dir) match {
