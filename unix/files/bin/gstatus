@@ -25,7 +25,10 @@ object Script {
   object Cmd {
     def execute(cmd: String, dir: File): String = {
       try {
-          sys.process.Process(cmd, dir).!!
+        val stdout = new StringBuilder
+        val stderr = new StringBuilder
+        val status = Process(cmd, dir) ! ProcessLogger(stdout append _, stderr append _)
+        stdout.toString + stderr.toString
       } catch {
           case e: Exception => "error"
       }
@@ -36,6 +39,7 @@ object Script {
     def status(dir: File): String = {
       if (!dir.isGitRepo)
         return "Not a git repo".blue
+      Cmd.execute("git fetch", dir)
       Cmd.execute("git status", dir)
     }
     def shortStatus(dir: File): String = status(dir) match {
