@@ -22,25 +22,22 @@ object Script {
     def isGitRepo: Boolean = file.listFiles.exists(f => f.getName == ".git")
   }
 
-  object Cmd {
-    def execute(cmd: String, dir: File): String = {
-      try {
-        val stdout = new StringBuilder
-        val stderr = new StringBuilder
-        val status = Process(cmd, dir) ! ProcessLogger(stdout append _, stderr append _)
-        stdout.toString + stderr.toString
-      } catch {
-          case e: Exception => "error"
-      }
-    }
+  def run (processBuilder:ProcessBuilder) = {
+    val stdout = new StringBuilder
+    val stderr = new StringBuilder
+    val status = processBuilder ! ProcessLogger(stdout append _, stderr append _)
+    stdout.toString + stderr.toString
   }
 
   object Git {
+    def branch(dir: File): String = {
+      run(Process("git branch", dir) #| "grep \\*")
+    }
     def status(dir: File): String = {
       if (!dir.isGitRepo)
         return "Not a git repo".blue
-      Cmd.execute("git fetch", dir)
-      Cmd.execute("git status", dir)
+      run(Process("git fetch", dir))
+      run(Process("git status", dir))
     }
     def shortStatus(dir: File): String = status(dir) match {
         case x if x.contains("not staged") => "Need to stage files".red
@@ -54,9 +51,14 @@ object Script {
 
   def main(args: Array[String]) {
     val directories = new File(".").listOfFiles
-    directories foreach((dir) => {
+    val (gitRepos, notGitRepos) = directories.partition(_.isGitRepo)
+    notGitRepos foreach((dir) => {
+        println(dir + ": Not a Git repo")
+    })
+    gitRepos foreach((dir) => {
         val state = Git.shortStatus(dir)
-        println(dir + ": " + state.green)
+        val branch = Git.branch(dir).trim
+        println(dir + "-" + branch.blue + ": " + state.green)
     })
   }
 }
