@@ -2,6 +2,9 @@
 
 import java.io.File
 import sys.process._
+import scala.concurrent.ExecutionContext.Implicits.global
+import concurrent.{Await, Future}
+import scala.concurrent.duration._
 
 object Script {
 
@@ -55,11 +58,14 @@ object Script {
     notGitRepos foreach((dir) => {
         println(dir + ": Not a Git repo")
     })
-    gitRepos foreach((dir) => {
-        val state = Git.shortStatus(dir)
-        val branch = Git.branch(dir).trim
-        println(dir + "-" + branch.blue + ": " + state.green)
-    })
+    val futures = gitRepos map((dir) => {
+        Future {
+          val state = Git.shortStatus(dir)
+          val branch = Git.branch(dir).trim
+          dir + "-" + branch.blue + ": " + state.green
+        }
+      })
+    Await.result(Future.sequence(futures), 5.seconds) foreach println
   }
 }
 
