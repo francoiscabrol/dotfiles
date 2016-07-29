@@ -1,4 +1,6 @@
-#!/usr/bin/env scala
+#!/bin/sh
+exec scala -savecompiled "$0" "$@"
+!#
 
 import java.io.File
 import sys.process._
@@ -6,7 +8,24 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import concurrent.{Await, Future}
 import scala.concurrent.duration._
 
-object Script {
+def run (processBuilder: ProcessBuilder): String = {
+  val stdout = new StringBuilder
+  val stderr = new StringBuilder
+  val status = processBuilder ! ProcessLogger(stdout append _, stderr append _)
+  stdout.toString + stderr.toString
+}
+
+object Git {
+  def branch(dir: File): String = {
+    run(Process("git branch", dir) #| "grep \\*")
+  }
+  def status(dir: File): String = {
+    run(Process("git fetch", dir))
+    run(Process("git status", dir))
+  }
+}
+
+object Gstatus {
 
   implicit class stringColors(val s: String) {
     val RED = "\u001B[31m"
@@ -21,53 +40,39 @@ object Script {
   }
 
   implicit class FileDecored(file: File) {
-    def listOfFiles: List[File] = file.listFiles.filter(_.isDirectory).filter(!_.isHidden).toList
+    def listDirectories: List[File] = file.listFiles.filter(_.isDirectory).toList
     def isGitRepo: Boolean = file.listFiles.exists(f => f.getName == ".git")
   }
 
-  def run (processBuilder:ProcessBuilder) = {
-    val stdout = new StringBuilder
-    val stderr = new StringBuilder
-    val status = processBuilder ! ProcessLogger(stdout append _, stderr append _)
-    stdout.toString + stderr.toString
-  }
-
-  object Git {
-    def branch(dir: File): String = {
-      run(Process("git branch", dir) #| "grep \\*")
+  def gitStatus(dir: File): String = Git.status(dir) match {
+      case x if x.contains("not staged") => "Need to stage files".red
+      case x if x.contains("up-to-date") => "Up to date"
+      case x if x.contains("git pull") => "Need to pull".blue
+      case x if x.contains("nothing to commit") => "nothing to commit. Not synchonized with a remote"
+      case "error" => "well... something unusual".red
+      case x => x
     }
-    def status(dir: File): String = {
-      if (!dir.isGitRepo)
-        return "Not a git repo".blue
-      run(Process("git fetch", dir))
-      run(Process("git status", dir))
-    }
-    def shortStatus(dir: File): String = status(dir) match {
-        case x if x.contains("not staged") => "Need to stage files".red
-        case x if x.contains("up-to-date") => "Up to date"
-        case x if x.contains("git pull") => "Need to pull".blue
-        case x if x.contains("nothing to commit") => "nothing to commit. Not synchonized with a remote"
-        case "error" => "well... something unusual".red
-        case x => x
-      }
-  }
 
-  def main(args: Array[String]) {
-    val directories = new File(".").listOfFiles
-    val (gitRepos, notGitRepos) = directories.partition(_.isGitRepo)
-    notGitRepos foreach((dir) => {
-        println(dir + ": Not a Git repo")
-    })
-    val futures = gitRepos map((dir) => {
+  def gitInformations(directories: List[File]): List[String] = {
+    val futures = directories map((dir) => {
         Future {
-          val state = Git.shortStatus(dir)
+          val state = gitStatus(dir)
           val branch = Git.branch(dir).trim
           dir + "-" + branch.blue + ": " + state.green
         }
       })
-    Await.result(Future.sequence(futures), 5.seconds) foreach println
+    Await.result(Future.sequence(futures), 10.seconds)
+  }
+
+  def main(args: Array[String]) {
+    val directories = new File(".").listDirectories.filter(!_.isHidden)
+    val (gitRepos, notGitRepos) = directories.partition(_.isGitRepo)
+    notGitRepos foreach((dir) => {
+        println(dir + ": Not a Git repo")
+    })
+    gitInformations(gitRepos) foreach println
   }
 }
 
-Script.main(args)
+Gstatus.main(args)
 
