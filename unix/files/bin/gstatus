@@ -7,12 +7,25 @@ import sys.process._
 import scala.concurrent.ExecutionContext.Implicits.global
 import concurrent.{Await, Future}
 import scala.concurrent.duration._
+import java.util.concurrent.TimeoutException
 
 def run (processBuilder: ProcessBuilder): String = {
   val stdout = new StringBuilder
   val stderr = new StringBuilder
   val status = processBuilder ! ProcessLogger(stdout append _, stderr append _)
   stdout.toString + stderr.toString
+}
+
+case class Mwait(message: String) {
+  def start = {
+    print(message)
+    this
+  }
+
+  def done() {
+    println("\r" +  " " * message.size)
+  }
+
 }
 
 object Git {
@@ -56,8 +69,11 @@ object Gstatus {
   def gitInformations(directories: List[File]): List[String] = {
     val futures = directories map((dir) => {
         Future {
-          val state = gitStatus(dir)
-          val branch = Git.branch(dir).trim
+          val combinedFuture = for {
+              r1 <- Future { gitStatus(dir) }
+              r2 <- Future { Git.branch(dir).trim }
+            } yield (r1, r2)
+          val (state, branch) = Await.result(combinedFuture, 10.seconds)
           dir + "-" + branch.blue + ": " + state.green
         }
       })
@@ -65,12 +81,19 @@ object Gstatus {
   }
 
   def main(args: Array[String]) {
+    val mWait = Mwait("wait").start
     val directories = new File(".").listDirectories.filter(!_.isHidden)
     val (gitRepos, notGitRepos) = directories.partition(_.isGitRepo)
     notGitRepos foreach((dir) => {
         println(dir + ": Not a Git repo")
     })
-    gitInformations(gitRepos) foreach println
+    try {
+      val r = gitInformations(gitRepos)
+      mWait.done
+      r foreach println
+    } catch {
+      case _: TimeoutException => println("Timeout")
+    }
   }
 }
 
