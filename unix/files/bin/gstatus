@@ -8,6 +8,9 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import concurrent.{Await, Future}
 import scala.concurrent.duration._
 import java.util.concurrent.TimeoutException
+import scala.actors.Actor
+import scala.actors.Actor._
+import util.control.Breaks._
 
 def run (processBuilder: ProcessBuilder): String = {
   val stdout = new StringBuilder
@@ -17,13 +20,31 @@ def run (processBuilder: ProcessBuilder): String = {
 }
 
 case class Mwait(message: String) {
+  val thread = new Thread {
+    override def run {
+      print(".")
+      breakable {
+        while(true) {
+          try {
+            Thread.sleep(1000)
+            print(".")
+          } catch {
+            case _: Throwable => break
+          }
+        }
+      }
+    }
+  }
+
   def start = {
     print(message)
+    thread.start
     this
   }
 
   def done() {
-    println("\r" +  " " * message.size)
+    thread.interrupt()
+    print("\r")
   }
 
 }
@@ -81,7 +102,7 @@ object Gstatus {
   }
 
   def main(args: Array[String]) {
-    val mWait = Mwait("wait").start
+    val mWait = Mwait("Please wait").start
     val directories = new File(".").listDirectories.filter(!_.isHidden)
     val (gitRepos, notGitRepos) = directories.partition(_.isGitRepo)
     notGitRepos foreach((dir) => {
