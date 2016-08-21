@@ -23,14 +23,13 @@ case class Mwait(message: String) {
   val thread = new Thread {
     override def run {
       print(".")
-      breakable {
-        while(true) {
-          try {
-            Thread.sleep(1000)
-            print(".")
-          } catch {
-            case _: Throwable => break
-          }
+      var done = true
+      while(done) {
+        try {
+          Thread.sleep(1000)
+          print(".")
+        } catch {
+          case _: Throwable => done = false
         }
       }
     }
@@ -105,12 +104,14 @@ object Gstatus {
     val mWait = Mwait("Please wait").start
     val directories = new File(".").listDirectories.filter(!_.isHidden)
     val (gitRepos, notGitRepos) = directories.partition(_.isGitRepo)
+    mWait.done
     notGitRepos foreach((dir) => {
         println(dir + ": Not a Git repo")
     })
+    val mWait2 = Mwait("Please wait").start
     try {
       val r = gitInformations(gitRepos)
-      mWait.done
+      mWait2.done
       r foreach println
     } catch {
       case _: TimeoutException => println("Timeout")
