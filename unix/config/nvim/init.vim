@@ -1,5 +1,3 @@
-let g:ranger_map_keys = 1
-
 " use vim, not vi api
 set nocompatible
 
@@ -62,7 +60,7 @@ Plug 'junegunn/limelight.vim'
 
 "================ colors =======================
 Plug 'lilydjwg/colorizer'
-"Plug 'KabbAmine/vCoolor.vim'
+Plug 'KabbAmine/vCoolor.vim'
 
 "================ languages =======================
 "Bundle 'ktvoelker/sbt-vim'
@@ -86,10 +84,13 @@ function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
 Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
-
 let g:deoplete#enable_at_startup = 1
 
-"================ colorscheme =======================
+"================ Git =======================
+com! Undo :GitGutterUndoHunk
+com! PreviewChanges :GitGutterPreviewHunk
+
+"================ Colorscheme =======================
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'w0ng/vim-hybrid'
 Plug 'junegunn/seoul256.vim'
@@ -122,19 +123,8 @@ hi CursorLine ctermbg=lightgrey
 " always show cursor
 set ruler
 
-"================ Colors and theme ========================
-highlight Normal ctermbg=NONE
-highlight nonText ctermbg=NONE
-colorscheme seoul256
-if $BG == 'dark'
-    set background=dark
-else
-    set background=light
-endif
-
 "================ Color palette =======================
-let g:vcoolor_disable_mappings = 1
-let g:vcoolor_map = '<leader>c'
+let g:vcoolor_disable_mappings = 0
 
 "================ Indentation ========================
 " turn indentation on
@@ -314,7 +304,7 @@ nnoremap <leader>n :NERDTree<CR>
 nnoremap <leader>nf :NERDTreeFind<CR>
 
 " ================ Ranger =======================
-
+let g:ranger_map_keys = 1
 
 " ================ TagBar=======================
 
@@ -377,7 +367,7 @@ function! MyTabFilename(n)
 endfunction
 
 let g:lightline = {
-            \ 'colorscheme': 'solarized',
+            \ 'colorscheme': 'wombat',
             \ 'active': {
             \   'right': [ [ 'lineinfo' ], ['percent'], [ 'filetype' ] ]
             \ },
@@ -395,15 +385,25 @@ let g:lightline = {
             \ 'subseparator': { 'left': '|', 'right': '|' }
             \ }
 
-" ================ Syntastic =======================
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+"================ Colors and theme ========================
+highlight Normal ctermbg=NONE
+highlight nonText ctermbg=NONE
+colorscheme seoul256
+if $BG == 'dark'
+    set background=dark
+else
+    set background=light
+endif
 
-let g:syntastic_always_populate_loc_list = 0
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
+ "================ Syntastic =======================
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+
+"let g:syntastic_always_populate_loc_list = 0
+"let g:syntastic_auto_loc_list = 0
+"let g:syntastic_check_on_open = 0
+"let g:syntastic_check_on_wq = 0
 
 
 " tabs keys mapping
@@ -458,6 +458,8 @@ let g:quickhl_manual_colors = [
 " tab navigation
 :map <A-h> :tabprevious<CR>
 :map <A-l> :tabnext<CR>
+:map <A-left> :tabprevious<CR>
+:map <A-right> :tabnext<CR>
 
 " ================ NeoVim terminal =======================
 :tnoremap <Esc> <C-\><C-n>
@@ -474,6 +476,4 @@ let g:quickhl_manual_colors = [
 :map <A-right> <A-l>
 :map <A-up>   <A-k>
 :map <A-down> <A-j>
-
-let g:ranger_map_keys = 1
 

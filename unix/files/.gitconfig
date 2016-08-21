@@ -1,5 +1,7 @@
 [user]
-	email = francois.cabrol@ubisoft.com
+	email = francois.cabrol@live.ca
 	name = Francois Cabrol
 [push]
 	default = simple
+[core]
+	editor = nvim
