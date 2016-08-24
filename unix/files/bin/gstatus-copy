@@ -1,0 +1,162 @@
+#!/bin/sh
+exec scala -savecompiled "$0" "$@"
+!#
+
+import java.io.File
+import sys.process._
+import scala.concurrent.ExecutionContext.Implicits.global
+import concurrent.{Await, Future}
+import scala.concurrent.duration._
+import java.util.concurrent.TimeoutException
+import util.control.Breaks._
+
+def run (processBuilder: ProcessBuilder): String = {
+  val stdout = new StringBuilder
+  val stderr = new StringBuilder
+  val status = processBuilder ! ProcessLogger(stdout append _, stderr append _)
+  stdout.toString + stderr.toString
+}
+
+case class AnimatedMessage(message: String) {
+
+  var i = 1
+
+  val thread = new Thread {
+    override def run {
+      print(".")
+      var done = true
+      while(done) {
+        try {
+          Thread.sleep(1000)
+          print(".")
+          i += 1
+        } catch {
+          case _: Throwable => done = false
+        }
+      }
+    }
+  }
+
+  def start = {
+    print(message)
+    thread.start
+    this
+  }
+
+  def done() {
+    thread.interrupt()
+    print("\r" + " " * (message.length + i) + "\r")
+  }
+}
+
+class Out {
+  var w:Option[AnimatedMessage] = None
+
+  def waiting(message:String) = {
+    stopWait
+    w = Some(AnimatedMessage(message).start)
+    this
+  }
+
+  def stopWait() = {
+    w foreach(_.done)
+    this
+  }
+
+  def <(str:String) = {
+    print(str)
+    this
+  }
+  def <<(str:String) = {
+    print(str)
+    this
+  }
+}
+
+object Git {
+  def branch(dir: File): String = {
+    run(Process("git branch", dir) #| "grep \\*")
+  }
+  def status(dir: File): String = {
+    run(Process("git fetch", dir))
+    run(Process("git status", dir))
+  }
+  def pull(dir: File) = {
+    run(Process("git pull", dir))
+  }
+}
+
+object Gstatus {
+
+  implicit class stringColors(val s: String) {
+    import Console._
+
+    def red = RED + s + RESET
+    def green = GREEN + s + RESET
+    def blue = BLUE + s + RESET
+  }
+
+  implicit class FileDecored(file: File) {
+    def listDirectories: List[File] = file.listFiles.filter(_.isDirectory).toList
+    def isGitRepo: Boolean = file.listFiles.exists(f => f.getName == ".git")
+  }
+
+  def gitStatus(dir: File): String = Git.status(dir) match {
+      case x if x.contains("not staged") => "Need to stage files".red
+      case x if x.contains("up-to-date") => "Up to date"
+      case x if x.contains("git pull") => "Need to pull".blue
+      case x if x.contains("nothing to commit") => "nothing to commit. Not synchonized with a remote"
+      case "error" => "well... something unusual".red
+      case x => x
+    }
+
+  case class Info(dir: File, branchName: String, status: String)
+
+  def gitInformations(directories: List[File]): List[Info] = {
+    val futures = directories map((dir) => {
+        Future {
+          val combinedFuture = for {
+              r1 <- Future { gitStatus(dir) }
+              r2 <- Future { Git.branch(dir).trim }
+            } yield (r1, r2)
+          val (state, branch) = Await.result(combinedFuture, 10.seconds)
+          Info(dir, branch, state)
+        }
+      })
+    Await.result(Future.sequence(futures), 10.seconds)
+  }
+
+  def main(args: Array[String]) {
+    val out = new Out
+    var isPullOk = false
+    if (args.length > 0) {
+      isPullOk = (args(0) == "--pull")
+    }
+    out.waiting("Finding the git repositories")
+    val directories = new File(".").listDirectories.filter(!_.isHidden)
+    val (gitRepos, notGitRepos) = directories.partition(_.isGitRepo)
+    out.stopWait
+    notGitRepos foreach((dir) => {
+        println(dir + ": Not a Git repo")
+    })
+    try {
+      out.waiting("Get informations from git repositories")
+      val r = gitInformations(gitRepos)
+      out.stopWait
+      r foreach((info) => {
+        out.<(info.dir + "-" + info.branchName.blue + ": " + info.status.green)
+        if (isPullOk && info.status.contains("Need to pull")) {
+          out << " pulling... ".red
+          Git.pull(info.dir)
+          print("done".green)
+        }
+        println(" ")
+      })
+    } catch {
+      case _: TimeoutException => println("Timeout")
+    }
+  }
+}
+
+Gstatus.main(args)
+
