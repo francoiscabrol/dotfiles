@@ -1,5 +1,5 @@
 #!/bin/sh
-exec scala -savecompiled "$0" "$@"
+exec scala -feature -savecompiled "$0" "$@"
 !#
 
 import java.io.File
@@ -8,17 +8,16 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import concurrent.{Await, Future}
 import scala.concurrent.duration._
 import java.util.concurrent.TimeoutException
-import util.control.Breaks._
+import scala.language.implicitConversions
 
-def run (processBuilder: ProcessBuilder): String = {
+def run(processBuilder: ProcessBuilder) = {
   val stdout = new StringBuilder
   val stderr = new StringBuilder
   val status = processBuilder ! ProcessLogger(stdout append _, stderr append _)
-  stdout.toString + stderr.toString
+  (stdout.toString, stderr.toString)
 }
 
-case class AnimatedMessage(message: String) {
-
+class AnimatedWaitingMessage(message: String) {
   var i = 1
 
   val thread = new Thread {
@@ -37,32 +36,34 @@ case class AnimatedMessage(message: String) {
     }
   }
 
-  def start = {
+  def show = {
     print(message)
     thread.start
     this
   }
 
-  def done() {
+  def hide {
     thread.interrupt()
     print("\r" + " " * (message.length + i) + "\r")
   }
 }
 
-class Out {
-  var w:Option[AnimatedMessage] = None
+object Out {
+  var waitingMessage:Option[AnimatedWaitingMessage] = None
 
-  def waiting(message:String) = {
+  def startWait(message:String) = {
     stopWait
-    w = Some(AnimatedMessage(message).start)
+    waitingMessage = Some(new AnimatedWaitingMessage(message).show)
     this
   }
-
-  def stopWait() = {
-    w foreach(_.done)
+  def stopWait = {
+    waitingMessage foreach(_.hide)
     this
   }
-
+  def ln = {
+    println
+    this
+  }
   def <(str:String) = {
     print(str)
     this
@@ -74,10 +75,10 @@ class Out {
 }
 
 object Git {
-  def branch(dir: File): String = {
+  def branch(dir: File) = {
     run(Process("git branch", dir) #| "grep \\*")
   }
-  def status(dir: File): String = {
+  def status(dir: File) = {
     run(Process("git fetch", dir))
     run(Process("git status", dir))
   }
@@ -101,7 +102,9 @@ object Gstatus {
     def isGitRepo: Boolean = file.listFiles.exists(f => f.getName == ".git")
   }
 
-  def gitStatus(dir: File): String = Git.status(dir) match {
+  implicit def tupleToString(t: Tuple2[String, String]):String = t.productIterator.mkString
+
+  def gitStatus(dir: File): String = Git.status(dir).productIterator.mkString match {
       case x if x.contains("not staged") => "Need to stage files".red
       case x if x.contains("up-to-date") => "Up to date"
       case x if x.contains("git pull") => "Need to pull".blue
@@ -110,7 +113,9 @@ object Gstatus {
       case x => x
     }
 
-  case class Info(dir: File, branchName: String, status: String)
+    case class Info(dir: File, branchName: String, status: String) {
+      override def toString = (dir + "-" + branchName.blue + ": " + status.green)
+    }
 
   def gitInformations(directories: List[File]): List[Info] = {
     val futures = directories map((dir) => {
@@ -127,33 +132,32 @@ object Gstatus {
   }
 
   def main(args: Array[String]) {
-    val out = new Out
+    Out startWait "Finding the git repositories"
     var isPullOk = false
     if (args.length > 0) {
       isPullOk = (args(0) == "--pull")
     }
-    out.waiting("Finding the git repositories")
     val directories = new File(".").listDirectories.filter(!_.isHidden)
     val (gitRepos, notGitRepos) = directories.partition(_.isGitRepo)
-    out.stopWait
+    Out.stopWait
     notGitRepos foreach((dir) => {
         println(dir + ": Not a Git repo")
     })
     try {
-      out.waiting("Get informations from git repositories")
-      val r = gitInformations(gitRepos)
-      out.stopWait
-      r foreach((info) => {
-        out.<(info.dir + "-" + info.branchName.blue + ": " + info.status.green)
+      Out startWait "Get informations from the git repositories"
+      val infos = gitInformations(gitRepos)
+      Out.stopWait
+      infos foreach((info) => {
+        Out < info.toString
         if (isPullOk && info.status.contains("Need to pull")) {
-          out << " pulling... ".red
+          Out << " pulling... ".red
           Git.pull(info.dir)
           print("done".green)
         }
-        println(" ")
+        Out.ln
       })
     } catch {
-      case _: TimeoutException => println("Timeout")
+      case _: TimeoutException => Out.stopWait < "Timeout"
     }
   }
 }
