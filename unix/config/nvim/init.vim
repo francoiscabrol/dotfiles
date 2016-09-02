@@ -79,6 +79,7 @@ Plug 'hail2u/vim-css3-syntax'
 Plug 'plasticboy/vim-markdown'
 "Plug 'digitaltoad/vim-jade'
 Plug 'aklt/plantuml-syntax'
+Plug 'mattn/emmet-vim'
 
 function! DoRemote(arg)
   UpdateRemotePlugins
@@ -302,6 +303,11 @@ let g:NERDTreeWinSize = 30
 " nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>n :NERDTree<CR>
 nnoremap <leader>nf :NERDTreeFind<CR>
+
+" ================ Ag =======================
+nnorema <leader>fa :execute 'Ag ' . expand('<cword>')<CR>
+nnorema <leader>faf :execute 'Ag ' . expand('<cword>') . '.*\('<CR>
+
 
 " ================ Ranger =======================
 let g:ranger_map_keys = 1

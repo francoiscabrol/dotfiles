@@ -128,7 +128,11 @@ nlspercol() {
     $EDITOR "$(grep --include="*.md" -R -l -i "$*" $NOTES | sed 's/\$NOTES\///g' | percol)"
 }
 nls() {
+  if [[ -n "$@" ]]; then
     agi $@ $NOTES
+  else
+    agi -g . $NOTES
+  fi
 }
 alias note='terminal_velocity'
 
