@@ -7,7 +7,7 @@
 ########## Variables
 
 DOT_DIR=`pwd`
-OLDDOT_DIR=$DOT_DIR/../dotfiles_old # old dotfiles backup directory
+OLDDOT_DIR=$HOME/tmp/dotfiles_old # old dotfiles backup directory
 
 OS_DIR="unix"
 if [[ $OSTYPE == *"linux"* ]]; then
@@ -34,6 +34,7 @@ createFolder() {
 }
 
 # create dotfiles_old in homedir for backup
+rm -rf $OLDDOT_DIR
 mkdir -p $OLDDOT_DIR
 
 # For each os
