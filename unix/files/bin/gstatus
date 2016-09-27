@@ -1,5 +1,5 @@
 #!/bin/sh
-exec scala -savecompiled "$0" "$@"
+exec scala -feature -savecompiled "$0" "$@"
 !#
 
 import java.io.File
@@ -8,18 +8,18 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import concurrent.{Await, Future}
 import scala.concurrent.duration._
 import java.util.concurrent.TimeoutException
-import scala.actors.Actor
-import scala.actors.Actor._
-import util.control.Breaks._
+import scala.language.implicitConversions
 
-def run (processBuilder: ProcessBuilder): String = {
+def run(processBuilder: ProcessBuilder) = {
   val stdout = new StringBuilder
   val stderr = new StringBuilder
   val status = processBuilder ! ProcessLogger(stdout append _, stderr append _)
-  stdout.toString + stderr.toString
+  (stdout.toString, stderr.toString)
 }
 
-case class Mwait(message: String) {
+class AnimatedWaitingMessage(message: String) {
+  var i = 1
+
   val thread = new Thread {
     override def run {
       print(".")
@@ -28,6 +28,7 @@ case class Mwait(message: String) {
         try {
           Thread.sleep(1000)
           print(".")
+          i += 1
         } catch {
           case _: Throwable => done = false
         }
@@ -35,37 +36,63 @@ case class Mwait(message: String) {
     }
   }
 
-  def start = {
+  def show = {
     print(message)
     thread.start
     this
   }
 
-  def done() {
+  def hide {
     thread.interrupt()
-    print("\r")
+    print("\r" + " " * (message.length + i) + "\r")
   }
+}
 
+object Out {
+  var waitingMessage:Option[AnimatedWaitingMessage] = None
+
+  def startWait(message:String) = {
+    stopWait
+    waitingMessage = Some(new AnimatedWaitingMessage(message).show)
+    this
+  }
+  def stopWait = {
+    waitingMessage foreach(_.hide)
+    this
+  }
+  def ln = {
+    println
+    this
+  }
+  def <(str:String) = {
+    print(str)
+    this
+  }
+  def <<(str:String) = {
+    print(str)
+    this
+  }
 }
 
 object Git {
-  def branch(dir: File): String = {
+  def branch(dir: File) = {
     run(Process("git branch", dir) #| "grep \\*")
   }
-  def status(dir: File): String = {
+  def status(dir: File) = {
     run(Process("git fetch", dir))
     run(Process("git status", dir))
+  }
+  def pull(dir: File) = {
+    run(Process("git pull", dir))
   }
 }
 
 object Gstatus {
 
+  val timeout = 60.seconds
+
   implicit class stringColors(val s: String) {
-    val RED = "\u001B[31m"
-    val GREEN = "\u001B[32m"
-    val WHITE = "\u001B[37m"
-    val BLUE = "\u001B[34m"
-    val RESET = "\u001B[0m"
+    import Console._
 
     def red = RED + s + RESET
     def green = GREEN + s + RESET
@@ -77,7 +104,9 @@ object Gstatus {
     def isGitRepo: Boolean = file.listFiles.exists(f => f.getName == ".git")
   }
 
-  def gitStatus(dir: File): String = Git.status(dir) match {
+  implicit def tupleToString(t: Tuple2[String, String]):String = t.productIterator.mkString
+
+  def gitStatus(dir: File): String = Git.status(dir).productIterator.mkString match {
       case x if x.contains("not staged") => "Need to stage files".red
       case x if x.contains("up-to-date") => "Up to date"
       case x if x.contains("git pull") => "Need to pull".blue
@@ -86,35 +115,51 @@ object Gstatus {
       case x => x
     }
 
-  def gitInformations(directories: List[File]): List[String] = {
+    case class Info(dir: File, branchName: String, status: String) {
+      override def toString = (dir + "-" + branchName.blue + ": " + status.green)
+    }
+
+  def gitInformations(directories: List[File]): List[Info] = {
     val futures = directories map((dir) => {
         Future {
           val combinedFuture = for {
               r1 <- Future { gitStatus(dir) }
               r2 <- Future { Git.branch(dir).trim }
             } yield (r1, r2)
-          val (state, branch) = Await.result(combinedFuture, 10.seconds)
-          dir + "-" + branch.blue + ": " + state.green
+          val (state, branch) = Await.result(combinedFuture, timeout)
+          Info(dir, branch, state)
         }
       })
-    Await.result(Future.sequence(futures), 10.seconds)
+    Await.result(Future.sequence(futures), timeout)
   }
 
   def main(args: Array[String]) {
-    val mWait = Mwait("Please wait").start
+    Out startWait "Finding the git repositories"
+    var isPullOk = false
+    if (args.length > 0) {
+      isPullOk = (args(0) == "--pull")
+    }
     val directories = new File(".").listDirectories.filter(!_.isHidden)
     val (gitRepos, notGitRepos) = directories.partition(_.isGitRepo)
-    mWait.done
+    Out.stopWait
     notGitRepos foreach((dir) => {
         println(dir + ": Not a Git repo")
     })
-    val mWait2 = Mwait("Please wait").start
     try {
-      val r = gitInformations(gitRepos)
-      mWait2.done
-      r foreach println
+      Out startWait "Getting information from the git repositories"
+      val infos = gitInformations(gitRepos)
+      Out.stopWait
+      infos foreach((info) => {
+        Out < info.toString
+        if (isPullOk && info.status.contains("Need to pull")) {
+          Out << " pulling... ".red
+          Git.pull(info.dir)
+          print("done".green)
+        }
+        Out.ln
+      })
     } catch {
-      case _: TimeoutException => println("Timeout")
+      case _: TimeoutException => Out.stopWait < "Timeout"
     }
   }
 }
