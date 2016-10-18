@@ -31,7 +31,7 @@ autocmd GUIEnter * set visualbell t_vb=
 call plug#begin('~/.config/nvim/plugged')
 
 Plug 'rbgrouleff/bclose.vim'
-Plug 'vim-scripts/quickhl.vim'
+"Plug 'vim-scripts/quickhl.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-fugitive'
@@ -135,9 +135,9 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
 
 "================ Quckhl ========================
-nmap <leader>j <Plug>(quickhl-manual-this)
-xmap <leader>j <Plug>(quickhl-manual-this)
-nmap <leader>k <Plug>(quickhl-cword-toggle)
+"nmap <leader>j <Plug>(quickhl-manual-this)
+"xmap <leader>j <Plug>(quickhl-manual-this)
+"nmap <leader>k <Plug>(quickhl-cword-toggle)
 
 "================ Easy align =======================
 " Start interactive EasyAlign in visual mode (e.g. vipga)
