@@ -12,8 +12,31 @@ fi
 
 source $HOME/.bash_aliases
 
+#####
+# For Linux
+#####
+if [[ "$OSTYPE" =~ ^linux ]]; then
+  # Alias to applications
+  alias pbcopy='xclip -selection clipboard'
+  alias open='gnome-open'
+  alias openIn='parallel -Xj1 --tty'
+  alias install_history="cat /var/log/apt/history.log | grep 'apt-get install'"
+fi
+
+#####
+# For MacOS
+#####
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # Add path
+    PATH=$PATH:$HOME/bin
+fi
+
+#####
+# For all systems
+#####
 export TERM=xterm-256color
 
+# Set editor properties
 BG=dark
 EDITOR=nvim
 
@@ -28,28 +51,13 @@ export BG
 # Bind the vi command to the default $EDITOR
 alias vi=$EDITOR
 
-# Customize to your needs...
-#####
-# For Linux
-#####
-if [[ "$OSTYPE" =~ ^linux ]]; then
-    # Alias to applications
-    alias pbcopy='xclip -selection clipboard'
-    alias open='gnome-open'
-    alias openIn='parallel -Xj1 --tty'
-
-    alias install_history="cat /var/log/apt/history.log | grep 'apt-get install'"
-    alias ack='ack-grep'
-fi
-
-#####
-# For all systems
-#####
 alias tk='tmux kill-session'
 alias tmux='tmux -2'
 
 # Grunt autocompletion
-eval "$(grunt --completion=zsh)"
+if hash grunt 2>/dev/null; then
+  eval "$(grunt --completion=zsh)"
+fi
 
 gcom () {
     git stash
@@ -94,39 +102,19 @@ function t() {
     fi
 }
 
-# acki: an interactive ack
-acki() {
-    if [[ $EDITOR == wstorm ]]; then
-        $EDITOR $(ack $@ | sed 's/:/ /g' | percol | awk '{print "--line "$2 " " $1}')
-    else
-        $EDITOR $((ack $@ | sed 's/:/ /g' | percol | awk '{print "+"$2 " " $1}') || '-c quit')
-    fi
-}
-grepi() {
-   $EDITOR $((grep -n $@ | sed 's/:/ /g' | percol | awk '{print "+"$2 " " $1}') || '-c quit')
-}
-
+# agi: an interactive ack
 agi() {
-   if [[ $EDITOR == wstorm ]]; then
-        $EDITOR $(ag $@ | sed 's/:/ /g' | fzf | awk '{print "--line "$2 " " $1}')
-   else
-        $EDITOR $((ag $@ | sed 's/:/ /g' | fzf | awk '{print "+"$2 " " $1}') || '-c quit')
-   fi
+  if [[ $EDITOR == wstorm ]]; then
+    $EDITOR $(ag $@ | sed 's/:/ /g' | fzf | awk '{print "--line "$2 " " $1}')
+  elif [[ $EDITOR == vim || $EDITOR == nvim ]]; then
+    $EDITOR $((ag $@ | sed 's/:/ /g' | fzf | awk '{print "+"$2 " " $1}') || '-c quit')
+  else
+    # By default open the file in vim/nvim
+    vi $((ag $@ | sed 's/:/ /g' | fzf | awk '{print "+"$2 " " $1}') || '-c quit')
+  fi
 }
-
-#####
-# For MacOS
-#####
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    # Add path
-    PATH=$PATH:$HOME/bin
-
-fi
 
 # For note taking
-nlspercol() {
-    $EDITOR "$(grep --include="*.md" -R -l -i "$*" $NOTES | sed 's/\$NOTES\///g' | percol)"
-}
 nls() {
   if [[ -n "$@" ]]; then
     agi $@ $NOTES
