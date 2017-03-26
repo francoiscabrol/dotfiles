@@ -8,6 +8,7 @@
 
 DOT_DIR=`pwd`
 OLDDOT_DIR=$HOME/tmp/dotfiles_old # old dotfiles backup directory
+ignored=". .. .DS_Store"
 
 OS_DIR="unix"
 if [[ $OSTYPE == *"linux"* ]]; then
@@ -34,8 +35,10 @@ createFolder() {
 }
 
 # create dotfiles_old in homedir for backup
-rm -rf $OLDDOT_DIR
-mkdir -p $OLDDOT_DIR
+if [[ ! -d $OLDDOT_DIR ]]; then
+  rm -rf $OLDDOT_DIR
+  mkdir -p $OLDDOT_DIR
+fi
 
 # For each os
 for os in $OS_DIR; do
@@ -46,7 +49,9 @@ for os in $OS_DIR; do
         src="$files/$f"
         dest="$HOME/$f"
         copy="$OLDDOT_DIR/$f"
-        create_symlink $src $dest $copy
+        if [[ !(${ignored[*]} =~ "$f") && ((! -f $dest && ! -d $dest) || ! -L $dest) ]]; then
+          create_symlink $src $dest $copy
+        fi
     done
 
     # Create symlinks for config
@@ -55,7 +60,9 @@ for os in $OS_DIR; do
         src="$config/$f"
         dest="$HOME/.config/$f"
         copy="$OLDDOT_DIR/.config/$f"
-        create_symlink $src $dest $copy
+        if [[ !(${ignored[*]} =~ "$f") && ((! -f $dest && ! -d $dest) || ! -L $dest) ]]; then
+          create_symlink $src $dest $copy
+        fi
     done
 
 done
