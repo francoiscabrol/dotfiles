@@ -1,0 +1,39 @@
+## Shift focus
+cmd + lalt - j     :  kwmc window -f north
+cmd + lalt - l     :  kwmc window -f east
+cmd + lalt - k     :  kwmc window -f south
+cmd + lalt - h     :  kwmc window -f west
+
+cmd + lalt - up    :  kwmc window -f north
+cmd + lalt - right :  kwmc window -f east
+cmd + lalt - down  :  kwmc window -f south
+cmd + lalt - left  :  kwmc window -f west
+
+## Swap position
+cmd + lalt + shift - up    :  kwmc window -s north
+cmd + lalt + shift - right :  kwmc window -s east
+cmd + lalt + shift - down  :  kwmc window -s south
+cmd + lalt + shift - left  :  kwmc window -s west
+
+## Move window
+cmd + lalt + lctrl - up   :   kwmc window -m north
+cmd + lalt + lctrl - right:   kwmc window -m east
+cmd + lalt + lctrl - down :   kwmc window -m south
+cmd + lalt + lctrl - left :   kwmc window -m west
+
+## Open new terminal window
+cmd + lalt - return      :   osascript ~/.kwm/new-term.scpt
+
+## Open new chrome window
+cmd + lalt - b :   osascript ~/.kwm/new-browser.scpt
+
+## Reload window layout if broken
+#lalt + shift - r   :   brew services restart kwm
+#lalt + shift + cmd - r :   brew services restart khd
+
+## switch between modes
+cmd + lalt - a : kwmc space -t bsp
+cmd + lalt - s : kwmc space -t monocle
+cmd + lalt - d : kwmc space -t float
+cmd + lalt - n : kwmc window -f next
+

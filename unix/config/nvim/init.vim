@@ -69,6 +69,7 @@ Plug 'KabbAmine/vCoolor.vim'
 "Plug 'heavenshell/vim-jsdoc'
 "Plug 'othree/yajs.vim'
 "Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'mxw/vim-jsx'
 
 "Plug 'mustache/vim-mustache-handlebars'
 "Plug 'peterhoeg/vim-qml'
@@ -80,6 +81,22 @@ Plug 'plasticboy/vim-markdown'
 "Plug 'digitaltoad/vim-jade'
 Plug 'aklt/plantuml-syntax'
 Plug 'mattn/emmet-vim'
+Plug 'leafgarland/typescript-vim'
+
+Plug 'prettier/vim-prettier', {
+	\ 'do': 'yarn install',
+	\ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
+" print spaces between brackets
+let g:prettier#config#bracket_spacing = 'true'
+" put > on the last line instead of new line
+let g:prettier#config#jsx_bracket_same_line = 'false'
+
+" Eslint
+Plug 'w0rp/ale'
+
+" Autocomplete
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+let g:deoplete#enable_at_startup = 1
 
 "================ Git =======================
 com! Undo :GitGutterUndoHunk
@@ -90,9 +107,10 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'w0ng/vim-hybrid'
 Plug 'junegunn/seoul256.vim'
 Plug 'trusktr/seti.vim'
-Plug 'altercation/vim-colors-solarized'
+"Plug 'altercation/vim-colors-solarized'
+Plug 'frankier/neovim-colors-solarized-truecolor-only'
 
-Plug 'zefei/vim-colortuner'
+"Plug 'zefei/vim-colortuner'
 "================ Motion =======================
 "Plug 'Lokaltog/vim-easymotion'
 " Add plugins to &runtimepath
@@ -101,9 +119,19 @@ call plug#end()
 " enable filetype plugins
 filetype plugin on
 
-"================ Shortcuts =======================
-" Eleminate delay with Esc
-set esckeys
+"================ Colors and theme ========================
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+
+highlight Normal ctermbg=NONE
+highlight nonText ctermbg=NONE
+if $BG == 'dark'
+    set background=dark
+    colorscheme seoul256
+else
+    set termguicolors
+    set background=light
+    colorscheme solarized
+endif
 
 "================ Syntax highlighting =======================
 syntax on
@@ -112,8 +140,8 @@ syntax on
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
 " Set line highlighting
-set cursorline
-hi CursorLine ctermbg=lightgrey
+"set cursorline
+"hi CursorLine ctermbg=LightGrey
 
 " always show cursor
 set ruler
@@ -301,10 +329,26 @@ nnoremap <leader>nf :NERDTreeFind<CR>
 " ================ Ag =======================
 nnorema <leader>fa :execute 'Ag ' . expand('<cword>')<CR>
 nnorema <leader>faf :execute 'Ag ' . expand('<cword>') . '.*\('<CR>
+" Augmenting Ag command using fzf#vim#with_preview function
+"   * fzf#vim#with_preview([[options], preview window, [toggle keys...]])
+"     * For syntax-highlighting, Ruby and any of the following tools are required:
+"       - Highlight: http://www.andre-simon.de/doku/highlight/en/highlight.php
+"       - CodeRay: http://coderay.rubychan.de/
+"       - Rouge: https://github.com/jneen/rouge
+"
+"   :Ag  - Start fzf with hidden preview window that can be enabled with "?" key
+"   :Ag! - Start fzf in fullscreen and display the preview window above
+command! -bang -nargs=* Ag
+  \ call fzf#vim#ag(<q-args>,
+  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+  \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \                 <bang>0)
 
 
 " ================ Ranger =======================
 let g:ranger_map_keys = 1
+let g:NERDTreeHijackNetrw = 0
+let g:ranger_replace_netrw = 1
 
 " ================ TagBar=======================
 
@@ -323,13 +367,33 @@ cmap w!! w !sudo tee % >/dev/null
 "let g:airline#extensions#tabline#show_tab_nr   = 0
 "let g:airline#extensions#tabline#tab_min_count = 2
 "" Enable/disable displaying buffers with a single tab. >
-"let g:airline#extensions#tabline#show_buffers = 0
-"let g:airline#extensions#tabline#enabled      = 1
-"let g:airline_powerline_fonts                 = 1
+let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#enabled      = 1
+let g:airline_powerline_fonts                 = 1
+" Enable the list of buffers
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#show_tabs = 1
+
+let g:airline#extensions#tabline#show_splits = 1 "enable/disable displaying open splits per tab (only when tabs are opened). >
+let g:airline#extensions#tabline#show_buffers = 1 " enable/disable displaying buffers with a single tab
+let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#show_splits = 1
+let g:airline#extensions#tabline#show_tabs = 1
+let g:airline#extensions#tabline#show_tab_nr = 1
+let g:airline#extensions#tabline#show_tab_type = 0
+let g:airline#extensions#tabline#close_symbol = '×'
+let g:airline#extensions#tabline#show_close_button = 0
+
+" Show just the filename
+let g:airline#extensions#tabline#fnamemod = ':t'
+
 "" Show just the filename
 "let g:airline#extensions#tabline#fnamemod = ':t'
 "let g:airline_theme='luna'
-set guifont=Meslo\ LG\ M\ for\ Powerline
+"set guifont=Meslo\ LG\ M\ for\ Powerline
 "
 "" enable/disable syntastic integration
 "let g:airline#extensions#syntastic#enabled = 1
@@ -343,57 +407,47 @@ function! LightLineFilename()
   return expand('%')
 endfunction
 
-function! MyTabFilename(n)
-  let buflist = tabpagebuflist(a:n)
-  let winnr = tabpagewinnr(a:n)
-  let bufnum = buflist[winnr - 1]
-  let bufname = expand('#'.bufnum.':t')
-  let buffullname = expand('#'.bufnum.':p')
-  let buffullnames = []
-  let bufnames = []
-  for i in range(1, tabpagenr('$'))
-    if i != a:n
-      let num = tabpagebuflist(i)[tabpagewinnr(i) - 1]
-      call add(buffullnames, expand('#' . num . ':p'))
-      call add(bufnames, expand('#' . num . ':t'))
-    endif
-  endfor
-  let i = index(bufnames, bufname)
-  if strlen(bufname) && i >= 0 && buffullnames[i] != buffullname
-    return substitute(buffullname, '.*/\([^/]\+/\)', '\1', '')
-  else
-    return strlen(bufname) ? bufname : '[No Name]'
-  endif
-endfunction
+"function! MyTabFilename(n)
+  "let buflist = tabpagebuflist(a:n)
+  "let winnr = tabpagewinnr(a:n)
+  "let bufnum = buflist[winnr - 1]
+  "let bufname = expand('#'.bufnum.':t')
+  "let buffullname = expand('#'.bufnum.':p')
+  "let buffullnames = []
+  "let bufnames = []
+  "for i in range(1, tabpagenr('$'))
+    "if i != a:n
+      "let num = tabpagebuflist(i)[tabpagewinnr(i) - 1]
+      "call add(buffullnames, expand('#' . num . ':p'))
+      "call add(bufnames, expand('#' . num . ':t'))
+    "endif
+  "endfor
+  "let i = index(bufnames, bufname)
+  "if strlen(bufname) && i >= 0 && buffullnames[i] != buffullname
+    "return substitute(buffullname, '.*/\([^/]\+/\)', '\1', '')
+  "else
+    "return strlen(bufname) ? bufname : '[No Name]'
+  "endif
+"endfunction
 
-let g:lightline = {
-            \ 'colorscheme': 'wombat',
-            \ 'active': {
-            \   'right': [ [ 'lineinfo' ], ['percent'], [ 'filetype' ] ]
-            \ },
-            \ 'component': {
-            \   'readonly': '%{&readonly?"":""}',
-            \ },
-            \ 'tab_component_function': {
-            \   'filename': 'MyTabFilename',
-            \ },
-            \ 'component_function': {
-            \   'modified': 'LightLineModified',
-            \   'filename': 'LightLineFilename'
-            \ },
-            \ 'separator': { 'left': '', 'right': '' },
-            \ 'subseparator': { 'left': '|', 'right': '|' }
-            \ }
-
-"================ Colors and theme ========================
-highlight Normal ctermbg=NONE
-highlight nonText ctermbg=NONE
-colorscheme seoul256
-if $BG == 'dark'
-    set background=dark
-else
-    set background=light
-endif
+"let g:lightline = {
+            "\ 'colorscheme': 'wombat',
+            "\ 'active': {
+            "\   'right': [ [ 'lineinfo' ], ['percent'], [ 'filetype' ] ]
+            "\ },
+            "\ 'component': {
+            "\   'readonly': '%{&readonly?"":""}',
+            "\ },
+            "\ 'tab_component_function': {
+            "\   'filename': 'MyTabFilename',
+            "\ },
+            "\ 'component_function': {
+            "\   'modified': 'LightLineModified',
+            "\   'filename': 'LightLineFilename'
+            "\ },
+            "\ 'separator': { 'left': '', 'right': '' },
+            "\ 'subseparator': { 'left': '|', 'right': '|' }
+            "\ }
 
  "================ Syntastic =======================
 "set statusline+=%#warningmsg#
@@ -436,13 +490,12 @@ set runtimepath+=~/.vim/bundle/jshint2.vim/
 "======= JSON =========
 com! FormatJSON %!jq .
 "Use :FormatJSON to format json
-let g:quickhl_manual_colors = [
-    \ "gui=bold ctermfg=16   ctermbg=153 guibg=#747070 guibg=#ffffff",
-    \ "gui=bold ctermfg=16   ctermbg=1   guibg=#FFBC78 guifg=#ffffff",
-    \ "gui=bold ctermfg=16   ctermbg=2   guibg=#72B9FF guifg=#ffffff",
-    \ "gui=bold ctermfg=16   ctermbg=3   guibg=#3EA06F guifg=#ffffff",
-    \ ]
-"let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+"let g:quickhl_manual_colors = [
+    "\ "gui=bold ctermfg=16   ctermbg=153 guibg=#747070 guibg=#ffffff",
+    "\ "gui=bold ctermfg=16   ctermbg=1   guibg=#FFBC78 guifg=#ffffff",
+    "\ "gui=bold ctermfg=16   ctermbg=2   guibg=#72B9FF guifg=#ffffff",
+    "\ "gui=bold ctermfg=16   ctermbg=3   guibg=#3EA06F guifg=#ffffff",
+    "\ ]
 
 " ================ Pane separator =======================
 " set fillchars+=vert:\
@@ -477,3 +530,10 @@ let g:quickhl_manual_colors = [
 :map <A-up>   <A-k>
 :map <A-down> <A-j>
 
+" ======= Macro ========
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+
+function! ExecuteMacroOverVisualRange()
+  echo "@".getcmdline()
+  execute ":'<,'>normal @".nr2char(getchar())
+endfunction

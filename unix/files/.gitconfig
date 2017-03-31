@@ -1,7 +1,0 @@
-[user]
-	email = francois.cabrol@live.ca
-	name = Francois Cabrol
-[push]
-	default = simple
-[core]
-	editor = nvim

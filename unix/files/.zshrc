@@ -34,15 +34,18 @@ fi
 #####
 # For all systems
 #####
-export TERM=xterm-256color
+function getBG() {
+  profile=${ITERM_PROFILE:-dark}
+  echo "$profile" | awk '{print tolower($0)}'
+}
 
 # Set editor properties
-BG=dark
+BG=$(getBG)
 EDITOR=nvim
 
 # Check if we are in webstorm
-if [[ $(env | grep -i storm | wc -l) > 0 ]]; then
-    EDITOR=wstorm
+if [[ $(env | grep -i ZDOT | wc -l | xargs) > 0 ]]; then
+    EDITOR=webstorm
     BG=dark
 fi
 
@@ -132,3 +135,6 @@ fpath=($HOME/bin/wd $fpath)
 rm -f ~/.zcompdump; compinit
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# auto suggestion color
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10'

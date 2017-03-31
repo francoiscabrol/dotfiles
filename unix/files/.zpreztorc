@@ -38,9 +38,9 @@ zstyle ':prezto:load' pmodule \
   'git' \
   'node' \
   'syntax-highlighting' \
-  'tmux' \
   'utility' \
-  'prompt'
+  'prompt' \
+  "autosuggestions"
 
 #
 # Editor

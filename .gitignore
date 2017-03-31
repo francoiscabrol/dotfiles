@@ -6,3 +6,5 @@ unix/config/nvim/shada
 *bookmarks
 *tagged
 *history
+unix/files/.gitconfig
+unix/config/nvim/autoload/
